@@ -3,7 +3,7 @@ extends layout
 block content
     nav(class="navbar")
         div(class="container fluid")
-            h4 RBAC
+            h4 LMS
 
     div(class="container mt-4")
         if message 
@@ -12,15 +12,21 @@ block content
                 button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
         
         div(class="card")
-            div(class="card-header") Login
+            div(class="card-header") Sign Up
             div(class="card-body")
-                form(action="/auth/login", method="POST")
+                form(action="/auth/signup", method="POST")
+                    div(class="mb-3")
+                        label( for="username" class="form-label") Name
+                        input(type="text" class="form-control" id="name" name="name") 
+                    div(class="mb-3")
+                        label( for="password" class="form-label") Email
+                        input(type="text" class="form-control" id="email" name="email")
                     div(class="mb-3")
                         label( for="username" class="form-label") Username
                         input(type="text" class="form-control" id="username" name="username") 
                     div(class="mb-3")
                         label( for="password" class="form-label") Password
                         input(type="password" class="form-control" id="password" name="password")
-                    button(type="submit" class="btn btn-primary") Login
-                    p dont have an account ?.
-                        a(href="/auth/signup") Sign Up   
+                    button(type="submit" class="btn btn-primary") Sign Up
+                    p already have an account ?.
+                        a(href="/auth/signup") Login   

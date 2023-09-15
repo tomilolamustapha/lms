@@ -6,11 +6,19 @@ export class AuthController {
 
   @Get('login')
   @Render('login')
-  index() {}
+  loginPage() {}
 
   @Post('login')
-  @Render('index')
+  @Redirect('/')
   login() {}
+
+  @Get('signup')
+  @Render('signup')
+  signupPage() {}
+
+  @Post('signup')
+  @Redirect('/')
+  signup() {}
 
   @Get('logout')
   @Redirect('login')
