@@ -1,8 +1,8 @@
 extends layout 
 
 block content
-    nav(class="navbar")
-        div(class="container fluid")
+    nav(class="")
+        div(class="bg-blue-700")
             h4 LMS
 
     div(class="container mt-4")
@@ -11,7 +11,7 @@ block content
                 strong  #{message}
                 button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
         
-        div(class="card")
+        div(class="bg-blue-400")
             div(class="card-header") Sign Up
             div(class="card-body")
                 form(action="/auth/signup", method="POST")
