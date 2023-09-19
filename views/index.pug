@@ -1,6 +1,6 @@
 extends layout 
 
-block content
+block main
     nav(class="bg-blue-400")
         div(class="bg-blue-700")
             h4(class="") LMS
@@ -10,13 +10,13 @@ block content
                 li 
                     a(href="/auth/logout") Logout 
     
-    div(class="container mt-4")
+    div(class="")
         if message 
             div(class="alert alert-warning alert-dismissible fade show" role="alert")
                 strong  #{message}
                 button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
         
-        div(class="jumbotron")
+        div(class="")
             h1(class="display-4") Login 
             p(class="lead") this is a simple jumbotron style
             hr(class="my-4")

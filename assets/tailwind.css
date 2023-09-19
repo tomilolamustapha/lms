@@ -3,3 +3,46 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  input:focus,
+  select:focus {
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(109, 40, 217);
+  }
+
+  input,
+  select {
+    outline: none;
+    border-width: 1px;
+    border-radius: 5px;
+    padding-left: 15px;
+    background: white;
+  }
+  label {
+    display: block;
+  }
+
+  label,
+  input,
+  select {
+    font-size: 1rem /* 16px */;
+    line-height: 1.5rem;
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    line-height: 1.5rem;
+    color: white;
+    background: rgb(109, 40, 217);
+    border-radius: 5px;
+    outline: none;
+  }
+}

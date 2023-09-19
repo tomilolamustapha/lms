@@ -1,26 +1,31 @@
-extends layout 
+extends auth_layout 
 
-block content
-    nav(class="navbar")
-        div(class="container fluid")
-            h4 RBAC
+block auth
 
-    div(class="container mt-4")
-        if message 
-            div(class="alert alert-warning alert-dismissible fade show" role="alert")
-                strong  #{message}
-                button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
-        
-        div(class="card")
-            div(class="card-header") Login
-            div(class="card-body")
-                form(action="/auth/login", method="POST")
-                    div(class="mb-3")
-                        label( for="username" class="form-label") Username
-                        input(type="text" class="form-control" id="username" name="username") 
-                    div(class="mb-3")
-                        label( for="password" class="form-label") Password
-                        input(type="password" class="form-control" id="password" name="password")
-                    button(type="submit" class="btn btn-primary") Login
-                    p dont have an account ?.
-                        a(href="/auth/signup") Sign Up   
+    div(class="")
+    if message 
+        div(class="alert alert-warning alert-dismissible fade show" role="alert")
+            strong  #{message}
+            button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
+
+    div(class="lg:h-screen lg:flex lg:w-full") 
+        div(class="bg-white flex justify-center items-center rounded-lg lg:rounded-r-lg lg:w-3/5")        
+            div(class="m-8")
+                div(class="font-bold text-lg text-violet-700 mb-3") Login in  your Account
+                div(class="")
+                    form(action="/auth/login", method="POST")
+                        div(class="mb-3")
+                            label( for="username" class="text-violet-700") Username
+                            input(type="text" class="focus:border" id="username" name="username") 
+                        div(class="mb-3")
+                            label( for="password" class="text-violet-700") Password
+                            input(type="password" class="" id="password" name="password")
+                        button( class="") Login
+                        p(class="text-gray-600") dont have an account ?.
+                            span(class="text-violet-500")
+                                a(href="/auth/signup") Sign Up  
+
+
+        div(class="hidden lg:flex justify-center items-center lg:w-2/5")   
+            div(class="m-8")
+                h4 Image here
