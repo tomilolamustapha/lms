@@ -12,41 +12,40 @@ block auth
         div(class="bg-white flex justify-center items-center rounded-lg lg:rounded-r-lg lg:w-3/5")        
             div(class="m-8")
                 div(class="font-bold text-lg text-violet-700 mb-3") Sign Up a new Account
-                div()
-                    input( type="radio" id="html" name="user" value="student")
-                    label( for="student") Student
-                    input(type="radio" id="tutor" name="user" value="tutor")
-                    label(for="tutor") Tutor
+                nav(class="tabs")
+                    a(class="tab active" data-toggle="tab" href="#student") Student
+                    a(class="tab" data-toggle="tab" href="#tutor") Tutor
 
-                if user =="student"    
-                    div(class="")
+                div(class="tab-content")
+                    div(id="student" class="tab-pane active")
                         form(action="/auth/signin", method="POST")
                             div(class="mb-3")
                                 label( for="username" class="text-violet-700") Username
-                                input(type="text" class="focus:border" id="username" name="username") 
+                                input(type="text" class="" id="username" name="username") 
                             div(class="mb-3")
                                 label( for="matric" class="text-violet-700") Matric number
-                                input(type="text" class="focus:border" id="matric" name="matric") 
+                                input(type="text" class="" id="matric" name="matric") 
                             div(class="mb-3")
                                 label( for="password" class="text-violet-700") Password
                                 input(type="password" class="" id="password" name="password")
                             button( class="") Sign Up
-                if user == "tutor"    
-                    div(class="")
+                    
+                    div(id="tutor" class="tab-pane")
                         form(action="/auth/signin", method="POST")
                             div(class="mb-3")
                                 label( for="username" class="text-violet-700") Username
-                                input(type="text" class="focus:border" id="username" name="username") 
+                                input(type="text" class="" id="tutor-username" name="username") 
                             div(class="mb-3")
                                 label( for="id" class="text-violet-700") Id number
-                                input(type="text" class="focus:border" id="id" name="id") 
+                                input(type="text" class="" id="id" name="id") 
                             div(class="mb-3")
                                 label( for="password" class="text-violet-700") Password
-                                input(type="password" class="" id="password" name="password")
+                                input(type="password" class="" id="tutor-password" name="password")
                             button( class="") Sign Up
-                        p(class="text-gray-600") already have an account ?.
-                            span(class="text-violet-500")
-                                a(href="/auth/login") Login  
+
+                p(class="text-gray-600") already have an account ?.
+                    span(class="text-violet-500")
+                        a(href="/auth/login") Login  
 
 
         div(class="hidden lg:flex justify-center items-center lg:w-2/5")   

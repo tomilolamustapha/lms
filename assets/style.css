@@ -572,6 +572,7 @@ video {
 
 * {
   font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
 
 input:focus,
@@ -608,6 +609,43 @@ button {
   background: rgb(109, 40, 217);
   border-radius: 5px;
   outline: none;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  padding: 3px;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: rgb(109, 40, 217);
+  margin-bottom: 30px;
+}
+
+.tab {
+  text-align: center;
+  color: rgb(109, 40, 217);
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+.tab:hover {
+  background-color: rgb(196, 181, 253);
+  color: white;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab.active {
+  background-color: rgb(109, 40, 217);
+  color: white;
+}
+
+.tab-pane.active {
+  display: block;
 }
 
 .m-8 {
@@ -697,10 +735,6 @@ button {
 .text-violet-700 {
   --tw-text-opacity: 1;
   color: rgb(109 40 217 / var(--tw-text-opacity));
-}
-
-.focus\:border:focus {
-  border-width: 1px;
 }
 
 @media (min-width: 1024px) {
