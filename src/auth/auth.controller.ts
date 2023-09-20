@@ -9,7 +9,7 @@ export class AuthController {
   loginPage() {}
 
   @Post('login')
-  @Redirect('/')
+  @Redirect('/admin')
   login() {}
 
   @Get('signup')
@@ -17,7 +17,7 @@ export class AuthController {
   signupPage() {}
 
   @Post('signup')
-  @Redirect('/')
+  @Redirect('/admin')
   signup() {}
 
   @Get('logout')

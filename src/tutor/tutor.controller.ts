@@ -1,4 +1,10 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller('tutor')
-export class TutorController {}
+export class TutorController {
+  constructor() {}
+
+  @Get()
+  @Render('dashboard/tutor')
+  index() {}
+}
