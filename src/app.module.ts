@@ -1,11 +1,28 @@
 import { Module } from '@nestjs/common';
+<<<<<<< HEAD
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
 import { AppController } from './app.controller';
+=======
+import { AppController } from './app.controller'
+>>>>>>> 8467c67061174ece4faa9bb23328355c544f0423
 import { TutorService } from './tutor/tutor.service';
 import { TutorController } from './tutor/tutor.controller';
 import { AdminController } from './admin/admin.controller';
 import { AdminService } from './admin/admin.service';
+import { TutorModule } from './tutor/tutor.module';
+import { AdminModule } from './admin/admin.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaService } from '../prisma/prisma.service';
+import { EmailService } from './email/email.service';
+import { EmailModule } from './email/email.module';
+import { VideoController } from './video/video.controller';
+import { PushNotificationController } from './push-notification/push-notification.controller';
+import { PushNotificationModule } from './push-notification/push-notification.module';
+import { StudentService } from './student/student.service';
+import { StudentController } from './student/student.controller';
+import { StudentModule } from './student/student.module';
 
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
@@ -54,4 +71,5 @@ import { JwtService } from '@nestjs/jwt';
     JwtService,
   ],
 })
-export class AppModule {}
+
+export class AppModule { }

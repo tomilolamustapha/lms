@@ -572,7 +572,10 @@ video {
 
 * {
   font-family: 'Poppins', sans-serif;
+<<<<<<< HEAD
   font-weight: 400;
+=======
+>>>>>>> 8467c67061174ece4faa9bb23328355c544f0423
 }
 
 input:focus,
@@ -611,6 +614,7 @@ button {
   outline: none;
 }
 
+<<<<<<< HEAD
 .tabs {
   display: flex;
   justify-content: space-around;
@@ -648,6 +652,8 @@ button {
   display: block;
 }
 
+=======
+>>>>>>> 8467c67061174ece4faa9bb23328355c544f0423
 .m-8 {
   margin: 2rem;
 }
