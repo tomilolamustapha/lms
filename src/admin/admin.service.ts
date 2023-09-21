@@ -8,36 +8,7 @@ export class AdminService {
         private prisma : PrismaService,
     ){}
     
-    async creatAdmin( data : createAdminDto ){
-        const { email ,firstname, lastname , phone} = data
-
-        const findAdminEmail = await this.prisma.admin.findUnique({where : {email}})
-        
-        const findAdminPhone = await this.prisma.admin.findUnique({where : {phone}})
-
-        if(findAdminEmail){
-
-            throw new BadRequestException('Email Already exists')
-        }
-
-        if (findAdminPhone) {
-
-            throw new BadRequestException('Phone Number Already exists')
-        }
-
-        //const hashedPassword = await this.generateRandomPasswordAndHash();
-         const newAdmin = await this.prisma.admin.creatAdmin({
-            data: {
-                firstname : firstname,
-                lastname : lastname,
-                fullname : firstname + " " + lastname ,
-                email : email,
-                phone : phone,
-            }
-
-         });
-        
-
+   //
     }
 
    // async generateRandomPasswordAndHash(): Promise<string> {
@@ -51,4 +22,4 @@ export class AdminService {
         //return hashedPassword;
     //}
 
-}
+

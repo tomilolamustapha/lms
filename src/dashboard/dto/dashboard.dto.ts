@@ -1,9 +1,12 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString, IsNotEmpty } from "class-validator";
+
 export class dashboardDto {
 
 
     @ApiProperty()
 
-    @String()
+    @IsString()
 
     @IsNotEmpty()
 
@@ -13,7 +16,7 @@ export class dashboardDto {
 
     @ApiProperty()
 
-    @String()
+    @IsString()
 
     @IsNotEmpty()
 
@@ -22,7 +25,7 @@ export class dashboardDto {
 
     @ApiProperty()
 
-    @String()
+    @IsString()
 
     @IsNotEmpty()
 
@@ -32,7 +35,7 @@ export class dashboardDto {
 
     @ApiProperty()
 
-    @String()
+    @IsString()
 
     @IsNotEmpty()
 
@@ -43,14 +46,14 @@ export class dashboardDto {
         Object.assign(this, data);
     }
 
-    validate(): string | null {
-        const errors = validateSync(this);
-        if (errors.length > 0) {
-            return Object.values(errors[0].constraints)[0];
-        }
-        return null;
-    }
+   //
 }
+
+
+
+
+
+
 
 
 
