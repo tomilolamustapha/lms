@@ -7,7 +7,8 @@ export class Student {
     studentMatric: string;
     phone?: string;
     passsword ?: string;
-    currentDeviceId?: string;
+    status: boolean;
+    //currentDeviceId?: string;
     createdBy?: string;
     lastLogin?: Date;
     isEmailVerified: boolean;

@@ -12,4 +12,5 @@ export class Tutor {
     isEmailVerified: boolean;
     createdAt?: Date;
     updatedAt: Date;
+    status : boolean
 }
