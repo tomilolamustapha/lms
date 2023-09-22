@@ -10,7 +10,7 @@ export class loginTutorDto{
 
     @IsNotEmpty()
 
-    tuttorId: string;
+    tutorId: string;
 
 
     @ApiProperty()

@@ -12,7 +12,7 @@ type JwtPayload  = {
 
 
 @Injectable()
-export class AdminSratgey extends PassportStrategy(Strategy, 'admin-jwt'){
+export class StudentStratgey extends PassportStrategy(Strategy, 'student-jwt'){
     constructor(
         private readonly prisma: PrismaService,
     ){
@@ -20,25 +20,15 @@ export class AdminSratgey extends PassportStrategy(Strategy, 'admin-jwt'){
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: 'admin-secret',
+            secretOrKey: 'student-secret',
         });
     }
 
-    async validateStudent(payload: JwtPayload){
+   async validate(payload: JwtPayload){
  
-        const student = await this.prisma.admin.findUnique({ where: { id: payload.sub }});
+        const student = await this.prisma.student.findUnique({ where: { id: payload.sub }});
         if (!student) throw new UnauthorizedException('Invalid token');
         
         return payload;
     }
-
-    async validateTutor(payload: JwtPayload){
- 
-        const tutor = await this.prisma.admin.findUnique({ where: { id: payload.sub }});
-        if (!tutor) throw new UnauthorizedException('Invalid token');
-        
-        return payload;
-    }
 }
-
-   

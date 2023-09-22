@@ -12,4 +12,5 @@ export class Admin {
     isEmailVerified: boolean;
     createdAt?: Date;
     updatedAt: Date;
+    status : boolean
 }
