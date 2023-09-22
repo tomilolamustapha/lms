@@ -8,7 +8,10 @@ export class AdminService {
         private prisma : PrismaService,
     ){}
     
-   //
+    async createAdmin(data : createAdminDto){
+        const {email, firstname , lastname ,phone} = data
+        
+    }
     }
 
    // async generateRandomPasswordAndHash(): Promise<string> {
