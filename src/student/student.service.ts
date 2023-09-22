@@ -5,6 +5,7 @@ import { PrismaService } from 'prisma/prisma.service';
 export class StudentService {
     constructor(
         private prisma : PrismaService,
+        
 
     ){}
     

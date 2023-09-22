@@ -10,12 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model Student{
   id        Int     @id @default(autoincrement())
   firstname String  
   lastname  String 
   email     String
   phoneNumber String
   password  String
-  
+  studentMatric Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+}
+
+model Tutor{
+   id        Int     @id @default(autoincrement())
+   firstname String  
+  lastname  String 
+  email     String
+  phoneNumber String
+  password  String
+  loginId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Admin {
+   id                Int               @id @default(autoincrement())
+  firstname         String
+  lastname          String
+  fullname          String?
+  email             String            @unique
+  phone             String?           @unique
+  password          String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PushNotifications {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
