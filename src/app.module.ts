@@ -23,6 +23,9 @@ import { StudentController } from './student/student.controller';
 import { StudentModule } from './student/student.module';
 import { AuthService } from './auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { PusherModule } from './pusher/pusher.module';
+import { CourseService } from './course/course.service';
+import { CourseModule } from './course/course.module';
 
 @Module({
   imports: [
@@ -34,6 +37,8 @@ import { JwtService } from '@nestjs/jwt';
     EmailModule,
     PushNotificationModule,
     StudentModule,
+    PusherModule,
+    CourseModule,
   ],
   controllers: [
     AppController,
@@ -51,6 +56,7 @@ import { JwtService } from '@nestjs/jwt';
     EmailService,
     StudentService,
     JwtService,
+    CourseService,
   ],
 })
 

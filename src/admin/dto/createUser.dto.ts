@@ -1,49 +1,56 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, validateSync } from "class-validator";
 
-export class createUserDto{
+export class createUserDto {
 
 
-    @ApiProperty()
+  @ApiProperty()
 
-    @IsNotEmpty()
+  @IsNotEmpty()
 
-    lastname: string;
-
-
-    @ApiProperty()
-
-    @IsNotEmpty()
-
-    firstname: string;
+  lastname: string;
 
 
-    @ApiProperty()
+  @ApiProperty()
 
-    @IsEmail()
+  @IsNotEmpty()
 
-    @IsNotEmpty()
-
-    email: string;
+  firstname: string;
 
 
-    @ApiProperty()
+  @ApiProperty()
 
-    @IsNotEmpty()
+  @IsNotEmpty()
 
-    phone: string;
+  fullname: string;
+
+
+  @ApiProperty()
+
+  @IsEmail()
+
+  @IsNotEmpty()
+
+  email: string;
+
+
+  @ApiProperty()
+
+  @IsNotEmpty()
+
+  phoneNumber: string;
 
 
 
-    constructor(data: Partial<createUserDto>) {
-        Object.assign(this, data);
-      }
+  constructor(data: Partial<createUserDto>) {
+    Object.assign(this, data);
+  }
 
-    validate(): string | null {
-      const errors = validateSync(this);
-      if (errors.length > 0) {
-        return Object.values(errors[0].constraints)[0];
-      }
-      return null;
+  validate(): string | null {
+    const errors = validateSync(this);
+    if (errors.length > 0) {
+      return Object.values(errors[0].constraints)[0];
     }
+    return null;
+  }
 }
