@@ -9,8 +9,140 @@
 
   * {
     font-family: 'Poppins', sans-serif;
+    font-size: 1em;
     font-weight: 400;
   }
+
+  em {
+    font-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .layout-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+  .trigger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4em;
+    background: #192b3c;
+  }
+
+  .trigger > i {
+    display: inline-block;
+    margin: 1.5em 0 0 1.5em;
+    color: #f07ab0;
+  }
+
+  .sidebar-nav {
+    position: fixed;
+    top: 0;
+    left: -15rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in;
+    width: 15em;
+    height: 100%;
+    background: #243e56;
+    color: rgb(255, 255, 255, 0.7);
+  }
+
+  .sidebar-nav:hover,
+  .sidebar-nav:focus,
+  .trigger:hover + .sidebar-nav,
+  .trigger:focus + .sidebar-nav {
+    left: 0;
+  }
+
+  .sidebar-nav ul {
+    position: absolute;
+    top: 4em;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .sidebar-nav ul li {
+    width: 100%;
+  }
+
+  .sidebar-nav-link {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 4em;
+  }
+
+  .sidebar-nav-link em {
+    position: absolute;
+    top: 50%;
+    left: 4em;
+    transform: translateY(-50%);
+  }
+
+  .sidebar-nav-link:hover {
+    background: #4d6276;
+  }
+
+  .sidebar-nav-link > i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 4em;
+    height: 4em;
+  }
+
+  .sidebar-nav-link > i::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (min-width: 48em) {
+    .layout-content {
+      margin-left: 4em;
+    }
+    .trigger {
+      width: 4em;
+    }
+    .sidebar-nav {
+      width: 4em;
+      left: 0;
+    }
+    .sidebar-nav:hover,
+    .sidebar-nav:focus,
+    .trigger:hover + .sidebar-nav,
+    .trigger:focus + .sidebar-nav {
+      width: 15em;
+    }
+  }
+
+  /* @media (min-width: 64em) {
+    .layout-content {
+      margin-left: 15em;
+    }
+    .trigger {
+      display: none;
+    }
+    .sidebar-nav {
+      width: 15em;
+    }
+    .sidebar-nav ul {
+      top: 1.3em;
+    }
+  } */
 
   input:focus,
   select:focus {

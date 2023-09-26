@@ -15,166 +15,157 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private emailService: EmailService,
-    private studentService: StudentService
-  ) { }
+    private studentService: StudentService,
+  ) {}
 
-  async signinStudent(data: loginStudentDto) {
+  // async signinStudent(data: loginStudentDto) {
 
-    const { studentMatric, password } = data;
+  //   const { studentMatric, password } = data;
 
-    const findStudent = await this.prisma.student.findFirst({
-      where: {
-        email: studentMatric,
-        password: password
-      },
-    })
+  //   const findStudent = await this.prisma.student.findFirst({
+  //     where: {
+  //       email: studentMatric,
+  //       password: password
+  //     },
+  //   })
 
-    if (!findStudent) {
+  //   if (!findStudent) {
 
-      throw new BadRequestException('Incorrect Email or Password');
-    }
+  //     throw new BadRequestException('Incorrect Email or Password');
+  //   }
 
-    //if(findStudent.isDeleted == true){
+  //   //if(findStudent.isDeleted == true){
 
-    //throw new BadRequestException('Your Account has been deleted');
-    //}
+  //   //throw new BadRequestException('Your Account has been deleted');
+  //   //}
 
-    const isMatch = await this.comparePasswords({
-      password,
-      hash: findStudent.password
-    });
+  //   const isMatch = await this.comparePasswords({
+  //     password,
+  //     hash: findStudent.password
+  //   });
 
-    if (!isMatch) {
+  //   if (!isMatch) {
 
-      throw new BadRequestException("Invalid Credentials")
-    }
-    if (findStudent.Status == false) {
+  //     throw new BadRequestException("Invalid Credentials")
+  //   }
+  //   if (findStudent.Status == false) {
 
-      throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
-    }
+  //     throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
+  //   }
 
-    if (findStudent.email == "tomilolamustapha@gmail.com") {
+  //   if (findStudent.email == "tomilolamustapha@gmail.com") {
 
-      //const tokens = await this.getStudentTokens(findStudent.id, findStudent.email);
-      //return {
-      //message: "Login Successful",
-      //student: findStudent,
-      // access_token: tokens.access_token,
-    }
+  //     //const tokens = await this.getStudentTokens(findStudent.id, findStudent.email);
+  //     //return {
+  //     //message: "Login Successful",
+  //     //student: findStudent,
+  //     // access_token: tokens.access_token,
+  //   }
 
-  }
+  // }
 
-  async signinTutor(data: loginTutorDto) {
+  // async signinTutor(data: loginTutorDto) {
 
-    const { tutorId, password } = data;
+  //   const { tutorId, password } = data;
 
-    const findTutor = await this.prisma.student.findFirst({
-      where: {
-        email: tutorId,
-        password: password
-      },
-    })
+  //   const findTutor = await this.prisma.student.findFirst({
+  //     where: {
+  //       email: tutorId,
+  //       password: password
+  //     },
+  //   })
 
-    if (!findTutor) {
+  //   if (!findTutor) {
 
-      throw new BadRequestException('Incorrect Email or Password');
-    }
+  //     throw new BadRequestException('Incorrect Email or Password');
+  //   }
 
-    //if(findStudent.isDeleted == true){
+  //   //if(findStudent.isDeleted == true){
 
-    //throw new BadRequestException('Your Account has been deleted');
-    //}
+  //   //throw new BadRequestException('Your Account has been deleted');
+  //   //}
 
-    const isMatch = await this.comparePasswords({
-      password,
-      hash: findTutor.password
-    });
+  //   const isMatch = await this.comparePasswords({
+  //     password,
+  //     hash: findTutor.password
+  //   });
 
-    if (findTutor.Status == false) {
+  //   if (findTutor.Status == false) {
 
-      throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
-    }
+  //     throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
+  //   }
 
-    if (findTutor.email == "tomilolamustapha@gmail.com") {
+  //   if (findTutor.email == "tomilolamustapha@gmail.com") {
 
-      //const tokens = await this.getStudentTokens(findTutor.id, findTutor.email);
-      //return {
-      //message: "Login Successful",
-      //student: findTutor,
-      // access_token: tokens.access_token,
-    }
+  //     //const tokens = await this.getStudentTokens(findTutor.id, findTutor.email);
+  //     //return {
+  //     //message: "Login Successful",
+  //     //student: findTutor,
+  //     // access_token: tokens.access_token,
+  //   }
 
-  }
+  // }
 
-  async signinAdmin(data: loginAdminDto) {
+  // async signinAdmin(data: loginAdminDto) {
 
-    const { email, password } = data;
+  //   const { email, password } = data;
 
-    const findAdmin = await this.prisma.admin.findUnique({ where: { email } })
+  //   const findAdmin = await this.prisma.admin.findUnique({ where: { email } })
 
-    if (!findAdmin) {
+  //   if (!findAdmin) {
 
-      throw new BadRequestException('Incorrect Email or Password');
-    }
+  //     throw new BadRequestException('Incorrect Email or Password');
+  //   }
 
-    const isMatch = await this.comparePasswords({
-      password,
-      hash: findAdmin.password
-    });
+  //   const isMatch = await this.comparePasswords({
+  //     password,
+  //     hash: findAdmin.password
+  //   });
 
-    if (!isMatch) {
-      throw new BadRequestException("Invalid Credentials")
-    }
+  //   if (!isMatch) {
+  //     throw new BadRequestException("Invalid Credentials")
+  //   }
 
-    if (findAdmin.Status == false) {
+  //   if (findAdmin.Status == false) {
 
-      throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
-    }
+  //     throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
+  //   }
 
-    //const tokens = await this.getAdminTokens(findAdmin.id, findAdmin.email);
+  //   //const tokens = await this.getAdminTokens(findAdmin.id, findAdmin.email);
 
-    //return {
-    //message: "Login Successful",
-    //user: findAdmin,
-    //access_token: tokens.access_token,
+  //   //return {
+  //   //message: "Login Successful",
+  //   //user: findAdmin,
+  //   //access_token: tokens.access_token,
 
-    //}
-  }
+  //   //}
+  // }
 
   async signoutAdmin(adminId: string, accessToken: string) {
-
     // await this.prisma.adminAcessToken.update({ where: { accessToken }, data: { revoked: true } });
 
     return {
-      message: "signout succcessful"
-    }
+      message: 'signout succcessful',
+    };
   }
 
   async signoutStudent(studentId: number, accessToken: string) {
-
     //await this.prisma.stuentAccessToken.update({ where: { accessToken }, data: { revoked: true } });
 
     return {
-      message: "signout succcessful"
-    }
+      message: 'signout succcessful',
+    };
   }
 
-  async signoutTutor(tutorIdId: number, accessToken: string){
-
-   // await this.prisma.tutorAccessToken.update({ where: { accessToken }, data: { revoked: true } });
+  async signoutTutor(tutorIdId: number, accessToken: string) {
+    // await this.prisma.tutorAccessToken.update({ where: { accessToken }, data: { revoked: true } });
 
     return {
-        message: "signout succcessful"
-    }
-}
-
-
-
-
-  async comparePasswords(args: { password: string; hash: string }) {
-
-    return await bcrypt.compare(args.password, args.hash);
+      message: 'signout succcessful',
+    };
   }
 
+  async comparePasswords(args: { password: string; hash: string }) {
+    return await bcrypt.compare(args.password, args.hash);
+  }
 }
-

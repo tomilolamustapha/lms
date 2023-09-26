@@ -3,4 +3,8 @@ extends root_layout
 block root
     div(class="bg-violet-700 h-screen flex justify-center items-center ")
         block auth
-        
+
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            handleTabs();
+        });        

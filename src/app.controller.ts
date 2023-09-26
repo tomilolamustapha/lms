@@ -7,4 +7,8 @@ export class AppController {
   @Get()
   @Redirect('/auth/login')
   index() {}
+
+  @Get('course')
+  @Render('course')
+  course() {}
 }
