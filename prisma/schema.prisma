@@ -11,27 +11,26 @@ datasource db {
 }
 
 model Student {
-  id            Int      @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   firstname     String
   lastname      String
   fullname      String
-  email         String
+  email         String        @unique
   phoneNumber   String
   password      String
   studentMatric Int
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   Status        Boolean
-  courses Enrollement[] 
-  
+  courses       Enrollement[]
 }
 
 model Tutor {
   id          Int      @id @default(autoincrement())
   firstname   String
   lastname    String
-  fullname  String
-  email       String
+  fullname    String
+  email       String   @unique
   phoneNumber String
   password    String
   loginId     Int
@@ -56,7 +55,7 @@ model Admin {
 model Course {
   id          Int           @id @default(autoincrement())
   title       String
-  description String  
+  description String
   enrollments Enrollement[]
 }
 

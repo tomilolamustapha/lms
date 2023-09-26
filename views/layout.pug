@@ -1,5 +1,30 @@
 extends root_layout 
     
 block root
-    
-    block main
+    div(class=" h-screen px-3 pt-5 lg:flex")
+        div(class="sidebar")
+            a(class="trigger" )
+                i(class="fa fa-bars")
+
+            nav(class="sidebar-nav")
+                ul
+                    li
+                        a( class="sidebar-nav-link" href="/dashboard")
+                            i(class="fa fa-laptop")
+                                em() Dashboard         
+                    li
+                        a( class="sidebar-nav-link" href="/course")
+                            i(class="fa fa-home")
+                                em() Course         
+                    li
+                        a( class="sidebar-nav-link" href="/auth/logout")
+                            i(class="fa fa-right-from-bracket")
+                                em() logout         
+  
+        main(class="layout-content") 
+            block main
+
+    //- script.
+    //-     document.addEventListener('DOMContentLoaded', function () {
+    //-         handleSideBar();
+    //-     });

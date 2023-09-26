@@ -59,5 +59,4 @@ import { CourseModule } from './course/course.module';
     CourseService,
   ],
 })
-
-export class AppModule { }
+export class AppModule {}
