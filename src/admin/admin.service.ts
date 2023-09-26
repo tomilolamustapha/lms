@@ -6,10 +6,15 @@ import { userActionDto } from './dto/userAction.dto';
 import { threadId } from 'worker_threads';
 import { async } from 'rxjs';
 import { createUserDto } from './dto/createUser.dto';
+
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { adminFetch } from './dto/fetchAdmin.dto';
 import { updateAdminRoleDto } from './dto/updateAdmin.dto';
 import { adminActionDto } from './dto/adminAction.dto';
+import { Tutor } from 'prisma/models/tutor.model';
+import { title } from 'process';
+import { Student } from 'prisma/models/student.model';
+import { createTutorDto } from './dto/createrTutor.dto';
 
 @Injectable()
 export class AdminService {
@@ -151,9 +156,10 @@ export class AdminService {
 
     async createStudent(data: createUserDto) {
 
-        const { email, firstname, lastname, phoneNumber,} = data
+        const { email, firstname, lastname, phoneNumber,studentMatric} = data
 
         const findStudentEmail = await this.prisma.student.findUnique({ where: { email } })
+
 
         const password = Math.random().toString(36).slice(-8);
 
@@ -168,7 +174,8 @@ export class AdminService {
                 fullname: firstname + " " + lastname,
                 email: email,
                 password: hashedPassword,
-                phone: phoneNumber,
+                studentMatric: studentMatric,
+                phoneNumber: phoneNumber
 
             }
         });
@@ -195,17 +202,17 @@ export class AdminService {
 
     }
 
-    async createTutor(data: createUserDto) {
+    async createTutor(data: createTutorDto) {
 
-        const { email, firstname, lastname, phoneNumber } = data
+        const { email, firstname, lastname ,phoneNumber,loginId} = data
 
-        const findTutorEmail = await this.prisma.student.findUnique({ where: { email } })
+        const findTutorEmail = await this.prisma.tutor.findUnique({ where: { email } })
 
         const password = Math.random().toString(36).slice(-8);
 
         const hashedPassword = await hash(password, 10);
 
-        const newStudent = await this.prisma.student.create({
+        const newStudent = await this.prisma.tutor.create({
 
             data: {
 
@@ -214,7 +221,8 @@ export class AdminService {
                 fullname: firstname + " " + lastname,
                 email: email,
                 password: hashedPassword,
-                phone: phoneNumber,
+                phoneNumber:phoneNumber ,
+                loginId: loginId
 
             }
         });
@@ -445,6 +453,22 @@ export class AdminService {
         return {
             message: "Admin Updated Successfully"
         }
+
+    }
+
+    async filterByTutorAndCourse(title : string , tutorId : number){
+
+        const courses = await this.prisma.course.findMany({
+            where:{
+                AND:[
+                    { id: tutorId},
+                    {title : title}
+                    
+                ]
+            }
+        });
+
+        return courses;
 
     }
 

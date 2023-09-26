@@ -5,9 +5,9 @@ import { EmailService } from 'src/email/email.service';
 import { loginAdminDto } from './dto/loginAdmin.dto';
 import { loginStudentDto } from './dto/loginStudent.dto';
 import { registerRes } from 'src/student/types/regRes.type';
-import { StudentService } from 'src/student/student.service';
 import * as bcrypt from 'bcrypt';
 import { loginTutorDto } from './dto/loginTutor.dto';
+import { StudentService } from 'src/student/student.service';
 
 @Injectable()
 export class AuthService {

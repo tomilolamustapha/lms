@@ -24,6 +24,10 @@ export class createUserDto {
 
   fullname: string;
 
+  @IsNotEmpty()
+
+  studentMatric: string;
+
 
   @ApiProperty()
 
