@@ -53,13 +53,8 @@ export class AuthService {
       throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
     }
 
-    if (findStudent.email == "tomilolamustapha@gmail.com") {
-
-      //const tokens = await this.getStudentTokens(findStudent.id, findStudent.email);
-      //return {
-      //message: "Login Successful",
-      //student: findStudent,
-      // access_token: tokens.access_token,
+    return{
+        message : 'Login Successful',
     }
 
   }
@@ -95,13 +90,8 @@ export class AuthService {
       throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
     }
 
-    if (findTutor.email == "tomilolamustapha@gmail.com") {
-
-      //const tokens = await this.getStudentTokens(findTutor.id, findTutor.email);
-      //return {
-      //message: "Login Successful",
-      //student: findTutor,
-      // access_token: tokens.access_token,
+    return{
+      message : 'Login Successful'
     }
 
   }
@@ -131,14 +121,9 @@ export class AuthService {
       throw new BadRequestException('Your Account Has been Disabled, Please Contact Support');
     }
 
-    //const tokens = await this.getAdminTokens(findAdmin.id, findAdmin.email);
-
-    //return {
-    //message: "Login Successful",
-    //user: findAdmin,
-    //access_token: tokens.access_token,
-
-    //}
+    return{
+      message : 'Login Successful'
+    }
   }
 
   async signoutAdmin(adminId: string, accessToken: string) {
