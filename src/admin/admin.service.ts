@@ -1,459 +1,122 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { createAdminDto } from './dto/createAdmin.dto';
-import { hash } from 'bcrypt';
-import { userActionDto } from './dto/userAction.dto';
-import { threadId } from 'worker_threads';
-import { async } from 'rxjs';
-import { createUserDto } from './dto/createUser.dto';
-import { PaginateFunction, paginator } from 'prisma/models/paginator';
-import { adminFetch } from './dto/fetchAdmin.dto';
-import { updateAdminRoleDto } from './dto/updateAdmin.dto';
-import { adminActionDto } from './dto/adminAction.dto';
+import { updateUserDto } from './dto/updateUser.dto';
+import { UserRole } from '@prisma/client';
+import { userActionDto } from './dto/userActionDto';
+import { courseDataDto } from './dto/courseData.dto';
+import { title } from 'process';
+
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+    constructor(
+        private prisma: PrismaService
+    ) { }
 
-  async createAdmin(data: createAdminDto) {
-    const { email, firstname, lastname, phone } = data;
 
-    const findAdminEmail = await this.prisma.admin.findUnique({
-      where: { email },
-    });
+    async updateUserRole(userRole: UserRole, data: updateUserDto) {
+        const { firstname, lastname, email, phoneNumber, id } = data
 
-    const findAdminPhone = await this.prisma.admin.findUnique({
-      where: { phone },
-    });
+        const admin = await this.prisma.user.findFirst({ where: { id } });
 
-    if (findAdminEmail) {
-      throw new BadRequestException('Email Already exists');
+        if (!admin || admin.role !== UserRole.Admin) {
+            throw new UnauthorizedException('Only Admins can update User Role')
+        }
+
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+        const findUser = await this.prisma.user.findFirst({ where: { id } });
+
+        if (findUser == null) throw new BadRequestException("User Not Found");
+
+        const updateUser = await this.prisma.user.update({
+            where: {
+                id
+            }, data: {
+                firstname,
+                lastname,
+                email,
+                phoneNumber
+            }
+        });
+
+        return {
+            message: "User Updated Successfully"
+        };
     }
 
-    if (findAdminPhone) {
-      throw new BadRequestException('Phone Number Already exists');
+    async userAction(id: number, params: userActionDto) {
+        const dto = new userActionDto(params);
+        const errorMessage = dto.validate();
+        if (errorMessage) {
+            throw new BadRequestException(errorMessage);
+        }
+
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+        const { type } = params
+
+        const findUser = await this.prisma.user.findFirst({ where: { id } });
+
+        if (findUser == null) throw new BadRequestException("User Not Found");
+
+
+        if (type == "enable") {
+
+            const enableUser = await this.prisma.user.update({
+                where: {
+                    id
+                },
+                data: {
+                    Status: true
+                }
+            });
+
+            return {
+                message: 'User Enabled Successfully'
+            }
+        } else if (type == 'disable') {
+
+            const disableUser = await this.prisma.user.update({
+                where: {
+                    id
+                },
+                data: {
+                    Status: false
+                }
+            });
+        }
+        return {
+            message: "User Disabled Sucessfully"
+        }
+
+
     }
 
-    const hashedPassword = await this.generateRandomPasswordAndHash();
+    async deleteCourse(id : number , data :courseDataDto){
 
-    const newAdmin = await this.prisma.admin.create({
-      data: {
-        firstname: firstname,
-        lastname: lastname,
-        fullname: firstname + ' ' + lastname,
-        email: email,
-        password: hashedPassword,
-        phone: phone,
-        Status: false,
-      },
-    });
+        const  admin = await this.prisma.user.findUnique({where :{id}});
 
-    return {
-      message: 'Account Created Successfully',
-    };
-  }
+        if(!admin || admin.role !==UserRole.Admin){
+            throw new UnauthorizedException('You are not Authorized to perform this action');
+        }
+        const course = await this.prisma.course.findUnique({where :{id}})
 
-  async userAction(id: number, params: userActionDto) {
-    const dto = new userActionDto(params);
+        if(!course){
+            throw new NotFoundException(`Course with ID ${id} not found.`)
+        }
 
-    const errorMessage = dto.validate();
+        await this.prisma.course.delete({
+            where:{
+                id
+            }
+        });
 
-    if (errorMessage) {
-      throw new BadRequestException(errorMessage);
+        return `Course with title ${title} has been deleted.`
     }
 
-    if (isNaN(id)) {
-      throw new BadRequestException('User Id is Invalid');
-    }
-
-    const { type } = params;
-
-    const findStudent = await this.prisma.student.findFirst({ where: { id } });
-
-    const findTutor = await this.prisma.tutor.findFirst({ where: { id } });
-
-    if (type == 'enable') {
-      const enableStudent = await this.prisma.student.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: true,
-        },
-      });
-
-      const enableTutor = await this.prisma.student.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: true,
-        },
-      });
-
-      const allStaff = await this.prisma.admin.findMany({
-        where: {
-          Status: true,
-        },
-      });
-
-      for (const staff of allStaff) {
-        const title = ' User Enabling Notification';
-        const adminId = staff.id;
-
-        //await this.pusher.sendNotificationtoAdmin(title, adminId)
-      }
-      return {
-        message: 'User Enabled Sucessfully',
-      };
-    } else if (type == 'disable') {
-      const disableStuent = await this.prisma.student.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: false,
-        },
-      });
-
-      const disableTutor = await this.prisma.student.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: false,
-        },
-      });
-
-      const allStaff = await this.prisma.admin.findMany({
-        where: {
-          Status: true,
-        },
-      });
-
-      for (const staff of allStaff) {
-        const title = ' User Enabling Notification';
-        const adminId = staff.id;
-      }
-      //await this.pusher.sendNotificationtoAdmin(title, adminId)
-      return {
-        message: 'User Disabled Sucessfully',
-      };
-    }
-  }
-
-  async createStudent(data: createUserDto) {
-    const { email, firstname, lastname, phoneNumber } = data;
-
-    const findStudentEmail = await this.prisma.student.findUnique({
-      where: { email: email },
-    });
-
-    const password = Math.random().toString(36).slice(-8);
-
-    const hashedPassword = await hash(password, 10);
-
-    const newStudent = await this.prisma.student.create({
-      data: {
-        firstname: firstname,
-        lastname: lastname,
-        fullname: firstname + ' ' + lastname,
-        email: email,
-        password: hashedPassword,
-        phoneNumber: phoneNumber,
-        studentMatric: 0,
-        Status: true,
-      },
-    });
-
-    const allStaff = await this.prisma.admin.findMany({
-      where: {
-        Status: true,
-      },
-    });
-
-    for (const staff of allStaff) {
-      const title = `Student Account Registration Notification`;
-      const content = ` ${findStudentEmail} has successfully created an account on the platform`;
-      const adminId = staff.id;
-
-      //await this.pusher.sendNotificationtoAdmin(title, content, adminId)
-    }
-
-    return {
-      message: 'Student Registered',
-    };
-  }
-
-  async createTutor(data: createUserDto) {
-    const { email, firstname, lastname, phoneNumber } = data;
-
-    const findTutorEmail = await this.prisma.student.findUnique({
-      where: { email },
-    });
-
-    const password = Math.random().toString(36).slice(-8);
-
-    const hashedPassword = await hash(password, 10);
-
-    const newStudent = await this.prisma.student.create({
-      data: {
-        firstname: firstname,
-        lastname: lastname,
-        fullname: firstname + ' ' + lastname,
-        email: email,
-        password: hashedPassword,
-        phoneNumber: phoneNumber,
-        studentMatric: 0,
-        Status: true,
-      },
-    });
-
-    const allStaff = await this.prisma.admin.findMany({
-      where: {
-        Status: true,
-      },
-    });
-
-    for (const staff of allStaff) {
-      const title = `Tutor Account Registration Notification`;
-      const content = ` ${findTutorEmail} has successfully created an account on the platform`;
-      const adminId = staff.id;
-
-      // await this.pusher.sendNotificationtoAdmin(title, content, adminId)
-    }
-
-    return {
-      message: 'Student Registered',
-    };
-  }
-
-  async getStaffById(id: number) {
-    if (isNaN(id)) {
-      throw new BadRequestException('Staff Id is Invalid');
-    }
-
-    const user = await this.prisma.admin.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) {
-      throw new BadRequestException('Staff Id does not exist');
-    }
-
-    return {
-      data: user,
-      message: 'Staf Fetched Successfully',
-    };
-  }
-
-  async getAllStaffs(data: adminFetch) {
-    const { search_term, page_number, start_date, end_date, page_size } = data;
-
-    const pageSize = page_size ?? 10;
-
-    const paginate: PaginateFunction = paginator({ perPage: pageSize });
-
-    const startDate = new Date(start_date).toISOString();
-
-    const endDate = new Date(end_date).toISOString();
-
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0); // set time to 00:00:00.000
-
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999); // set time to 23:59:59.999
-
-    const newlyRegistered = await this.prisma.admin.count({
-      where: {
-        AND: [
-          { createdAt: { lte: startOfToday.toISOString() } },
-          { createdAt: { gte: endOfToday.toISOString() } },
-        ],
-      },
-    });
-
-    const totalStaffs = await this.prisma.admin.count();
-
-    const allUsers = await paginate(
-      this.prisma.admin,
-      {
-        where: {
-          AND: [
-            { createdAt: { lte: endDate } },
-            { createdAt: { gte: startDate } },
-          ],
-          OR: [
-            {
-              fullname: {
-                contains: search_term?.toString(),
-                mode: 'insensitive',
-              },
-            },
-            {
-              firstname: {
-                contains: search_term?.toString(),
-                mode: 'insensitive',
-              },
-            },
-            {
-              lastname: {
-                contains: search_term?.toString(),
-                mode: 'insensitive',
-              },
-            },
-            {
-              email: { contains: search_term?.toString(), mode: 'insensitive' },
-            },
-            {
-              phone: { contains: search_term?.toString(), mode: 'insensitive' },
-            },
-            {
-              course: {
-                contains: search_term?.toString(),
-                mode: 'insensitive',
-              },
-            },
-          ],
-        },
-        orderBy: {
-          id: 'desc',
-        },
-      },
-      {
-        page: page_number,
-        perPage: pageSize,
-      },
-    );
-
-    return {
-      data: allUsers.data,
-      meta: allUsers.meta,
-      totalStaffs,
-      message: 'Staffs fetched Successfully',
-    };
-  }
-
-  async updateAdminRole(data: updateAdminRoleDto) {
-    const findAdmin = await this.prisma.admin.findFirst({
-      where: { id: data.id },
-    });
-
-    if (!findAdmin) throw new BadRequestException('Staff does Not Exist');
-
-    const updateRole = await this.prisma.admin.update({
-      where: {
-        id: findAdmin.id,
-      },
-      data: {
-        //role: data.role,
-      },
-    });
-
-    const emailContent = {
-      firstname: findAdmin.firstname,
-      content: `Congratulations, your role has been changed successfully.`,
-      warning: 'Please note that the Super Admin authorized this change.',
-      header: 'Role Changed Successfully',
-    };
-
-    //await this.emailService.sendEmail(emailContent, "adminInfo", findAdmin.email, "Role Changed Successfully");
-
-    const allStaff = await this.prisma.admin.findMany({
-      where: {
-        Status: true,
-      },
-    });
-
-    for (const staff of allStaff) {
-      const title = `Role Update Alert`;
-      const content = `${findAdmin.fullname} role has just been updated successfully`;
-      const adminId = staff.id;
-
-      // await this.pusher.sendNotificationtoAdmin(title, content, adminId)
-    }
-
-    return {
-      message: 'Admin Role Updated Successfully',
-    };
-  }
-
-  async adminAction(id: number, params: adminActionDto) {
-    const dto = new adminActionDto(params);
-    const errorMessage = dto.validate();
-    if (errorMessage) {
-      throw new BadRequestException(errorMessage);
-    }
-
-    const { type } = params;
-
-    const findAdmin = await this.prisma.admin.findFirst({ where: { id } });
-
-    if (findAdmin == null) throw new BadRequestException('Admin Not Found');
-
-    if (type == 'enable') {
-      const enableAdmin = await this.prisma.admin.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: true,
-        },
-      });
-
-      const allStaff = await this.prisma.admin.findMany({
-        where: {
-          Status: true,
-        },
-      });
-
-      for (const staff of allStaff) {
-        const title = `Admin Enabled`;
-        const content = `${findAdmin.fullname}'s account has been enabled successfully`;
-        const adminId = staff.id;
-
-        // await this.pusher.sendNotificationtoAdmin(title, content, adminId)
-      }
-    } else if (type == 'disable') {
-      const disableAdmin = await this.prisma.admin.update({
-        where: {
-          id,
-        },
-        data: {
-          Status: false,
-        },
-      });
-
-      const allStaff = await this.prisma.admin.findMany({
-        where: {
-          Status: true,
-        },
-      });
-
-      for (const staff of allStaff) {
-        const title = `Admin Disabled`;
-        const content = `${findAdmin.fullname}'s account has been disabled`;
-        const adminId = staff.id;
-
-        //await this.pusher.sendNotificationtoAdmin(title, content, adminId)
-      }
-    }
-
-    return {
-      message: 'Admin Updated Successfully',
-    };
-  }
-
-  async generateRandomPasswordAndHash(): Promise<string> {
-    // Generate a random 8-character password
-    const password = Math.random().toString(36).slice(-8);
-
-    // Hash the password with bcrypt
-    const hashedPassword = await hash(password, 10);
-
-    // Return the hashed password
-    return hashedPassword;
-  }
 }

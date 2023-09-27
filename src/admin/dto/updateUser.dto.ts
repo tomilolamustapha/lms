@@ -1,41 +1,29 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, validateSync } from "class-validator";
 
-export class createAdminDto{
-
-
-    @ApiProperty()
+export class updateUserDto{
 
     @IsNotEmpty()
 
-    firstname: string;
-
-
-    @ApiProperty()
+    firstname : string;
 
     @IsNotEmpty()
 
-    lastname: string;
-
-
-    @ApiProperty()
+    lastname : string;
 
     @IsEmail()
 
-    @IsNotEmpty()
-
-    email: string;
-
-
-    @ApiProperty()
+    email:string;
 
     @IsNotEmpty()
 
-    phone: string;
+    phoneNumber:string;
 
 
+    @IsNotEmpty()
 
-    constructor(data: Partial<createAdminDto>) {
+    id:number;
+
+    constructor(data: Partial<updateUserDto>) {
         Object.assign(this, data);
       }
 

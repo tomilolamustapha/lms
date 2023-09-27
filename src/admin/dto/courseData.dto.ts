@@ -1,18 +1,22 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, validateSync } from "class-validator";
 
-export class adminIdDto{
+export class courseDataDto{
 
-
-    @ApiProperty()
-    
     @IsNotEmpty()
 
-    id: number;
+     title : string;
+
+    @IsNotEmpty()
+
+    description : string;
+
+    @IsNotEmpty()
+
+    id : number;
 
 
 
-    constructor(data: Partial<adminIdDto>) {
+    constructor(data: Partial<courseDataDto>) {
         Object.assign(this, data);
       }
 

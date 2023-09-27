@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, Length, validateSync } from "class-validator";
 
-export class loginAdminDto{
+export class loginUserDto{
 
 
     @ApiProperty()
@@ -22,7 +22,7 @@ export class loginAdminDto{
     password: string;
 
 
-    constructor(data: Partial<loginAdminDto>) {
+    constructor(data: Partial<loginUserDto>) {
         Object.assign(this, data);
       }
 

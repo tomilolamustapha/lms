@@ -1,3 +1,4 @@
+import { Student } from "./student.model";
 import { Tutor } from "./tutor.model";
 
 export class courses {
@@ -5,7 +6,8 @@ export class courses {
     title: string;
     description: string;
     createdBy: string;
-    tutors: Tutor[];
+    tutor: Tutor[];
+    student :Student[];
     uploadedOn: Date;
     updatedON: Date;
 }

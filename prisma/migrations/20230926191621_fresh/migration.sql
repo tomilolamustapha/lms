@@ -16,6 +16,7 @@ CREATE TABLE "Course" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "tutorId" INTEGER NOT NULL,
 
     CONSTRAINT "Course_pkey" PRIMARY KEY ("id")
 );
@@ -31,6 +32,9 @@ CREATE TABLE "Enrollement" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Enrollement_courseId_studentId_key" ON "Enrollement"("courseId", "studentId");
+
+-- AddForeignKey
+ALTER TABLE "Course" ADD CONSTRAINT "Course_tutorId_fkey" FOREIGN KEY ("tutorId") REFERENCES "Tutor"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Enrollement" ADD CONSTRAINT "Enrollement_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
