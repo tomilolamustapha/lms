@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function () {
+function handleTabs() {
     const tabToggles = document.querySelectorAll('[data-toggle="tab"]');
 
     tabToggles.forEach((toggle) => {
@@ -20,4 +20,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     console.log("Element to click:", tabToggles[0]);
     tabToggles[0].click();
-})
+}
+function handleSideBar() {
+
+
+    const contain = document.querySelector('.contain');
+    // const mainContent = document.querySelector('.main-content');
+    const hamburger = document.querySelector(".hamburger");
+
+    hamburger.addEventListener('click', function () {
+        contain.classList.toggle('toggled')
+    })
+
+
+}

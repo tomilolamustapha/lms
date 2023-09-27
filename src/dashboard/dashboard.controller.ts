@@ -1,4 +1,10 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Redirect } from '@nestjs/common';
 
 @Controller('dashboard')
-export class DashboardController {}
+export class DashboardController {
+  constructor() {}
+
+  @Get()
+  @Redirect('/admin')
+  index() {}
+}

@@ -10,66 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
-  id            Int      @id @default(autoincrement())
-  firstname     String
-  lastname      String
-  fullname      String
-  email         String @unique
-  phoneNumber   String @unique
-  password      String
-  studentMatric String @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  Status        Boolean
-  courses Enrollement[] 
-  
+enum UserRole {
+  Student
+  Tutor
+  Admin
 }
 
-model Tutor {
-  id          Int      @id @default(autoincrement())
+model User {
+  id          Int           @id @default(autoincrement())
   firstname   String
   lastname    String
   fullname  String
-  email       String @unique
-  phoneNumber String @unique
+  email       String        @unique
+  phoneNumber String        @unique
   password    String
-  loginId     String @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  role        UserRole
+  username    String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   Status      Boolean
-  courses Course[]
-}
-
-model Admin {
-  id        Int      @id @default(autoincrement())
-  firstname String
-  lastname  String
-  fullname  String?
-  email     String   @unique
-  phone     String?  @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Status    Boolean
+   tokens            UserAccessToken[]
+  courses     Enrollement[]
 }
 
 model Course {
   id          Int           @id @default(autoincrement())
   title       String
-  description String  
-  enrollments Enrollement[]
-  tutorId Int 
-  tutor Tutor  @relation(fields: [tutorId], references: [id])
-
+  description String
+  //tutor  User    @relation( ,fields: [tutorId], references: [id])
+  tutorId     Int
+  students    Enrollement[]
 }
 
 model Enrollement {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   courseId  Int
   studentId Int
-  course    Course  @relation(fields: [courseId], references: [id])
-  student   Student @relation(fields: [studentId], references: [id])
+  course    Course @relation(fields: [courseId], references: [id])
+  student   User   @relation(fields: [studentId], references: [id])
 
   @@unique([courseId, studentId])
 }
@@ -80,4 +58,13 @@ model PushNotifications {
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model UserAccessToken {
+  id          Int      @id @default(autoincrement())
+  accessToken String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  createdAt   DateTime @default(now())
+  revoked     Boolean  @default(false)
 }
