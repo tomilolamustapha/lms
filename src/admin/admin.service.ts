@@ -97,26 +97,4 @@ export class AdminService {
 
     }
 
-    async deleteCourse(id : number , data :courseDataDto){
-
-        const  admin = await this.prisma.user.findUnique({where :{id}});
-
-        if(!admin || admin.role !==UserRole.Admin){
-            throw new UnauthorizedException('You are not Authorized to perform this action');
-        }
-        const course = await this.prisma.course.findUnique({where :{id}})
-
-        if(!course){
-            throw new NotFoundException(`Course with ID ${id} not found.`)
-        }
-
-        await this.prisma.course.delete({
-            where:{
-                id
-            }
-        });
-
-        return `Course with title ${title} has been deleted.`
-    }
-
 }
