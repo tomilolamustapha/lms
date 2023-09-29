@@ -2,6 +2,14 @@ extends root_layout
     
 block root
     div(class="bg-violet-700 h-screen flex justify-center items-center ")
+        if message
+            label
+                input(type="checkbox" class="alertCheckbox" autocomplete="off")
+                div(class="alert")
+                    span(class="alertClose")
+                        i(class="fa fa-xmark")
+                    span(class="alertText") #{message}
+    
         block auth
 
     script.

@@ -2,12 +2,6 @@ extends auth_layout
 
 block auth
 
-    div(class="")
-    if message 
-        div(class="alert alert-warning alert-dismissible fade show" role="alert")
-            strong  #{message}
-            button(type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close")
-
     div(class="lg:h-screen lg:flex lg:w-full") 
         div(class="bg-white flex justify-center items-center rounded-lg lg:rounded-r-lg lg:w-3/5")        
             div(class="m-8")
@@ -15,8 +9,8 @@ block auth
                 div(class="")
                     form(action="/auth/login", method="POST")
                         div(class="mb-3")
-                            label( for="username" class="text-violet-700") Username
-                            input(type="text" class="" id="username" name="username") 
+                            label( for="email" class="text-violet-700") Email
+                            input(type="email" class="" id="email" name="email") 
                         div(class="mb-3")
                             label( for="password" class="text-violet-700") Password
                             input(type="password" class="" id="password" name="password")
