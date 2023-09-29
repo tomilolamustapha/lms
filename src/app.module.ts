@@ -9,7 +9,6 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { PrismaService } from '../prisma/prisma.service';
 import { EmailService } from './email/email.service';
 import { EmailModule } from './email/email.module';
-import { VideoController } from './course/video/video.controller';
 import { PushNotificationController } from './push-notification/push-notification.controller';
 import { PushNotificationModule } from './push-notification/push-notification.module';
 import { AuthService } from './auth/auth.service';
@@ -26,6 +25,10 @@ import { AdminService } from './admin/admin.service';
 import { AdminController } from './admin/admin.controller';
 import { TutorController } from './tutor/tutor.controller';
 import { TutorService } from './tutor/tutor.service';
+import { UploadsService } from './course/uploads/uploads.service';
+import { memoryStorage } from 'multer';
+import { VideoController } from './course/uploads/video.controller';
+import { MulterModule } from './common/middleware/multer.module';
 
 @Module({
   imports: [
@@ -37,6 +40,7 @@ import { TutorService } from './tutor/tutor.service';
     PusherModule,
     CourseModule,
     UserModule,
+    MulterModule,
   ],
   controllers: [
     AppController,
@@ -57,6 +61,8 @@ import { TutorService } from './tutor/tutor.service';
     StudentService,
     AdminService,
     TutorService,
+    UploadsService,
+    
   ],
 })
 export class AppModule {}
