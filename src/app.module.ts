@@ -25,7 +25,7 @@ import { AdminService } from './admin/admin.service';
 import { AdminController } from './admin/admin.controller';
 import { TutorController } from './tutor/tutor.controller';
 import { TutorService } from './tutor/tutor.service';
-import { UploadsService } from './course/uploads/uploads.service';
+// import { UploadsService } from './course/uploads/uploads.service';
 import { memoryStorage } from 'multer';
 import { VideoController } from './course/uploads/video.controller';
 import { MulterModule } from './common/middleware/multer.module';
@@ -50,7 +50,7 @@ import { MulterModule } from './common/middleware/multer.module';
     UserController,
     StudentController,
     AdminController,
-    TutorController
+    TutorController,
   ],
   providers: [
     AuthService,
@@ -61,8 +61,7 @@ import { MulterModule } from './common/middleware/multer.module';
     StudentService,
     AdminService,
     TutorService,
-    UploadsService,
-    
+    // UploadsService,
   ],
 })
 export class AppModule {}

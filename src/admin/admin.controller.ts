@@ -1,4 +1,9 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller('admin')
-export class AdminController {}
+export class AdminController {
+  constructor() {}
+  @Get('')
+  @Render('dashboard/admin')
+  dashboard() {}
+}
