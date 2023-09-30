@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
+import * as flash from 'express-flash';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -15,6 +16,7 @@ async function bootstrap() {
   app.use(
     session({ secret: 'secret', resave: false, saveUninitialized: true }),
   );
+  app.use(flash());
 
   await app.listen(4004);
   console.log(`Application is running on: ${await app.getUrl()}`);

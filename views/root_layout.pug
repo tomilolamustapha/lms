@@ -13,5 +13,15 @@ html(lang="en")
         script(src="/script.js") 
         title LMS
     body
+        if message
+            div(class=`${message.status}-alert alert `)
+                h3 #{message.message}
+                i(class="close fa fa-xmark")
+                
         block root
+
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+          handleAlert()
+        });   
         

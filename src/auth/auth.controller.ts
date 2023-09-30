@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Controller,
   Get,
   Post,
@@ -9,8 +8,6 @@ import {
 } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
-import { request } from 'http';
-import { error } from 'console';
 
 @Controller('auth')
 export class AuthController {
@@ -22,8 +19,19 @@ export class AuthController {
   @Get('login')
   @Render('login')
   loginPage(@Request() req) {
-    // const message = req.session.message;
-    // return { message: message };
+    let message;
+    const success = req.flash('success')[0];
+    const error = req.flash('error')[0];
+    if (success) {
+      message = {
+        status: 'success',
+        message: success,
+      };
+    }
+    if (error) {
+      message = { status: 'error', message: error };
+    }
+    return { message: message };
   }
 
   @Post('login')
@@ -32,32 +40,46 @@ export class AuthController {
     try {
       const user = await this.authService.signInUser(req.body);
       if (user.user.role === 'Admin') {
-        req.session.message = user.message;
+        req.flash('success', user.message);
         return {
           url: '/admin',
         };
       }
       if (user.user.role === 'Student') {
-        req.session.message = user.message;
+        req.flash('success', user.message);
         return {
           url: '/student',
         };
       }
       if (user.user.role === 'Tutor') {
-        req.session.message = user.message;
+        req.flash('success', user.message);
         return {
           url: '/tutor',
         };
       }
     } catch (error) {
-      req.session.message = error.message;
+      req.flash('error', error.message);
       return { url: '/auth/login' };
     }
   }
 
   @Get('signup')
   @Render('signup')
-  signupPage() {}
+  signupPage(@Request() req) {
+    let message;
+    const success = req.flash('success')[0];
+    const error = req.flash('error')[0];
+    if (success) {
+      message = {
+        status: 'success',
+        message: success,
+      };
+    }
+    if (error) {
+      message = { status: 'error', message: error };
+    }
+    return { message: message };
+  }
 
   @Post('signup')
   @Redirect('/admin')
@@ -65,21 +87,25 @@ export class AuthController {
     try {
       const user = await this.userService.registerUser(req.body);
       if (user.user.role === 'Admin') {
+        req.flash('success', user.message);
         return {
           url: '/admin',
         };
       }
       if (user.user.role === 'Student') {
+        req.flash('success', user.message);
         return {
           url: '/student',
         };
       }
       if (user.user.role === 'Tutor') {
+        req.flash('success', user.message);
         return {
           url: '/tutor',
         };
       }
     } catch (error) {
+      req.flash('error', error.message);
       return { url: '/auth/signup' };
     }
   }
