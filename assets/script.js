@@ -23,7 +23,6 @@ function handleTabs() {
 }
 function handleSideBar() {
 
-
     const contain = document.querySelector('.contain');
     // const mainContent = document.querySelector('.main-content');
     const hamburger = document.querySelector(".hamburger");
@@ -33,4 +32,15 @@ function handleSideBar() {
     })
 
 
+}
+
+function handleAlert() {
+    document.querySelectorAll('.close').forEach(function (e) {
+        e.addEventListener('click', function () {
+            parentAlert = this.closest('.alert');
+            if (parentAlert) {
+                parentAlert.style.display = 'none';
+            }
+        })
+    });
 }

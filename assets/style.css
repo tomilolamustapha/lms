@@ -559,6 +559,7 @@ a {
 }
 
 .trigger {
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
@@ -675,6 +676,39 @@ a {
       top: 1.3em;
     }
   } */
+
+.success-alert .close {
+  color: violet;
+}
+
+.error-alert .close {
+  color: red;
+}
+
+.alert {
+  z-index: 2;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translatex(-50%);
+  width: 75%;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: hand;
+  cursor: pointer;
+  color: #292524;
+  box-shadow: 0 0 3px 1px #666464;
+}
+
+.close {
+  position: absolute;
+  width: 30px;
+  height: 10px;
+  opacity: 0.5;
+  right: 15px;
+  top: 5px;
+}
 
 input:focus,
   select:focus {
