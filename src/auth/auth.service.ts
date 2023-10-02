@@ -2,9 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'prisma/prisma.service';
 import { EmailService } from 'src/email/email.service';
-import { loginUserDto } from './dto/loginAdmin.dto';
+import { loginUserDto } from './dto/loginUser.dto';
 import * as bcrypt from 'bcrypt';
-import { UserService } from 'src/user/user.service';
+import { registerRes } from 'src/user/types/regRes.type';
 
 
 @Injectable()
@@ -13,10 +13,9 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private emailService: EmailService,
-    private userService: UserService
   ) { }
 
-  async signInUser(data: loginUserDto) {
+  async signInUser(data: loginUserDto) : Promise<registerRes>{
     const { email, password } = data;
 
     const findUser = await this.prisma.user.findFirst({
