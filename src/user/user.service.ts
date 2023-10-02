@@ -5,8 +5,6 @@ import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
 import { createUserDto } from './dto/createUserDto';
 import * as bcrypt from 'bcrypt';
-import { registerRes } from './types/regRes.type';
-import { async } from 'rxjs';
 
 @Injectable()
 export class UserService {
