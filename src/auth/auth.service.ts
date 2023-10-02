@@ -18,21 +18,11 @@ export class AuthService {
   async signInUser(data: loginUserDto) : Promise<registerRes>{
     const { email, password } = data;
 
-    const findUser = await this.prisma.user.findFirst({
-      where: {
-        email: email,
-        password: password,
-      },
-    });
+    const findUser = await this.prisma.user.findUnique({where: { email: email}});
 
     if (!findUser) {
       throw new BadRequestException('Incorrect Email or Password');
     }
-
-    //if(findUser.isDeleted == true){
-
-    //throw new BadRequestException('Your Account has been deleted');
-    //}
 
     const isMatch = await this.comparePasswords({
       password,
@@ -49,7 +39,7 @@ export class AuthService {
       );
     }
 
-    if (findUser.email == "tomilolamustaphagmail.com"){
+    if (findUser.email){
       const tokens = await this.getUserTokens(findUser.id, findUser.email);
     
     return {
