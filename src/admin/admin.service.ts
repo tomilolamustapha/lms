@@ -3,8 +3,7 @@ import { PrismaService } from 'prisma/prisma.service';
 import { updateUserDto } from './dto/updateUser.dto';
 import { UserRole } from '@prisma/client';
 import { userActionDto } from './dto/userActionDto';
-import { courseDataDto } from './dto/courseData.dto';
-import { title } from 'process';
+
 
 
 @Injectable()
