@@ -42,23 +42,9 @@ html {
   -moz-tab-size: 4;
   /* 3 */
   -o-tab-size: 4;
-  tab-size: 4;
+     tab-size: 4;
   /* 3 */
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    'Noto Sans',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Noto Color Emoji';
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -99,7 +85,7 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 
 abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
+          text-decoration: underline dotted;
 }
 
 /*
@@ -143,8 +129,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   /* 1 */
   font-size: 1em;
   /* 2 */
@@ -381,8 +366,7 @@ textarea {
 2. Set the default placeholder color to the user's configured gray 400 color.
 */
 
-input::-moz-placeholder,
-textarea::-moz-placeholder {
+input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1;
   /* 1 */
   color: #9ca3af;
@@ -402,7 +386,7 @@ Set the default cursor for buttons.
 */
 
 button,
-[role='button'] {
+[role="button"] {
   cursor: pointer;
 }
 
@@ -450,9 +434,7 @@ video {
   display: none;
 }
 
-*,
-::before,
-::after {
+*, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -558,6 +540,7 @@ video {
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   font-weight: 400;
+  color: #28104e;
 }
 
 em {
@@ -607,9 +590,9 @@ a {
 }
 
 .sidebar-nav:hover,
-.sidebar-nav:focus,
-.trigger:hover + .sidebar-nav,
-.trigger:focus + .sidebar-nav {
+  .sidebar-nav:focus,
+  .trigger:hover + .sidebar-nav,
+  .trigger:focus + .sidebar-nav {
   left: 0;
 }
 
@@ -676,9 +659,9 @@ a {
   }
 
   .sidebar-nav:hover,
-  .sidebar-nav:focus,
-  .trigger:hover + .sidebar-nav,
-  .trigger:focus + .sidebar-nav {
+    .sidebar-nav:focus,
+    .trigger:hover + .sidebar-nav,
+    .trigger:focus + .sidebar-nav {
     width: 15em;
   }
 }
@@ -732,13 +715,13 @@ a {
 }
 
 input:focus,
-select:focus {
+  select:focus {
   border-bottom-width: 2px;
   border-bottom-color: #6237a0;
 }
 
 input,
-select {
+  select {
   outline: none;
   border-width: 1px;
   border-radius: 5px;
@@ -751,20 +734,28 @@ label {
 }
 
 label,
-input,
-select {
+  input,
+  select {
   font-size: 1rem /* 16px */;
   line-height: 1.5rem;
   width: 100%;
 }
 
 button {
-  width: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
   line-height: 1.5rem;
   color: #deacf5;
   background: #6237a0;
   border-radius: 5px;
   outline: none;
+  padding: 0 5px;
+}
+
+button.inverse {
+  border-color: #6237a0;
+  background: none;
+  color: #6237a0;
 }
 
 .tabs {
@@ -774,6 +765,7 @@ button {
   border-radius: 5px;
   border-color: #6237a0;
   margin-bottom: 30px;
+  justify-content: space-between;
 }
 
 .tab {
@@ -846,6 +838,19 @@ button {
   display: none;
 }
 
+.card {
+  border-width: 1px;
+  border-radius: 5px;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  /* border-bottom-color: #6237a0;
+    border-right-color: #6237a0; */
+  border-color: #28104e;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0 5px;
+}
+
 @media (max-width: 768px) {
   .nav > .nav-btn {
     display: inline-block;
@@ -862,7 +867,7 @@ button {
   }
 
   .nav > .nav-btn > label:hover,
-  .nav #nav-check:checked ~ .nav-btn > label {
+    .nav #nav-check:checked ~ .nav-btn > label {
     background-color: #28104e;
   }
 
@@ -900,6 +905,21 @@ button {
   margin: 2rem;
 }
 
+.my-14 {
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -912,6 +932,10 @@ button {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
 .hidden {
   display: none;
 }
@@ -920,12 +944,36 @@ button {
   height: 100vh;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
 .items-center {
   align-items: center;
 }
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .rounded-lg {
@@ -942,13 +990,27 @@ button {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.p-5 {
+  padding: 1.25rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
 
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-lg {
@@ -956,8 +1018,21 @@ button {
   line-height: 1.75rem;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
 }
 
 .text-gray-600 {
@@ -976,6 +1051,10 @@ button {
 }
 
 @media (min-width: 1024px) {
+  .lg\:m-0 {
+    margin: 0px;
+  }
+
   .lg\:flex {
     display: flex;
   }
@@ -992,8 +1071,32 @@ button {
     width: 60%;
   }
 
+  .lg\:w-8\/12 {
+    width: 66.666667%;
+  }
+
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:basis-2\/12 {
+    flex-basis: 16.666667%;
+  }
+
+  .lg\:basis-5\/12 {
+    flex-basis: 41.666667%;
+  }
+
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:flex-col {
+    flex-direction: column;
   }
 
   .lg\:rounded-r-lg {
