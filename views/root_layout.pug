@@ -17,9 +17,11 @@ html(lang="en")
             div(class=`${message.status}-alert alert `)
                 h3 #{message.message}
                 i(class="close fa fa-xmark")
-                
+        
+        include mixins.pug
+        
         block root
-
+            
     script.
         document.addEventListener('DOMContentLoaded', function () {
           handleAlert()

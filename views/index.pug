@@ -1,0 +1,124 @@
+extends root_layout 
+
+block root
+    -
+        const statistics = [
+            {
+                'number': '320 k',
+                'text': 'lorem ipsum, dolor sit'
+            },
+            {
+                'number': '100 %',
+                'text': 'lorem ipsum, sit'
+            },
+            {
+                'number': '20 k',
+                'text': 'lorem ipsum'
+            },
+            {
+                'number': '20 k',
+                'text': 'lorem ipsum'
+            }
+        ]
+
+        const courses = [
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+
+        ]
+
+    div(class="nav")
+        input(type="checkbox" id="nav-check")
+        div(class="nav-header")
+            div(class="nav-title") LMS
+        div(class="nav-btn")
+            label(for="nav-check")
+                span 
+                span 
+                span 
+        div(class="nav-links")
+            a(href="/auth/login") Login 
+            a(href="/auth/singup") SignUp 
+    div(class="h-screen px-3 pt-3")
+        div(class="flex flex-col lg:flex-row justify-between ")
+            div(class="lg:basis-5/12")
+                p(class="text-5xl font-semibold") Boost your skills with us 
+                p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt? 
+                div(class="my-5")
+                    a(href="#course")
+                        +card
+                            p Explore Courses
+            div(class="lg:basis-5/12 my-3")
+                div(class="px-5")
+                    img(src="/image/schoolgirl.jpg", alt="school girl")
+            div(class="flex justify-center items-center lg:basis-2/12 my-5 lg:m-0")
+                div(class="flex flex-row lg:flex-col px-3")
+                    each stat in statistics 
+                        +landing-stats(stat)
+                
+        div(class="flex justify-center my-5")      
+            p Learn from over 100+ tutors
+        
+        div(class="flex justify-center")    
+            +card
+                div(class="flex justify-around w-full lg:flex-row p-5")
+                    each stat in statistics 
+                        +landing-stats(stat)
+
+        div( id="course" class="flex flex-col justify-center")
+            div(class="flex justify-between w-4/5 lg:w-8/12 my-14" )
+                p(class="text-xl font-semibold") Featured Courses
+                p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+
+            div(class="grid lg:grid-cols-3 gap-3")
+                each course in courses
+                    +course-card(course)
+                
+            

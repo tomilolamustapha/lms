@@ -2,10 +2,10 @@ import { Controller, Get, Redirect, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor() {} // private readonly lmsService: LMSService
+  constructor() {}
 
   @Get()
-  @Redirect('/auth/login')
+  @Render('index')
   index() {}
 
   @Get('course')

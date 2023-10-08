@@ -1,7 +1,7 @@
 extends root_layout 
     
 block root
-    div(class=" h-screen px-3 pt-5 lg:flex")
+    div(class=" h-screen px-3 pt-3 flex")
         div(class="sidebar")
             a(class="trigger" )
                 i(class="fa fa-bars")
@@ -21,7 +21,7 @@ block root
                             i(class="fa fa-right-from-bracket")
                                 em() logout         
   
-        main(class="layout-content") 
+        main(class="layout-content flex-col lg:flex-row") 
             block main
 
     //- script.

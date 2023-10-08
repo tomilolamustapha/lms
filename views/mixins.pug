@@ -1,0 +1,21 @@
+mixin landing-stats(stats)
+    div()  
+        h2 #{stats.number}
+        p #{stats.text}
+
+mixin card
+    .card
+        block
+
+mixin course-card(data)
+    .card
+        img(src=`${data.image}` alt="", srcset="")
+        div(class="justify-between")
+            p(class="font-bold") #{data.school}
+            p rating
+        p(class="font-bold") #{data.title}
+        p #{data.description}
+        div(class="justify-between")
+            button(class="inverse") join 
+            p(class="font-bold") #{data.enrolled}
+                span(class="font-normal") enrolled
