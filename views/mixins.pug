@@ -4,12 +4,12 @@ mixin landing-stats(stats)
         p #{stats.text}
 
 mixin card
-    .card
+    .card.active
         block
 
 mixin course-card(data)
     .card
-        img(src=`${data.image}` alt="", srcset="")
+        img(class="h-56 rounded-lg" src=`${data.image}` alt="", srcset="")
         div(class="justify-between")
             p(class="font-bold") #{data.school}
             p rating

@@ -111,6 +111,6 @@ export class AuthController {
   }
 
   @Get('logout')
-  @Redirect('login')
+  @Redirect('/')
   logout() {}
 }
