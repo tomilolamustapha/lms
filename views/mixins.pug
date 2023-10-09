@@ -9,13 +9,31 @@ mixin card
 
 mixin course-card(data)
     .card
-        img(class="h-56 rounded-lg" src=`${data.image}` alt="", srcset="")
-        div(class="justify-between")
-            p(class="font-bold") #{data.school}
-            p rating
-        p(class="font-bold") #{data.title}
-        p #{data.description}
-        div(class="justify-between")
-            button(class="inverse") join 
-            p(class="font-bold") #{data.enrolled}
-                span(class="font-normal") enrolled
+        div(class="flex flex-col justify-evenly")
+            img(class="h-56 rounded-lg" src=`${data.image}` alt="", srcset="")
+            div(class="flex justify-between")
+                p(class="font-bold") #{data.school}
+                p rating
+            p(class="font-bold") #{data.title}
+            p #{data.description}
+            div(class="flex justify-between items-center")
+                button(class="inverse") Join 
+                p(class="font-bold") #{data.enrolled}
+                    span(class="font-normal") enroll
+
+mixin carousel
+    div(class="flex items-center w-full")
+        i(id="left" class="carousel-nav fa-solid fa-angle-left")
+        .carousel
+            block
+        i(id="right" class="carousel-nav fa-solid fa-angle-right")
+
+mixin course(stats)
+    .card(class="w-44") 
+        h2(class="text-bold") #{stats.title}
+        p #{stats.description}
+
+script.
+        document.addEventListener('DOMContentLoaded', function () {
+          handleCarousel()
+        });   

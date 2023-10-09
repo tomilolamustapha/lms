@@ -749,13 +749,18 @@ button {
   background: #6237a0;
   border-radius: 0.5rem;
   outline: none;
-  padding: 0 5px;
+  padding: 5px 20px;
 }
 
 button.inverse {
-  border-color: #6237a0;
+  border: 1px solid #28104e;
   background: none;
-  color: #6237a0;
+  color: #28104e;
+}
+
+button.inverse:hover {
+  background: #28104e;
+  color: #ffffff;
 }
 
 .tabs {
@@ -849,6 +854,22 @@ button.inverse {
 .card.active,
   .card:hover {
   box-shadow: 4px 4px 0px 0px #28104e;
+}
+
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 3)- 12px);
+  gap: 16px;
+  overflow: hidden;
+  margin: 0 5px;
+}
+
+.carousel.dragging ::content {
+  cursor: grab;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -953,8 +974,12 @@ button.inverse {
   height: 100vh;
 }
 
-.w-4\/5 {
-  width: 80%;
+.w-11\/12 {
+  width: 91.666667%;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .w-full {
@@ -985,6 +1010,10 @@ button.inverse {
   justify-content: space-around;
 }
 
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -1005,16 +1034,6 @@ button.inverse {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.px-14 {
-  padding-left: 3.5rem;
-  padding-right: 3.5rem;
-}
-
-.px-16 {
-  padding-left: 4rem;
-  padding-right: 4rem;
 }
 
 .px-3 {
@@ -1125,5 +1144,15 @@ button.inverse {
   .lg\:rounded-r-lg {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+  }
+
+  .lg\:px-14 {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+
+  .lg\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }

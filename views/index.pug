@@ -66,7 +66,58 @@ block root
             },
         ]
 
-    div(class="nav px-14")
+        const courseCategory = [
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },      
+        ]
+
+    div(class="nav lg:px-14")
         input(type="checkbox" id="nav-check")
         div(class="nav-header")
             div(class="nav-title") LMS
@@ -78,7 +129,7 @@ block root
         div(class="nav-links")
             a(href="/auth/login") Login 
             a(href="/auth/singup") SignUp 
-    div(class="h-screen px-16 pt-3")
+    div(class="h-screen px-5 lg:px-16 pt-3")
         div(class="flex flex-col lg:flex-row justify-between")
             div(class="lg:basis-5/12")
                 p(class="text-5xl font-semibold") Boost your skills with us 
@@ -106,7 +157,7 @@ block root
 
         div( id="course" class="flex flex-col")
             div(class="flex justify-center")
-                div(class="flex justify-between w-4/5 lg:w-8/12 my-14" )
+                div(class="flex justify-between w-11/12 lg:w-8/12 my-14" )
                     p(class="text-xl font-semibold") Featured Courses
                     p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
             div(class="flex justify-center")
@@ -118,4 +169,14 @@ block root
                     +card
                         p Explore Courses
             
+        div(id="course-category")
+            div(class="flex justify-center")
+                p(class="text-xl font-semibold") More Courses from Catagories
+
+            div(class="flex justify-center")
+                +carousel()
+                    each cat in courseCategory 
+                        +course(cat)
+
+
             
