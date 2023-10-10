@@ -62,8 +62,8 @@
 
   .sidebar-nav:hover,
   .sidebar-nav:focus,
-  .trigger:hover + .sidebar-nav,
-  .trigger:focus + .sidebar-nav {
+  .trigger:focus + .sidebar-nav,
+  .trigger:hover + .sidebar-nav {
     left: 0;
   }
 
@@ -73,7 +73,7 @@
     left: 0;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 15em;
   }
 
   .sidebar-nav ul li {
@@ -119,9 +119,11 @@
       margin-left: 4em;
       top: 0;
     }
+
     .trigger {
       width: 4em;
     }
+
     .sidebar-nav {
       width: 4em;
       left: 0;
@@ -149,18 +151,18 @@
     }
   } */
 
-  .success-alert {
-    background-color: mediumorchid !important;
-    border-left: 5px solid violet;
+  .alert.success {
+    border-color: green;
+    border-left: 5px solid green;
   }
-  .success-alert .close {
-    color: violet;
+  .alert.success .close {
+    color: green;
   }
-  .error-alert {
-    background-color: pink !important;
+  .alert.error {
+    border-color: red;
     border-left: 5px solid red;
   }
-  .error-alert .close {
+  .alert.error .close {
     color: red;
   }
 
@@ -173,11 +175,13 @@
     width: 75%;
     margin: 20px auto;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: hand;
     cursor: pointer;
-    color: #292524;
-    box-shadow: 0 0 3px 1px #666464;
+    background-color: #ffffff;
+    border: 1px solid #6237a0;
+    border-left: 5px solid #6237a0;
+    /* box-shadow: 0 0 3px 1px #666464; */
   }
 
   .close {
@@ -187,6 +191,7 @@
     opacity: 0.5;
     right: 15px;
     top: 5px;
+    color: #6237a0;
   }
 
   input:focus,
@@ -199,7 +204,7 @@
   select {
     outline: none;
     border-width: 1px;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     padding-left: 15px;
     background: white;
   }
@@ -220,14 +225,19 @@
     line-height: 1.5rem;
     color: #deacf5;
     background: #6237a0;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     outline: none;
-    padding: 0 5px;
+    padding: 5px 20px;
   }
+
   button.inverse {
-    border-color: #6237a0;
+    border: 1px solid #28104e;
     background: none;
-    color: #6237a0;
+    color: #28104e;
+  }
+  button.inverse:hover {
+    background: #28104e;
+    color: #ffffff;
   }
 
   .tabs {
@@ -311,15 +321,29 @@
   }
 
   .card {
-    border-width: 1px;
-    border-radius: 5px;
-    border-bottom-width: 3px;
-    border-right-width: 3px;
-    /* border-bottom-color: #6237a0;
-    border-right-color: #6237a0; */
-    border-color: #28104e;
+    border: 2px solid #28104e;
+    border-radius: 0.5rem;
     width: fit-content;
-    padding: 0 5px;
+    padding: 10px;
+  }
+
+  .card.active,
+  .card:hover {
+    box-shadow: 4px 4px 0px 0px #28104e;
+  }
+
+  .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / 3)- 12px);
+    gap: 16px;
+    overflow: hidden;
+    margin: 0 5px;
+  }
+
+  .carousel.dragging ::content {
+    cursor: grab;
+    user-select: none;
   }
 
   @media (max-width: 768px) {
