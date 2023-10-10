@@ -44,3 +44,37 @@ function handleAlert() {
         })
     });
 }
+
+function handleCarousel() {
+    const carousel = document.querySelector('.carousel');
+    const arrowBtns = document.querySelectorAll('.carousel-nav')
+
+    let isDragging = false, startX, startScrollleft;
+
+    // arrowBtns.forEach(btn => {
+    //     btn.addEventListener('click', () => {
+    //         carousel.scrollLeft = btn.id ===  
+    //     })
+    // })
+
+    const dragStart = (e) => {
+        isDragging = true;
+        carousel.classList.add('dragging');
+        startX = e.pageX;
+        startScrollleft = carousel.scrollLeft
+    }
+
+    const dragging = (e) => {
+        if (!isDragging) return;
+        carousel.scrollLeft = startScrollleft - (e.pageX - startX)
+    }
+
+    const dragStop = () => {
+        isDragging = false;
+        carousel.classList.remove("dragging")
+    }
+
+    carousel.addEventListener("mousedown", dragStart)
+    carousel.addEventListener("mousemove", dragging)
+    document.addEventListener("mouseup", dragStop)
+} 

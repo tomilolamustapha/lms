@@ -64,17 +64,60 @@ block root
                 'description': 'lorem ipsum, dolor sit',
                 'enrolled': 200
             },
-            {
-                'image': '/image/schoolgirl.jpg',
-                'school': 'LASU',
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
-                'enrolled': 200
-            },
-
         ]
 
-    div(class="nav")
+        const courseCategory = [
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },
+            {
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+            },      
+        ]
+
+    div(class="nav lg:px-14")
         input(type="checkbox" id="nav-check")
         div(class="nav-header")
             div(class="nav-title") LMS
@@ -86,8 +129,8 @@ block root
         div(class="nav-links")
             a(href="/auth/login") Login 
             a(href="/auth/singup") SignUp 
-    div(class="h-screen px-3 pt-3")
-        div(class="flex flex-col lg:flex-row justify-between ")
+    div(class="h-screen px-5 lg:px-16 pt-3")
+        div(class="flex flex-col lg:flex-row justify-between")
             div(class="lg:basis-5/12")
                 p(class="text-5xl font-semibold") Boost your skills with us 
                 p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt? 
@@ -97,12 +140,12 @@ block root
                             p Explore Courses
             div(class="lg:basis-5/12 my-3")
                 div(class="px-5")
-                    img(src="/image/schoolgirl.jpg", alt="school girl")
+                    img(class="rounded-lg" src="/image/schoolgirl.jpg", alt="school girl")
             div(class="flex justify-center items-center lg:basis-2/12 my-5 lg:m-0")
                 div(class="flex flex-row lg:flex-col px-3")
                     each stat in statistics 
                         +landing-stats(stat)
-                
+            
         div(class="flex justify-center my-5")      
             p Learn from over 100+ tutors
         
@@ -112,13 +155,28 @@ block root
                     each stat in statistics 
                         +landing-stats(stat)
 
-        div( id="course" class="flex flex-col justify-center")
-            div(class="flex justify-between w-4/5 lg:w-8/12 my-14" )
-                p(class="text-xl font-semibold") Featured Courses
-                p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+        div( id="course" class="flex flex-col")
+            div(class="flex justify-center")
+                div(class="flex justify-between w-11/12 lg:w-8/12 my-14" )
+                    p(class="text-xl font-semibold") Featured Courses
+                    p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            div(class="flex justify-center")
+                div(class="grid lg:grid-cols-3 gap-4")
+                    each course in courses
+                        +course-card(course)
+            div(class="flex justify-center my-20")
+                a(href="#course")
+                    +card
+                        p Explore Courses
+            
+        div(id="course-category")
+            div(class="flex justify-center")
+                p(class="text-xl font-semibold") More Courses from Catagories
 
-            div(class="grid lg:grid-cols-3 gap-3")
-                each course in courses
-                    +course-card(course)
-                
+            div(class="flex justify-center")
+                +carousel()
+                    each cat in courseCategory 
+                        +course(cat)
+
+
             

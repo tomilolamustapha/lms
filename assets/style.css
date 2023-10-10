@@ -591,8 +591,8 @@ a {
 
 .sidebar-nav:hover,
   .sidebar-nav:focus,
-  .trigger:hover + .sidebar-nav,
-  .trigger:focus + .sidebar-nav {
+  .trigger:focus + .sidebar-nav,
+  .trigger:hover + .sidebar-nav {
   left: 0;
 }
 
@@ -602,7 +602,7 @@ a {
   left: 0;
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 15em;
 }
 
 .sidebar-nav ul li {
@@ -681,11 +681,21 @@ a {
     }
   } */
 
-.success-alert .close {
-  color: violet;
+.alert.success {
+  border-color: green;
+  border-left: 5px solid green;
 }
 
-.error-alert .close {
+.alert.success .close {
+  color: green;
+}
+
+.alert.error {
+  border-color: red;
+  border-left: 5px solid red;
+}
+
+.alert.error .close {
   color: red;
 }
 
@@ -698,11 +708,13 @@ a {
   width: 75%;
   margin: 20px auto;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: hand;
   cursor: pointer;
-  color: #292524;
-  box-shadow: 0 0 3px 1px #666464;
+  background-color: #ffffff;
+  border: 1px solid #6237a0;
+  border-left: 5px solid #6237a0;
+  /* box-shadow: 0 0 3px 1px #666464; */
 }
 
 .close {
@@ -712,6 +724,7 @@ a {
   opacity: 0.5;
   right: 15px;
   top: 5px;
+  color: #6237a0;
 }
 
 input:focus,
@@ -724,7 +737,7 @@ input,
   select {
   outline: none;
   border-width: 1px;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   padding-left: 15px;
   background: white;
 }
@@ -747,15 +760,20 @@ button {
   line-height: 1.5rem;
   color: #deacf5;
   background: #6237a0;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   outline: none;
-  padding: 0 5px;
+  padding: 5px 20px;
 }
 
 button.inverse {
-  border-color: #6237a0;
+  border: 1px solid #28104e;
   background: none;
-  color: #6237a0;
+  color: #28104e;
+}
+
+button.inverse:hover {
+  background: #28104e;
+  color: #ffffff;
 }
 
 .tabs {
@@ -839,16 +857,32 @@ button.inverse {
 }
 
 .card {
-  border-width: 1px;
-  border-radius: 5px;
-  border-bottom-width: 3px;
-  border-right-width: 3px;
-  /* border-bottom-color: #6237a0;
-    border-right-color: #6237a0; */
-  border-color: #28104e;
+  border: 2px solid #28104e;
+  border-radius: 0.5rem;
   width: -moz-fit-content;
   width: fit-content;
-  padding: 0 5px;
+  padding: 10px;
+}
+
+.card.active,
+  .card:hover {
+  box-shadow: 4px 4px 0px 0px #28104e;
+}
+
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 3)- 12px);
+  gap: 16px;
+  overflow: hidden;
+  margin: 0 5px;
+}
+
+.carousel.dragging ::content {
+  cursor: grab;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -910,6 +944,11 @@ button.inverse {
   margin-bottom: 3.5rem;
 }
 
+.my-20 {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -940,12 +979,20 @@ button.inverse {
   display: none;
 }
 
+.h-56 {
+  height: 14rem;
+}
+
 .h-screen {
   height: 100vh;
 }
 
-.w-4\/5 {
-  width: 80%;
+.w-11\/12 {
+  width: 91.666667%;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .w-full {
@@ -974,6 +1021,14 @@ button.inverse {
 
 .justify-around {
   justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .rounded-lg {
@@ -1102,5 +1157,15 @@ button.inverse {
   .lg\:rounded-r-lg {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+  }
+
+  .lg\:px-14 {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+
+  .lg\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }
