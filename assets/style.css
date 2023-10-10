@@ -681,11 +681,21 @@ a {
     }
   } */
 
-.success-alert .close {
-  color: violet;
+.alert.success {
+  border-color: green;
+  border-left: 5px solid green;
 }
 
-.error-alert .close {
+.alert.success .close {
+  color: green;
+}
+
+.alert.error {
+  border-color: red;
+  border-left: 5px solid red;
+}
+
+.alert.error .close {
   color: red;
 }
 
@@ -701,8 +711,10 @@ a {
   border-radius: 0.5rem;
   cursor: hand;
   cursor: pointer;
-  color: #292524;
-  box-shadow: 0 0 3px 1px #666464;
+  background-color: #ffffff;
+  border: 1px solid #6237a0;
+  border-left: 5px solid #6237a0;
+  /* box-shadow: 0 0 3px 1px #666464; */
 }
 
 .close {
@@ -712,6 +724,7 @@ a {
   opacity: 0.5;
   right: 15px;
   top: 5px;
+  color: #6237a0;
 }
 
 input:focus,

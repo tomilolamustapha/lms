@@ -39,6 +39,9 @@ export class AuthController {
   async login(@Request() req) {
     try {
       const user = await this.authService.signInUser(req.body);
+      req.session.user = user.user;
+      req.session.access_token = user.access_token;
+
       if (user.user.role === 'Admin') {
         req.flash('success', user.message);
         return {
@@ -86,6 +89,8 @@ export class AuthController {
   async signup(@Request() req) {
     try {
       const user = await this.userService.registerUser(req.body);
+      req.session.user = user.user;
+      // req.session.access_token = user.access_token;
       if (user.user.role === 'Admin') {
         req.flash('success', user.message);
         return {
@@ -112,5 +117,23 @@ export class AuthController {
 
   @Get('logout')
   @Redirect('/')
-  logout() {}
+  logout(@Request() req) {
+    // if (!req.session.id || !req.session.access_token) {
+    //   req.session.destroy();
+    //   return {
+    //     url: '/auth/login',
+    //   };
+    // }
+    const signout = this.authService.signOutUser(
+      req.session.user.id,
+      req.session.access_token,
+    );
+
+    let message = signout;
+    req.flash('success', message);
+    // req.session.destroy();
+    return {
+      url: '/auth/login',
+    };
+  }
 }

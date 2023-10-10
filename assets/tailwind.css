@@ -151,18 +151,18 @@
     }
   } */
 
-  .success-alert {
-    background-color: mediumorchid !important;
-    border-left: 5px solid violet;
+  .alert.success {
+    border-color: green;
+    border-left: 5px solid green;
   }
-  .success-alert .close {
-    color: violet;
+  .alert.success .close {
+    color: green;
   }
-  .error-alert {
-    background-color: pink !important;
+  .alert.error {
+    border-color: red;
     border-left: 5px solid red;
   }
-  .error-alert .close {
+  .alert.error .close {
     color: red;
   }
 
@@ -178,8 +178,10 @@
     border-radius: 0.5rem;
     cursor: hand;
     cursor: pointer;
-    color: #292524;
-    box-shadow: 0 0 3px 1px #666464;
+    background-color: #ffffff;
+    border: 1px solid #6237a0;
+    border-left: 5px solid #6237a0;
+    /* box-shadow: 0 0 3px 1px #666464; */
   }
 
   .close {
@@ -189,6 +191,7 @@
     opacity: 0.5;
     right: 15px;
     top: 5px;
+    color: #6237a0;
   }
 
   input:focus,
