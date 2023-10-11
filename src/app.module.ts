@@ -29,6 +29,8 @@ import { TutorService } from './tutor/tutor.service';
 import { memoryStorage } from 'multer';
 import { VideoController } from './course/uploads/video.controller';
 import { MulterModule } from './common/middleware/multer.module';
+import { EnrollmentService } from './enrollment/enrollment.service';
+import { EnrollmentController } from './enrollment/enrollment.controller';
 
 @Module({
   imports: [
@@ -51,6 +53,7 @@ import { MulterModule } from './common/middleware/multer.module';
     StudentController,
     AdminController,
     TutorController,
+    EnrollmentController,
   ],
   providers: [
     AuthService,
@@ -61,6 +64,7 @@ import { MulterModule } from './common/middleware/multer.module';
     StudentService,
     AdminService,
     TutorService,
+    EnrollmentService,
     // UploadsService,
   ],
 })

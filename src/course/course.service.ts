@@ -118,6 +118,20 @@ export class CourseService {
     }
   }
 
+  async courseCategory(courseCode: string){
+
+    const filterCourse = await this.prisma.course.findMany({
+      where: {courseCode}
+    });
+
+
+    return{
+      filterCourse,
+      message : "Course code have been successfully searched"
+    }
+  }
+
+
 
 
 }

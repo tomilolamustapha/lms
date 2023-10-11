@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Course" ADD COLUMN     "duration" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "status" BOOLEAN NOT NULL DEFAULT true,
+ALTER COLUMN "description" DROP NOT NULL;

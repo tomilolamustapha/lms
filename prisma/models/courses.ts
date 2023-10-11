@@ -7,6 +7,9 @@ export class courses {
     title: string;
     description: string;
     document : Document[];
+    duration : number;
+    progress: number;
+    status : boolean;
     video : Video[];
     createdBy: string;
     courseCode : string;
