@@ -86,5 +86,52 @@ export class CourseService {
       };
   }
 
+  async uploadVideo(courseId : number, title : string, url:string){
+
+    const videoUpload = await this.prisma.video.create({
+      data:{
+        title,
+        url: url,
+        courseId
+      }
+    });
+
+    return{
+      data : videoUpload,
+      message: "Video Successfully uploded!"
+    }
+  }
+
+  async uploadDocument(courseId : number ,title: string, url:string){
+
+    const document = await this.prisma.document.create({
+      data:{
+        title,
+        url : url,
+        courseId
+      }
+    });
+
+    return{
+      data: document,
+      message : "Document Successfully Uploaded!"
+    }
+  }
+
+  async courseCategory(courseCode: string){
+
+    const filterCourse = await this.prisma.course.findMany({
+      where: {courseCode}
+    });
+
+
+    return{
+      filterCourse,
+      message : "Course code have been successfully searched"
+    }
+  }
+
+
+
 
 }
