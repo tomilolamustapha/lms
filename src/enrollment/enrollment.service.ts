@@ -6,7 +6,7 @@ import { PrismaService } from 'prisma/prisma.service';
 export class EnrollmentService {
     constructor(private prisma : PrismaService){}
 
-    async enroll(studentId: number, courseId){
+    async enroll(studentId: number, courseId : number){
 
         const student = await this.prisma.user.findUnique({
             where: {

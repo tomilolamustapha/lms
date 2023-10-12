@@ -31,7 +31,6 @@ model User {
   Status      Boolean
   tokens      UserAccessToken[]
   courses     Enrollment[]
-  subcription Subscription[]
 }
 
 model Course {
@@ -45,7 +44,6 @@ model Course {
   video        Video[]
   document     Document[]
   students     Enrollment[]
-  subscription Subscription[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 }
@@ -54,29 +52,12 @@ model Enrollment {
   id             Int           @id @default(autoincrement())
   courseId       Int
   studentId      Int
-  subscriptionId Int
   course         Course        @relation(fields: [courseId], references: [id])
   student        User          @relation(fields: [studentId], references: [id])
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
   createdAt DateTime @default(now())
   progress  Float?
 
   @@unique([courseId, studentId])
-}
-
-model Subscription {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  studentId   Int
-  courseId    Int
-  enrollment  Enrollment[]
-  student     User         @relation(fields: [studentId], references: [id])
-  // Define a one-to-many relationship: A subscription is associated with one course.
-  course      Course       @relation(fields: [courseId], references: [id])
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
 }
 
 model PushNotifications {

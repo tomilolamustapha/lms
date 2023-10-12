@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserRole } from '@prisma/client';
+import { Course, UserRole } from '@prisma/client';
 import { courses } from 'prisma/models/courses';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
@@ -128,6 +128,24 @@ export class CourseService {
     return{
       filterCourse,
       message : "Course code have been successfully searched"
+    }
+  }
+
+
+  async gettopCourses(){
+
+    const topCourses = await this.prisma.course.findMany({
+      take: 6,
+      orderBy:{
+        students:{
+          _count : 'desc',
+        },
+      },
+    });
+
+    return{
+      topCourses,
+      message : "Courses fetched sucessfully"
     }
   }
 
