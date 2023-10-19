@@ -1,7 +1,7 @@
 extends root_layout 
 
 block root
-    -
+    -   
         const statistics = [
             {
                 'number': '320 k',
@@ -20,6 +20,7 @@ block root
                 'text': 'lorem ipsum'
             }
         ]
+
 
         const courses = [
             {
@@ -116,11 +117,28 @@ block root
                 'description': 'lorem ipsum, dolor sit',
             },      
         ]
+    
+        const testimonials = [
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },          
+        ]
 
     div(class="nav lg:px-14")
         input(type="checkbox" id="nav-check")
         div(class="nav-header")
-            div(class="nav-title") LMS
+            div(class="nav-title") 
+                i(class="fa fa-chalkboard !important text-light") 
+                   span(class="text-light font-black") LMS
         div(class="nav-btn")
             label(for="nav-check")
                 span 
@@ -129,7 +147,7 @@ block root
         div(class="nav-links")
             a(href="/auth/login") Login 
             a(href="/auth/singup") SignUp 
-    div(class="h-screen px-5 lg:px-16 pt-3")
+    div(class=" px-5 lg:px-16 pt-3")
         div(class="flex flex-col lg:flex-row justify-between")
             div(class="lg:basis-5/12")
                 p(class="text-5xl font-semibold") Boost your skills with us 
@@ -138,6 +156,7 @@ block root
                     a(href="#course")
                         +card
                             p Explore Courses
+            
             div(class="lg:basis-5/12 my-3")
                 div(class="px-5")
                     img(class="rounded-lg" src="/image/schoolgirl.jpg", alt="school girl")
@@ -169,14 +188,88 @@ block root
                     +card
                         p Explore Courses
             
-        div(id="course-category")
-            div(class="flex justify-center")
-                p(class="text-xl font-semibold") More Courses from Catagories
+        //- div(id="course-category")
+        //-     div(class="flex justify-center my-5")
+        //-         p(class="text-xl font-semibold my-") More Courses from Catagories
 
-            div(class="flex justify-center")
-                +carousel()
-                    each cat in courseCategory 
-                        +course(cat)
+        //-     div(class="flex justify-center")
+        //-         +carousel()
+        //-             each course in courseCategory
+        //-                 +profile-card(course)
+        //-                     block profile 
+        //-                         i(class="fa fa-laptop")
+        //-                     block body
+        //-                         p(class="text-2xl text-bold") testing
+        //-                         p(class="text-bold") #{course.title}
+        //-                         p #{course.description}
+        //-                 //- +card 
+        //-                 //-     p(class="text-xl font-bold") #{courseCat.title}
+        //-                 //-     p(class="") #{courseCat.description}
 
+    
+        //- div( id="testomonials" class="flex flex-col")
+        //-     div(class="flex justify-center")
+        //-         div(class="flex justify-between w-11/12 lg:w-8/12 my-14" )
+        //-             p(class="text-xl font-semibold") what our clients say
+        //-             p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+        //-     div(class="flex justify-between")
+        //-         each test, i in testimonials
+        //-             +profile-card(test)
+        //-                 block profile
+        //-                     img( src="" alt="", srcset="")
+        //-                 block body
+        //-                     p(class="font-bold") #{test.client}
+        //-                     p #{parse.occupation}
+        //-                     p #{parse.testimony}
+                
+        //-     div(class="flex justify-center my-20")
+        //-         a(href="#course")
+        //-             +card
+        //-                 p View all Tesmonials
+
+        
+    div(id="footer" class="bg-dark  ")
+        div(class="flex flex-col lg:flex-row lg:justify-between  text-medium !important p-5 lg:pt-10 lg:px-16 lg:pb-24")
+            div()
+                i(class="fa fa-chalkboard  text-light py-5 flex justify-self-center") 
+                    span(class="text-light font-black") LMS
+
+                p(class="text-bold text-medium flex justify-self-center") Follow us on social 
+                div(class=" flex justify-evenly")
+                    a( class="" href="#")
+                        i(class="fa-brands fa-x-twitter text-medium")
+                    a( class="" href="#")
+                        i(class="fa-brands fa-instagram text-medium")
+                    a( class="" href="#")
+                        i(class="fa-brands fa-facebook text-medium")
+
+            div(class="")
+                p(class="font-extrabold py-5 text-medium flex justify-self-center") links
+
+                div(class="flex lg:flex-col justify-evenly")
+                    a(href="#" class="text-medium") Home
+                    a(href="#" class="text-medium") Help center
+                    a(href="#" class="text-medium") service
+            
+            div(class="")
+                p(class="font-extrabold py-5 text-medium") Resource
+
+                div(class="flex lg:flex-col justify-evenly")
+                    a(href="#" class="text-medium") about
+                    a(href="#" class="text-medium") carrier
+                    a(href="#" class="text-medium") legal notice
+            div(class="")
+                p(class="font-extrabold py-5 text-medium") Contacts
+
+                div(class="flex lg:flex-col justify-evenly") 
+                    a(href="#" class="text-medium") Epe, Lagos.
+                    a(href="#" class="text-medium") support
+                    a(href="#" class="text-medium") +234 800 000 0000
+
+        div(class="bg-primary flex justify-center")
+            a(href="#")      
+                p © Aishat Tomilola 2023
+
+            
 
             

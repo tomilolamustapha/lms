@@ -3,6 +3,13 @@ mixin landing-stats(stats)
         h2 #{stats.number}
         p #{stats.text}
 
+mixin carousel
+    .carousel-wrap
+        i(id="left" class="carousel-nav fa-solid fa-angle-left")
+        .carousel
+            block
+        i(id="right" class="carousel-nav fa-solid fa-angle-right")
+
 mixin card
     .card.active
         block
@@ -21,17 +28,19 @@ mixin course-card(data)
                 p(class="font-bold") #{data.enrolled}
                     span(class="font-normal") enroll
 
-mixin carousel
-    div(class="flex items-center w-full")
-        i(id="left" class="carousel-nav fa-solid fa-angle-left")
-        .carousel
-            block
-        i(id="right" class="carousel-nav fa-solid fa-angle-right")
+mixin profile-card(parsedData)
+    
+    - const parse = parseedDats
 
-mixin course(stats)
-    .card(class="w-44") 
-        h2(class="text-bold") #{stats.title}
-        p #{stats.description}
+    .card.profile
+        div(class="avatar")
+            block profile
+
+        block body
+
+mixin course(course) 
+    h2(class="text-bold") #{course.title}
+    p #{course.description}
 
 script.
         document.addEventListener('DOMContentLoaded', function () {
