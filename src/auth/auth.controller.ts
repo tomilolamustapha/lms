@@ -4,7 +4,10 @@ import {
   Post,
   Redirect,
   Render,
+  Req,
   Request,
+  Res,
+  Session,
 } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
@@ -117,23 +120,9 @@ export class AuthController {
 
   @Get('logout')
   @Redirect('/')
-  logout(@Request() req) {
-    // if (!req.session.id || !req.session.access_token) {
-    //   req.session.destroy();
-    //   return {
-    //     url: '/auth/login',
-    //   };
-    // }
-    const signout = this.authService.signOutUser(
-      req.session.user.id,
-      req.session.access_token,
-    );
-
-    let message = signout;
-    req.flash('success', message);
-    // req.session.destroy();
-    return {
-      url: '/auth/login',
-    };
+  async logout(@Session() session, @Req() req, @Res() res) {
+    req.flash('success', 'Successfully logged out');
+    await session.destroy();
+    return { url: '/' };
   }
 }
