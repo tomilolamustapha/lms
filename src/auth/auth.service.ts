@@ -83,7 +83,7 @@ export class AuthService {
 
 
   async signOutUser(userId: string, accessToken: string) {
-     await this.prisma.userAccessToken.update({ where: { accessToken }, data: { revoked: true } });
+     await this.prisma.userAccessToken.update({ where: { accessToken: accessToken }, data: { revoked: true } });
 
     return {
       message: 'signout succcessful',
