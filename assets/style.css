@@ -543,6 +543,10 @@ video {
   color: #28104e;
 }
 
+#footer {
+  color: #6237a0;
+}
+
 em {
   font-style: none;
 }
@@ -869,13 +873,38 @@ button.inverse:hover {
   box-shadow: 4px 4px 0px 0px #28104e;
 }
 
-.carousel {
+.card.profile {
+  position: relative;
+}
+
+.card.profile .avatar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #28104e;
+  margin-bottom: 50px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-wrap {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-wrap .carousel {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: calc((100% / 3)- 12px);
   gap: 16px;
-  overflow: hidden;
-  margin: 0 5px;
+  overflow-x: hidden;
+  margin: 0px 10px;
 }
 
 .carousel.dragging ::content {
@@ -991,10 +1020,6 @@ button.inverse:hover {
   width: 91.666667%;
 }
 
-.w-44 {
-  width: 11rem;
-}
-
 .w-full {
   width: 100%;
 }
@@ -1031,8 +1056,17 @@ button.inverse:hover {
   gap: 1rem;
 }
 
+.justify-self-center {
+  justify-self: center;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.bg-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(40 16 78 / var(--tw-bg-opacity));
 }
 
 .bg-primary {
@@ -1059,8 +1093,18 @@ button.inverse:hover {
   padding-right: 1.25rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-5xl {
@@ -1078,8 +1122,16 @@ button.inverse:hover {
   line-height: 1.75rem;
 }
 
+.font-black {
+  font-weight: 900;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
 }
 
 .font-normal {
@@ -1093,6 +1145,11 @@ button.inverse:hover {
 .text-gray-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
+.text-light {
+  --tw-text-opacity: 1;
+  color: rgb(222 172 245 / var(--tw-text-opacity));
 }
 
 .text-medium {
@@ -1154,6 +1211,10 @@ button.inverse:hover {
     flex-direction: column;
   }
 
+  .lg\:justify-between {
+    justify-content: space-between;
+  }
+
   .lg\:rounded-r-lg {
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
@@ -1167,5 +1228,13 @@ button.inverse:hover {
   .lg\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
+  }
+
+  .lg\:pb-24 {
+    padding-bottom: 6rem;
+  }
+
+  .lg\:pt-10 {
+    padding-top: 2.5rem;
   }
 }
