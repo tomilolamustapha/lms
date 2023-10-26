@@ -5,9 +5,11 @@ import {
   Redirect,
   Render,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
+import { UserGuard } from 'src/common/guards';
 
 @Controller('auth')
 export class AuthController {
@@ -115,6 +117,8 @@ export class AuthController {
     }
   }
 
+
+  @UseGuards(UserGuard)
   @Get('logout')
   @Redirect('/')
   logout(@Request() req) {

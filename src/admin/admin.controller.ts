@@ -1,9 +1,11 @@
-import { Controller, Get, Render, Request } from '@nestjs/common';
+import { Controller, Get, Render, Request, UseGuards } from '@nestjs/common';
+import { UserGuard } from 'src/common/guards';
 
 @Controller('admin')
 export class AdminController {
   constructor() {}
   @Get('')
+  @UseGuards(UserGuard)
   @Render('dashboard/admin')
   dashboard(@Request() req) {
     let message;

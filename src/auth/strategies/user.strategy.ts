@@ -13,7 +13,7 @@ type JwtPayload  = {
 
 
 @Injectable()
-export class UserSratgey extends PassportStrategy(Strategy, 'user-jwt'){
+export class UserJwtStrategy extends PassportStrategy(Strategy, 'user-jwt'){
     constructor(
         private readonly prisma: PrismaService,
         private userService : UserService,
