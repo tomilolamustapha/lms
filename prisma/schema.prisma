@@ -34,26 +34,26 @@ model User {
 }
 
 model Course {
-  id           Int            @id @default(autoincrement())
-  title        String
-  description  String?
-  courseCode   String         @unique
-  duration     Int            @default(0)
-  tutorId      Int
-  status       Boolean        @default(true)
-  video        Video[]
-  document     Document[]
-  students     Enrollment[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  courseCode  String       @unique
+  duration    Int          @default(0)
+  tutorId     Int
+  status      Boolean      @default(true)
+  video       Video[]
+  document    Document[]
+  students    Enrollment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Enrollment {
-  id             Int           @id @default(autoincrement())
-  courseId       Int
-  studentId      Int
-  course         Course        @relation(fields: [courseId], references: [id])
-  student        User          @relation(fields: [studentId], references: [id])
+  id        Int      @id @default(autoincrement())
+  courseId  Int
+  studentId Int
+  course    Course   @relation(fields: [courseId], references: [id])
+  student   User     @relation(fields: [studentId], references: [id])
   createdAt DateTime @default(now())
   progress  Float?
 
@@ -96,4 +96,11 @@ model Document {
   course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
 }

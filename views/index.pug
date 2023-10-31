@@ -67,55 +67,55 @@ block root
             },
         ]
 
-        const courseCategory = [
+        const category = [
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
             },
             {
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
-            },      
+                title: 'Lorem ipsum',
+                description: 'lorem ipsum, dolor sit',
+            },           
         ]
     
         const testimonials = [
@@ -147,7 +147,7 @@ block root
         div(class="nav-links")
             a(href="/auth/login") Login 
             a(href="/auth/singup") SignUp 
-    div(class=" px-5 lg:px-16 pt-3")
+    div(class=" px-5 lg:px-16 pt-3 flex flex-col")
         div(class="flex flex-col lg:flex-row justify-between")
             div(class="lg:basis-5/12")
                 p(class="text-5xl font-semibold") Boost your skills with us 
@@ -159,7 +159,7 @@ block root
             
             div(class="lg:basis-5/12 my-3")
                 div(class="px-5")
-                    img(class="rounded-lg" src="/image/schoolgirl.jpg", alt="school girl")
+                    img(class="rounded-lg" src="/image/schoolgirl.jpg" alt="school girl")
             div(class="flex justify-center items-center lg:basis-2/12 my-5 lg:m-0")
                 div(class="flex flex-row lg:flex-col px-3")
                     each stat in statistics 
@@ -188,48 +188,48 @@ block root
                     +card
                         p Explore Courses
             
-        //- div(id="course-category")
-        //-     div(class="flex justify-center my-5")
-        //-         p(class="text-xl font-semibold my-") More Courses from Catagories
+        div(id="course-category")
+            div(class="flex justify-center my-10")
+                p(class="text-xl font-semibold ") More Courses from Catagories
 
-        //-     div(class="flex justify-center")
-        //-         +carousel()
-        //-             each course in courseCategory
-        //-                 +profile-card(course)
-        //-                     block profile 
-        //-                         i(class="fa fa-laptop")
-        //-                     block body
-        //-                         p(class="text-2xl text-bold") testing
-        //-                         p(class="text-bold") #{course.title}
-        //-                         p #{course.description}
-        //-                 //- +card 
-        //-                 //-     p(class="text-xl font-bold") #{courseCat.title}
-        //-                 //-     p(class="") #{courseCat.description}
+            div(class="flex justify-center py-14 my-5")
+                //- +carousel()
+                each cat, i in category
+                    +profile-card(cat)
+                        block profile 
+                            img(src="/image/schoolgirl.jpg" alt="")
+                        block body
+                            p(class="text-2xl text-bold") testing
+                            p(class="text-bold") #{parse.title}
+                            p #{parse.description}
+                    //- +card 
+                    //-     p(class="text-xl font-bold") #{courseCat.title}
+                    //-     p(class="") #{courseCat.description}
 
     
-        //- div( id="testomonials" class="flex flex-col")
-        //-     div(class="flex justify-center")
-        //-         div(class="flex justify-between w-11/12 lg:w-8/12 my-14" )
-        //-             p(class="text-xl font-semibold") what our clients say
-        //-             p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-        //-     div(class="flex justify-between")
-        //-         each test, i in testimonials
-        //-             +profile-card(test)
-        //-                 block profile
-        //-                     img( src="" alt="", srcset="")
-        //-                 block body
-        //-                     p(class="font-bold") #{test.client}
-        //-                     p #{parse.occupation}
-        //-                     p #{parse.testimony}
+        div( id="testomonials" class="flex flex-col")
+            div(class="flex justify-center")
+                div(class="flex justify-between w-11/12 lg:w-8/12 my-14" )
+                    p(class="text-xl font-semibold") what our clients say
+                    p Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            div(class="flex justify-evenly pt-14 ")
+                each test, i in testimonials
+                    +profile-card(test)
+                        block profile
+                            img( src=`${parse.image}` alt="" srcset="")
+                        block body
+                            p(class="font-bold") #{parse.client}
+                            p #{parse.occupation}
+                            p #{parse.testimony}
                 
-        //-     div(class="flex justify-center my-20")
-        //-         a(href="#course")
-        //-             +card
-        //-                 p View all Tesmonials
+            div(class="flex justify-center my-20")
+                a(href="#course")
+                    +card
+                        p View all Tesmonials
 
         
     div(id="footer" class="bg-dark  ")
-        div(class="flex flex-col lg:flex-row lg:justify-between  text-medium !important p-5 lg:pt-10 lg:px-16 lg:pb-24")
+        div(class="flex flex-col lg:flex-row lg:justify-between  text-medium !important p-5 lg:pt-10 lg:px-16 lg:pb-20")
             div()
                 i(class="fa fa-chalkboard  text-light py-5 flex justify-self-center") 
                     span(class="text-light font-black") LMS
@@ -269,6 +269,10 @@ block root
         div(class="bg-primary flex justify-center")
             a(href="#")      
                 p © Aishat Tomilola 2023
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            //- handleCarousel();
+        });
 
             
 

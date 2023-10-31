@@ -5,6 +5,8 @@ import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import * as flash from 'express-flash';
+import { PrismaSessionStore } from '@quixo3/prisma-session-store';
+import { PrismaClient } from '@prisma/client';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,7 +16,17 @@ async function bootstrap() {
   app.setViewEngine('pug');
 
   app.use(
-    session({ secret: 'secret', resave: false, saveUninitialized: true }),
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 30 * 60 * 1000 },
+      // store: new PrismaSessionStore(new PrismaClient(), {
+      //   checkPeriod: 2 * 60 * 1000, //ms
+      //   dbRecordIdIsSessionId: true,
+      //   dbRecordIdFunction: undefined,
+      // }),
+    }),
   );
   app.use(flash());
 

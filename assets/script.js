@@ -21,6 +21,7 @@ function handleTabs() {
     console.log("Element to click:", tabToggles[0]);
     tabToggles[0].click();
 }
+
 function handleSideBar() {
 
     const contain = document.querySelector('.contain');
