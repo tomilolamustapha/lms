@@ -7,11 +7,10 @@ import { EmailService } from 'src/email/email.service';
 import { UserService } from 'src/user/user.service';
 import { UserJwtStrategy } from './strategies/user.strategy';
 
-
 @Module({
   imports: [JwtModule.register({}), EmailModule],
   controllers: [AuthController],
-  providers: [AuthService, UserService,EmailService,UserJwtStrategy],
-  exports: [AuthService, JwtModule]
+  providers: [AuthService, UserService, EmailService, UserJwtStrategy],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

@@ -875,36 +875,45 @@ button.inverse:hover {
 
 .card.profile {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .card.profile .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #28104e;
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   background-color: #28104e;
-  margin-bottom: 50px;
-  justify-content: center;
-  overflow: hidden;
 }
 
-.carousel-wrap {
+.card.profile .avatar > * {
   width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
+  transform: scale(2, 2);
 }
 
-.carousel-wrap .carousel {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: calc((100% / 3)- 12px);
-  gap: 16px;
-  overflow-x: hidden;
-  margin: 0px 10px;
+.card.profile .body {
+  margin-top: 3.5rem;
+}
+
+/* .carousel-wrap {
+  }
+
+  .carousel {
+  }
+
+  .carousel > * {
+  } */
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel.dragging ::content {
@@ -966,6 +975,11 @@ button.inverse:hover {
 
 .m-8 {
   margin: 2rem;
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .my-14 {
@@ -1093,9 +1107,18 @@ button.inverse:hover {
   padding-right: 1.25rem;
 }
 
+.py-14 {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+
+.pt-14 {
+  padding-top: 3.5rem;
 }
 
 .pt-3 {
@@ -1230,8 +1253,8 @@ button.inverse:hover {
     padding-right: 4rem;
   }
 
-  .lg\:pb-24 {
-    padding-bottom: 6rem;
+  .lg\:pb-20 {
+    padding-bottom: 5rem;
   }
 
   .lg\:pt-10 {
