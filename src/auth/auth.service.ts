@@ -6,6 +6,16 @@ import { loginUserDto } from './dto/loginUser.dto';
 import * as bcrypt from 'bcrypt';
 import { registerRes } from 'src/user/types/regRes.type';
 
+export type User = {
+  firstname: String;
+  lastname: String;
+  fullname: String;
+  email: String;
+  phoneNumber: String;
+  role: String;
+  Status: Boolean;
+};
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -43,8 +53,8 @@ export class AuthService {
     }
 
     if (findUser.email) {
-      const tokens = await this.getUserTokens(findUser.id, findUser.email);
-      console.log(tokens);
+      delete findUser.password;
+      const tokens = await this.getUserTokens(findUser.id, findUser);
       return {
         message: 'Login Successful',
         user: findUser,
@@ -53,16 +63,16 @@ export class AuthService {
     }
   }
 
-  async getUserTokens(userId: number, email: string) {
+  async getUserTokens(userId: number, user: User) {
     const [at] = await Promise.all([
       this.jwtService.signAsync(
         {
           sub: userId,
-          email,
+          user,
         },
         {
           secret: 'user-secret',
-          expiresIn: 30,
+          expiresIn: 5 * 60,
         },
       ),
     ]);

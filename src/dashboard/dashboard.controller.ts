@@ -1,22 +1,24 @@
-import { Controller, Get, Res, Session } from '@nestjs/common';
-import { session } from 'passport';
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { UserGuard } from 'src/common/guards';
 
+@UseGuards(UserGuard)
 @Controller('dashboard')
 export class DashboardController {
   constructor() {}
 
   @Get()
-  index(@Res() res, @Session() session) {
-    if (!session.user || !session.access_token) {
-      res.redirect('/');
-    } else {
-      if (session.user.role === 'admin') {
-        res.redirect('/admin');
-      } else if (session.user.role === 'student') {
-        res.redirect('/student');
-      } else if (session.user.role === 'tutor') {
-        res.redirect('/tutor');
-      }
+  index(@Req() req: Request, @Res() res: Response) {
+    const payload: any = req.user;
+    // console.log(user);
+    if (payload.user.role === 'Admin') {
+      res.redirect('/admin');
+    }
+    if (payload.user.role === 'Student') {
+      res.redirect('/student');
+    }
+    if (payload.user.role === 'Tutor') {
+      res.redirect('/tutor');
     }
   }
 }

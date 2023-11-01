@@ -1,0 +1,7 @@
+extends ../auth_layout 
+
+block auth
+    p(class="font-bold text-lg text-violet-700") You are already Logged in!! you'll be redirectd in 2 seconds
+
+    script.
+        setTimeout(function() {window.location.href= '/dashboard'},2000)
