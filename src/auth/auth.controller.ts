@@ -41,27 +41,14 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(
-    @Req() req: Request,
-    @Res() res: Response,
-    @Session() session: Record<string, any>,
-  ) {
+  async login(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.authService.signInUser(req.body);
       const access = user.access_token;
-      this.authService.setToken(access);
-      if (user.user.role === 'Admin') {
-        // req.flash('success', user.message);
-        res.redirect('/admin');
-      }
-      if (user.user.role === 'Student') {
-        // req.flash('success', user.message);
-        res.redirect('/student');
-      }
-      if (user.user.role === 'Tutor') {
-        // req.flash('success', user.message);
-        res.redirect('/tutor');
-      }
+      res.cookie('user_token', access, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
+      res.redirect('/dashboard');
     } catch (error) {
       // req.flash('error', error.message);
       res.redirect('/auth/login');
@@ -122,7 +109,7 @@ export class AuthController {
   @Redirect('/')
   async logout(@Session() session, @Req() req, @Res() res) {
     req.flash('success', 'Successfully logged out');
-    await session.destroy();
+
     return { url: '/' };
   }
 }

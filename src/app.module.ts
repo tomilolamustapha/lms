@@ -33,7 +33,7 @@ import { EnrollmentService } from './enrollment/enrollment.service';
 import { EnrollmentController } from './enrollment/enrollment.controller';
 import * as flash from 'express-flash';
 import * as cookieParser from 'cookie-parser';
-import { SetTokenMiddleware } from './common/middleware/token.middleware';
+import { AuthMiddleware } from './common/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -75,10 +75,12 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(flash()).forRoutes('*'); // Apply express-flash middleware to all routes
     consumer
-      .apply(SetTokenMiddleware)
+      .apply(AuthMiddleware)
       .exclude(
         { path: 'auth/login', method: RequestMethod.GET },
         { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'auth/signup', method: RequestMethod.GET },
+        { path: 'auth/signup', method: RequestMethod.POST },
       )
       .forRoutes('/');
   }
