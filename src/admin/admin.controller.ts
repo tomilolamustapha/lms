@@ -7,7 +7,8 @@ export class AdminController {
   constructor() {}
   @Get('')
   dashboard(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
     const payload: any = req.user;
-    res.render('dashboard/admin', { user: payload.user });
+    res.render('dashboard/admin', { message, user: payload.user });
   }
 }

@@ -31,9 +31,12 @@ import { VideoController } from './course/uploads/video.controller';
 import { MulterModule } from './common/middleware/multer.module';
 import { EnrollmentService } from './enrollment/enrollment.service';
 import { EnrollmentController } from './enrollment/enrollment.controller';
-import * as flash from 'express-flash';
-import * as cookieParser from 'cookie-parser';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
+import { PageMiddleware } from './common/middleware/page.middleware';
+import { RedirectLoginMiddleware } from './common/middleware/redirect-login.middleware';
+import { ExternalExceptionFilter } from '@nestjs/core/exceptions/external-exception-filter';
+import { FlashMiddleware } from './common/middleware/flash.middleware';
+// import flash from 'express-flash';
 
 @Module({
   imports: [
@@ -73,7 +76,7 @@ import { AuthMiddleware } from './common/middleware/auth.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(flash()).forRoutes('*'); // Apply express-flash middleware to all routes
+    consumer.apply(FlashMiddleware).forRoutes('/');
     consumer
       .apply(AuthMiddleware)
       .exclude(
@@ -81,7 +84,12 @@ export class AppModule {
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/signup', method: RequestMethod.GET },
         { path: 'auth/signup', method: RequestMethod.POST },
+        { path: '/', method: RequestMethod.GET },
       )
-      .forRoutes('/');
+      .forRoutes('*');
+    consumer
+      .apply(RedirectLoginMiddleware)
+      .forRoutes({ path: 'auth/login', method: RequestMethod.GET });
+    // consumer.apply(PageMiddleware).forRoutes('/');
   }
 }
