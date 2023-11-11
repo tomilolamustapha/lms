@@ -71,7 +71,6 @@ import { FlashMiddleware } from './common/middleware/flash.middleware';
     AdminService,
     TutorService,
     EnrollmentService,
-    // UploadsService,
   ],
 })
 export class AppModule {

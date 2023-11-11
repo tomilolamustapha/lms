@@ -10,7 +10,9 @@ export class DashboardController {
   @Get()
   index(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
-    req.flash(message.status, message.message);
+    if (message) {
+      req.flash(message.status, message.message);
+    }
 
     const payload: any = req.user;
 

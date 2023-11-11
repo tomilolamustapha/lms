@@ -48,22 +48,17 @@ export class AuthController {
   }
 
   @Get('signup')
-  @Render('signup')
-  signupPage(@Req() req: Request, @Req() res: Response) {
+  signupPage(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
 
-    res.render('login', { message });
+    res.render('signup', { message });
   }
 
   @Post('signup')
-  @Redirect('/admin')
   async signup(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.userService.registerUser(req.body);
-      // const access = user.access_token;
-      // res.cookie('user_token', access, {
-      //   expires: new Date(Date.now() + 10 * 60 * 1000),
-      // });
+      req.flash('success', user.message);
       res.redirect('/dashboard');
     } catch (error) {
       res.redirect('/auth/signup');

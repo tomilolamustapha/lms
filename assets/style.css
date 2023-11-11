@@ -561,18 +561,18 @@ a {
   position: relative;
   top: 4em;
   justify-content: center;
-  align-items: center;
+  width: 100%;
   flex: 1;
 }
 
 .trigger {
-  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 4em;
   background: #28104e;
+  z-index: 2;
 }
 
 .trigger > i {
@@ -591,6 +591,7 @@ a {
   height: 100%;
   background: #6237a0;
   color: #deacf5;
+  z-index: 1;
 }
 
 .sidebar-nav:hover,
@@ -863,8 +864,6 @@ button.inverse:hover {
 .card {
   border: 2px solid #28104e;
   border-radius: 0.5rem;
-  width: -moz-fit-content;
-  width: fit-content;
   padding: 10px;
 }
 
@@ -973,6 +972,10 @@ button.inverse:hover {
   }
 }
 
+.m-5 {
+  margin: 1.25rem;
+}
+
 .m-8 {
   margin: 2rem;
 }
@@ -1014,6 +1017,10 @@ button.inverse:hover {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
 .grid {
   display: grid;
 }
@@ -1032,6 +1039,11 @@ button.inverse:hover {
 
 .w-11\/12 {
   width: 91.666667%;
+}
+
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .w-full {
@@ -1070,6 +1082,10 @@ button.inverse:hover {
   gap: 1rem;
 }
 
+.gap-5 {
+  gap: 1.25rem;
+}
+
 .justify-self-center {
   justify-self: center;
 }
@@ -1081,6 +1097,11 @@ button.inverse:hover {
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(40 16 78 / var(--tw-bg-opacity));
+}
+
+.bg-light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(222 172 245 / var(--tw-bg-opacity));
 }
 
 .bg-primary {
@@ -1228,8 +1249,20 @@ button.inverse:hover {
     flex-basis: 16.666667%;
   }
 
+  .lg\:basis-2\/6 {
+    flex-basis: 33.333333%;
+  }
+
+  .lg\:basis-4\/6 {
+    flex-basis: 66.666667%;
+  }
+
   .lg\:basis-5\/12 {
     flex-basis: 41.666667%;
+  }
+
+  .lg\:grid-flow-col {
+    grid-auto-flow: column;
   }
 
   .lg\:grid-cols-3 {
