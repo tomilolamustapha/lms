@@ -25,6 +25,7 @@ export class TutorService {
         };
     }
 
+
     async updateTutorCourse(id : number , data : updateCourseDataDto, document: any, video: any){
          const { title, description, courseCode} = data 
 

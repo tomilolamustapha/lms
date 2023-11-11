@@ -9,6 +9,14 @@ export class createCourseDto{
 
     description: string;
 
+    @IsNotEmpty()
+
+    courseCode: string;
+
+    @IsNotEmpty()
+
+    tutorId: number;
+
     constructor(data: Partial<createCourseDto>) {
         Object.assign(this, data);
       }
