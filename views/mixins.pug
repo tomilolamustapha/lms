@@ -30,19 +30,14 @@ mixin course-card(data)
 
 mixin profile-card(parsedData)
     
-    - const parse = parseedDats
+    - const parse = parsedData
 
     .card.profile
-        div(class="avatar")
+        .avatar
             block profile
-
-        block body
+        .body
+            block body
 
 mixin course(course) 
     h2(class="text-bold") #{course.title}
     p #{course.description}
-
-script.
-        document.addEventListener('DOMContentLoaded', function () {
-          handleCarousel()
-        });   

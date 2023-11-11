@@ -1,14 +1,45 @@
-import { Controller, Get, Redirect, Render } from '@nestjs/common';
+import { Controller, Get, Redirect, Req, Res, Session } from '@nestjs/common';
+import { session } from 'passport';
 
 @Controller()
 export class AppController {
   constructor() {}
 
   @Get()
-  @Render('index')
-  index() {}
+  index(@Req() req, @Res() res, @Session() session) {
+    let message;
+    const success = req.flash('success')[0];
+    const error = req.flash('error')[0];
+    if (success) {
+      message = {
+        status: 'success',
+        message: success,
+      };
+    }
+    if (error) {
+      message = { status: 'error', message: error };
+    }
+    if (!session.user || !session.access_token) {
+      res.render('index', message);
+    } else {
+      res.redirect('/dashboard');
+    }
+  }
 
   @Get('course')
-  @Render('course')
-  course() {}
+  course(@Req() req, @Res() res) {
+    let message;
+    const success = req.flash('success')[0];
+    const error = req.flash('error')[0];
+    if (success) {
+      message = {
+        status: 'success',
+        message: success,
+      };
+    }
+    if (error) {
+      message = { status: 'error', message: error };
+    }
+    res.render('course');
+  }
 }

@@ -4,12 +4,16 @@ import {
   Post,
   Redirect,
   Render,
-  Request,
+  Req,
+  Res,
+  Session,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { UserGuard } from 'src/common/guards';
+import { Request, Response } from 'express';
+import session from 'express-session';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +24,7 @@ export class AuthController {
 
   @Get('login')
   @Render('login')
-  loginPage(@Request() req) {
+  loginPage(@Req() req) {
     let message;
     const success = req.flash('success')[0];
     const error = req.flash('error')[0];
@@ -37,40 +41,23 @@ export class AuthController {
   }
 
   @Post('login')
-  @Redirect('/admin')
-  async login(@Request() req) {
+  async login(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.authService.signInUser(req.body);
-      req.session.user = user.user;
-      req.session.access_token = user.access_token;
-
-      if (user.user.role === 'Admin') {
-        req.flash('success', user.message);
-        return {
-          url: '/admin',
-        };
-      }
-      if (user.user.role === 'Student') {
-        req.flash('success', user.message);
-        return {
-          url: '/student',
-        };
-      }
-      if (user.user.role === 'Tutor') {
-        req.flash('success', user.message);
-        return {
-          url: '/tutor',
-        };
-      }
+      const access = user.access_token;
+      res.cookie('user_token', access, {
+        expires: new Date(Date.now() + 5 * 60 * 1000),
+      });
+      res.redirect('/dashboard');
     } catch (error) {
-      req.flash('error', error.message);
-      return { url: '/auth/login' };
+      // req.flash('error', error.message);
+      res.redirect('/auth/login');
     }
   }
 
   @Get('signup')
   @Render('signup')
-  signupPage(@Request() req) {
+  signupPage(@Req() req) {
     let message;
     const success = req.flash('success')[0];
     const error = req.flash('error')[0];
@@ -88,7 +75,7 @@ export class AuthController {
 
   @Post('signup')
   @Redirect('/admin')
-  async signup(@Request() req) {
+  async signup(@Req() req) {
     try {
       const user = await this.userService.registerUser(req.body);
       req.session.user = user.user;
@@ -117,27 +104,12 @@ export class AuthController {
     }
   }
 
-
   @UseGuards(UserGuard)
   @Get('logout')
   @Redirect('/')
-  logout(@Request() req) {
-    // if (!req.session.id || !req.session.access_token) {
-    //   req.session.destroy();
-    //   return {
-    //     url: '/auth/login',
-    //   };
-    // }
-    const signout = this.authService.signOutUser(
-      req.session.user.id,
-      req.session.access_token,
-    );
+  async logout(@Session() session, @Req() req, @Res() res) {
+    req.flash('success', 'Successfully logged out');
 
-    let message = signout;
-    req.flash('success', message);
-    // req.session.destroy();
-    return {
-      url: '/auth/login',
-    };
+    return { url: '/' };
   }
 }

@@ -1,0 +1,7 @@
+extends ../auth_layout 
+
+block auth
+    p(class="font-bold text-lg text-violet-700") No session!! you'll be redirectd in 3 seconds
+
+    script.
+        setTimeout(function() {window.location.href= '/auth/login'},3000)

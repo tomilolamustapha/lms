@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
 import { AppController } from './app.controller';
@@ -31,6 +31,9 @@ import { VideoController } from './course/uploads/video.controller';
 import { MulterModule } from './common/middleware/multer.module';
 import { EnrollmentService } from './enrollment/enrollment.service';
 import { EnrollmentController } from './enrollment/enrollment.controller';
+import * as flash from 'express-flash';
+import * as cookieParser from 'cookie-parser';
+import { AuthMiddleware } from './common/middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -68,4 +71,17 @@ import { EnrollmentController } from './enrollment/enrollment.controller';
     // UploadsService,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(flash()).forRoutes('*'); // Apply express-flash middleware to all routes
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.GET },
+        { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'auth/signup', method: RequestMethod.GET },
+        { path: 'auth/signup', method: RequestMethod.POST },
+      )
+      .forRoutes('/');
+  }
+}
