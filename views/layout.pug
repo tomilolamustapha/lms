@@ -21,8 +21,9 @@ block root
                             i(class="fa fa-right-from-bracket")
                                 em() logout         
   
-        main(class="layout-content flex-col lg:flex-row") 
-            block main
+        main(class="layout-content") 
+            div(class="w-full")
+                block main
 
     script.
         document.addEventListener('DOMContentLoaded', function () {

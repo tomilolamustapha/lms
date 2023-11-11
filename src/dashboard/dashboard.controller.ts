@@ -9,8 +9,13 @@ export class DashboardController {
 
   @Get()
   index(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+    if (message) {
+      req.flash(message.status, message.message);
+    }
+
     const payload: any = req.user;
-    // console.log(user);
+
     if (payload.user.role === 'Admin') {
       res.redirect('/admin');
     }

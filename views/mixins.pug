@@ -41,3 +41,9 @@ mixin profile-card(parsedData)
 mixin course(course) 
     h2(class="text-bold") #{course.title}
     p #{course.description}
+
+mixin dash-card(data)
+    .card(class="m-5 p-5")
+        i(class=`${data.icon}`)
+        P() #{data.value}
+        P() #{data.title}

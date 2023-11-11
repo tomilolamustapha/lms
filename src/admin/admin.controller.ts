@@ -1,13 +1,20 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserGuard } from 'src/common/guards';
+import { DashboardService } from 'src/dashboard/dashboard.service';
 @UseGuards(UserGuard)
 @Controller('admin')
 export class AdminController {
-  constructor() {}
+  constructor(private readonly dashboardService: DashboardService) {}
   @Get('')
   dashboard(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
     const payload: any = req.user;
-    res.render('dashboard/admin', { user: payload.user });
+    // const stats = this.dashboardService.AdminStats(payload.user.id, 0);
+    res.render('dashboard/admin', {
+      message,
+      user: payload.user,
+      // stats: stats,
+    });
   }
 }

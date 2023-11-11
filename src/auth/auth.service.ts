@@ -72,7 +72,7 @@ export class AuthService {
         },
         {
           secret: 'user-secret',
-          expiresIn: 5 * 60,
+          expiresIn: 10 * 60,
         },
       ),
     ]);

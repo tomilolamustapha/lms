@@ -1,25 +1,20 @@
 extends auth_layout 
 
-block auth
 
-    div(class="lg:h-screen lg:flex lg:w-full") 
-        div(class="bg-white flex justify-center items-center rounded-lg lg:rounded-r-lg lg:w-3/5")        
-            div(class="m-8")
-                div(class="font-bold text-lg text-primary mb-3") Login in  your Account
-                div(class="")
-                    form(action="/auth/login", method="POST")
-                        div(class="mb-3")
-                            label( for="email" class="text-primary") Email
-                            input(type="email" class="" id="email" name="email") 
-                        div(class="mb-3")
-                            label( for="password" class="text-primary") Password
-                            input(type="password" class="" id="password" name="password")
-                        button( class="w-full") Login
-                        p(class="text-gray-600") dont have an account ?.
-                            span(class="text-medium")
-                                a(href="/auth/signup") Sign Up  
+block left   
+    div(class="font-bold text-lg text-primary mb-3") Login in  your Account
+    div(class="")
+        form(action="/auth/login", method="POST")
+            div(class="mb-3")
+                label( for="email" class="text-primary") Email
+                input(type="email" class="" id="email" name="email") 
+            div(class="mb-3")
+                label( for="password" class="text-primary") Password
+                input(type="password" class="" id="password" name="password")
+            button( class="w-full") Login
+            p(class="text-gray-600") dont have an account ?.
+                span(class="text-medium")
+                    a(href="/auth/signup") Sign Up  
 
-
-        div(class="hidden lg:flex justify-center items-center lg:w-2/5")   
-            div(class="m-8")
-                h4 Image here
+block right
+    img( src="/image/Course app-rafiki.png" alt="girl")

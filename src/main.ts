@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
-import * as flash from 'express-flash';
+import flash = require('connect-flash');
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {

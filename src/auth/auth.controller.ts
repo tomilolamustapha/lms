@@ -23,21 +23,10 @@ export class AuthController {
   ) {}
 
   @Get('login')
-  @Render('login')
-  loginPage(@Req() req) {
-    let message;
-    const success = req.flash('success')[0];
-    const error = req.flash('error')[0];
-    if (success) {
-      message = {
-        status: 'success',
-        message: success,
-      };
-    }
-    if (error) {
-      message = { status: 'error', message: error };
-    }
-    return { message: message };
+  loginPage(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+
+    res.render('login', { message });
   }
 
   @Post('login')
@@ -45,71 +34,44 @@ export class AuthController {
     try {
       const user = await this.authService.signInUser(req.body);
       const access = user.access_token;
+      console.log(user.message);
+
+      req.flash('success', user.message);
       res.cookie('user_token', access, {
-        expires: new Date(Date.now() + 5 * 60 * 1000),
+        expires: new Date(Date.now() + 10 * 60 * 1000),
       });
       res.redirect('/dashboard');
     } catch (error) {
-      // req.flash('error', error.message);
+      req.flash('error', error.message);
       res.redirect('/auth/login');
     }
   }
 
   @Get('signup')
-  @Render('signup')
-  signupPage(@Req() req) {
-    let message;
-    const success = req.flash('success')[0];
-    const error = req.flash('error')[0];
-    if (success) {
-      message = {
-        status: 'success',
-        message: success,
-      };
-    }
-    if (error) {
-      message = { status: 'error', message: error };
-    }
-    return { message: message };
+  signupPage(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+
+    res.render('signup', { message });
   }
 
   @Post('signup')
-  @Redirect('/admin')
-  async signup(@Req() req) {
+  async signup(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.userService.registerUser(req.body);
-      req.session.user = user.user;
-      // req.session.access_token = user.access_token;
-      if (user.user.role === 'Admin') {
-        req.flash('success', user.message);
-        return {
-          url: '/admin',
-        };
-      }
-      if (user.user.role === 'Student') {
-        req.flash('success', user.message);
-        return {
-          url: '/student',
-        };
-      }
-      if (user.user.role === 'Tutor') {
-        req.flash('success', user.message);
-        return {
-          url: '/tutor',
-        };
-      }
+      req.flash('success', user.message);
+      res.redirect('/dashboard');
     } catch (error) {
-      req.flash('error', error.message);
-      return { url: '/auth/signup' };
+      res.redirect('/auth/signup');
     }
   }
 
   @UseGuards(UserGuard)
   @Get('logout')
-  @Redirect('/')
-  async logout(@Session() session, @Req() req, @Res() res) {
-    req.flash('success', 'Successfully logged out');
-
-    return { url: '/' };
+  async logout(@Req() req: Request, @Res() res: Response) {
+    res.cookie('user_token', '', {
+      expires: new Date(Date.now()),
+    });
+    req.flash('flash', 'successfully logged out');
+    res.redirect('/');
   }
 }

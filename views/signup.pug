@@ -1,68 +1,63 @@
 extends auth_layout 
 
-block auth
+block left
+    div(class="font-bold text-lg text-primary mb-3") Sign Up a new Account
+    nav(class="tabs")
+        a(class="tab active" data-toggle="tab" href="#student") Student
+        a(class="tab" data-toggle="tab" href="#tutor") Tutor
 
-    div(class="lg:h-screen lg:flex lg:w-full") 
-        div(class="bg-white flex justify-center items-center rounded-lg lg:rounded-r-lg lg:w-3/5")        
-            div(class="m-8")
-                div(class="font-bold text-lg text-primary mb-3") Sign Up a new Account
-                nav(class="tabs")
-                    a(class="tab active" data-toggle="tab" href="#student") Student
-                    a(class="tab" data-toggle="tab" href="#tutor") Tutor
+    div(class="tab-content")
+        div(id="student" class="tab-pane active")
+            form(action="/auth/signup", method="POST")
+                div(class="mb-3")
+                    label( for="lastName" class="text-primary") Last Name
+                    input(type="text" class="" id="lastName" name="lastname" required) 
+                div(class="mb-3")
+                    label( for="firstName" class="text-primary") First Name
+                    input(type="text" class="" id="firstName" name="firstname") 
+                div(class="mb-3")
+                    label( for="email" class="text-primary") Email
+                    input(type="enail" class="" id="email" name="email")
+                div(class="mb-3")
+                    label( for="phoneNumber" class="text-primary") Phone Number
+                    input(type="tel" class="" id="phoneNumber" name="phoneNumber") 
+                div(class="mb-3")
+                    label( for="password" class="text-primary") Password
+                    input(type="password" class="" id="password" name="password") 
+                div(class="mb-3")
+                    label( for="role" class="text-primary") Role
+                    select( class="" id="role" name="role")
+                        option( disabled slected label="Select a role")
+                        option(value="Admin" label="Admin")
+                        option(value="Tutor" label="Tutor")
+                        option(value="Student" label="Student")
+                div(class="mb-3")
+                    label( for="password" class="text-primary" require) Username
+                    input(type="text" class="" id="username" name="username")
+                button( class="w-full") Sign Up
+        
+        div(id="tutor" class="tab-pane")
+            form(action="/auth/signup", method="POST")
+                div(class="mb-3")
+                    label( for="username" class="text-primary") Username
+                    input(type="text" class="" id="tutor-username" name="username") 
+                div(class="mb-3")
+                    label( for="id" class="text-primary") Id number
+                    input(type="text" class="" id="id" name="id") 
+                div(class="mb-3")
+                    label( for="password" class="text-primary") Password
+                    input(type="password" class="" id="tutor-password" name="password")
+                button( class="") Sign Up
 
-                div(class="tab-content")
-                    div(id="student" class="tab-pane active")
-                        form(action="/auth/signup", method="POST")
-                            div(class="mb-3")
-                                label( for="lastName" class="text-primary") Last Name
-                                input(type="text" class="" id="lastName" name="lastname" required) 
-                            div(class="mb-3")
-                                label( for="firstName" class="text-primary") First Name
-                                input(type="text" class="" id="firstName" name="firstname") 
-                            div(class="mb-3")
-                                label( for="email" class="text-primary") Email
-                                input(type="enail" class="" id="email" name="email")
-                            div(class="mb-3")
-                                label( for="phoneNumber" class="text-primary") Phone Number
-                                input(type="tel" class="" id="phoneNumber" name="phoneNumber") 
-                            div(class="mb-3")
-                                label( for="password" class="text-primary") Password
-                                input(type="password" class="" id="password" name="password") 
-                            div(class="mb-3")
-                                label( for="role" class="text-primary") Role
-                                select( class="" id="role" name="role")
-                                    option( disabled slected label="Select a role")
-                                    option(value="Admin" label="Admin")
-                                    option(value="Tutor" label="Tutor")
-                                    option(value="Student" label="Student")
-                            div(class="mb-3")
-                                label( for="password" class="text-primary" require) Username
-                                input(type="text" class="" id="username" name="username")
-                            button( class="w-full") Sign Up
-                    
-                    div(id="tutor" class="tab-pane")
-                        form(action="/auth/signup", method="POST")
-                            div(class="mb-3")
-                                label( for="username" class="text-primary") Username
-                                input(type="text" class="" id="tutor-username" name="username") 
-                            div(class="mb-3")
-                                label( for="id" class="text-primary") Id number
-                                input(type="text" class="" id="id" name="id") 
-                            div(class="mb-3")
-                                label( for="password" class="text-primary") Password
-                                input(type="password" class="" id="tutor-password" name="password")
-                            button( class="") Sign Up
-
-                p(class="text-gray-600") already have an account ?.
-                    span(class="text-medium")
-                        a(href="/auth/login") Login  
+    p(class="text-gray-600") already have an account ?.
+        span(class="text-medium")
+            a(href="/auth/login") Login  
 
 
-        div(class="hidden lg:flex justify-center items-center lg:w-2/5")   
-            div(class="m-8")
-                h4 Image here
-    
+block right
+    img( src="/image/Buffer-bro.png" alt="girl")
+
     script.
         document.addEventListener('DOMContentLoaded', function () {
-          handleTabs()
+            handleTabs()
         });     

@@ -1,4 +1,12 @@
 extends ../layout 
 
 block main
+    div(class="flex")
+        div(class="lg:basis-4/6")
+            div(="bg-light rounded-lg flex justify-between")
+                p() Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae et culpa reprehenderit id beatae asperiores est, ea consequatur quos. Exercitationem optio iure consequuntur magni dignissimos ea harum earum amet quod.
+                img( src="/image/Student stress-amico.png" alt="girl")
+        div(class="lg:basis-2/6")
+            +card
+                p() yes
     h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Student dashboard

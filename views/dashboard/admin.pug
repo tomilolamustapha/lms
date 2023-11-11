@@ -1,4 +1,59 @@
 extends ../layout 
 
-block main
-    h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Admin Dashboard
+block main 
+    -
+        const stats = [
+            {
+                icon: 'fa fa-envelope',
+                title: 'Courses',
+                value: 100,
+            },
+            {
+                icon: 'fa fa-envelope',
+                title: 'Students',
+                value: 200,
+            },
+            {
+                icon: 'fa fa-envelope',
+                title: 'Tutors',
+                value: 45,
+            },    
+        ]
+    
+
+        
+    div(class="grid lg:grid-flow-col gap-5")
+        each stat, i in stats 
+            +card
+                i(class=`${stat.icon}`)
+                P() #{stat.value}
+                P() #{stat.title}
+        //- +card
+        //-     i(class='')
+        //-     P() #{stats.numCourses}
+        //-     P() Courses
+        
+        //- +card
+        //-     i(class='')
+        //-     P() #{stats.numStudents}
+        //-     P() Courses
+        
+        //- +card
+        //-     i(class='')
+        //-     P() #{stats.numTutors}
+        //-     P() Courses
+
+    
+    div()
+        table 
+            thead 
+                th Name
+                th email
+                th date
+            tbody 
+                td Aishat
+                td AT@mail.com
+                td 22-3-3003
+
+    div()    
+        h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Admin Dashboard
