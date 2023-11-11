@@ -8,7 +8,7 @@ import { PaginateFunction, paginator } from 'prisma/models/paginator';
 export class DashboardService {
     constructor(private prisma: PrismaService) { }
 
-    async AdminStats(id: number , tutorId: number) {
+    async AdminStats(id: number ) {
 
         // Check if the user is an admin
         const user = await this.prisma.user.findUnique({

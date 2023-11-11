@@ -4,6 +4,7 @@ import { courses } from 'prisma/models/courses';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
+import { createCourseDto } from './dto/createCourse.dto';
 
 @Injectable()
 export class CourseService {
@@ -148,7 +149,27 @@ export class CourseService {
       message : "Courses fetched sucessfully"
     }
   }
+   
 
+  async createCourse(data :createCourseDto){
+
+    const {title, description, courseCode, tutorId} = data;
+
+    const newCourse = await this.prisma.course.create({
+      data:{
+        title,
+        description,
+        courseCode,
+        tutorId
+      },
+    });
+
+    return{
+      newCourse,
+      mesaage :" Course created successfully"
+    }
+
+  }
 
 
 
