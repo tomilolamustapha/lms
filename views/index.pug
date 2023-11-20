@@ -192,19 +192,19 @@ block root
             div(class="flex justify-center my-10")
                 p(class="text-xl font-semibold ") More Courses from Catagories
 
-            div(class="flex justify-center py-14 my-5")
-                //- +carousel()
-                each cat, i in category
-                    +profile-card(cat)
-                        block profile 
-                            img(src="/image/schoolgirl.jpg" alt="")
-                        block body
-                            p(class="text-2xl text-bold") testing
-                            p(class="text-bold") #{parse.title}
-                            p #{parse.description}
-                    //- +card 
-                    //-     p(class="text-xl font-bold") #{courseCat.title}
-                    //-     p(class="") #{courseCat.description}
+            div(class=" py-14 my-5")
+                +carousel()
+                    each cat, i in category
+                        +profile-card(cat)
+                            block profile 
+                                img(src="/image/schoolgirl.jpg" alt="")
+                            block body
+                                p(class="text-2xl text-bold") testing
+                                p(class="text-bold") #{parse.title}
+                                p #{parse.description}
+                        //- +card 
+                        //-     p(class="text-xl font-bold") #{courseCat.title}
+                        //-     p(class="") #{courseCat.description}
 
     
         div( id="testomonials" class="flex flex-col")

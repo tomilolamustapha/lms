@@ -284,6 +284,37 @@
     display: block;
   }
 
+  table {
+    border-collapse: collapse;
+    margin: 28px 0;
+    min-width: auto;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
+    width: 100%;
+  }
+
+  table thead tr {
+    background-color: #6237a0;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  table th,
+  table td {
+    padding: 12px 16px;
+  }
+
+  table tbody tr {
+    border-bottom: 1px solid #ffffff;
+  }
+  table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  table tbody tr:last-of-type {
+    border-bottom: 2px solid #6237a0;
+  }
+
   .nav {
     height: 50px;
     width: 100%;
@@ -339,7 +370,7 @@
 
   .card.profile {
     position: relative;
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -367,13 +398,21 @@
     margin-top: 3.5rem;
   }
 
-  /* .carousel-wrap {
+  .carousel-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .carousel {
+    width: 100%;
+    gap: 1em;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns:;
   }
 
-  .carousel > * {
+  /* .carousel > * {
   } */
 
   .carousel::-webkit-scrollbar {
