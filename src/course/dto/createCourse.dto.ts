@@ -1,4 +1,4 @@
-import {  IsNotEmpty, validateSync } from "class-validator";
+import {  IsNotEmpty, isNotEmpty, validateSync } from "class-validator";
 
 export class createCourseDto{
     @IsNotEmpty()
@@ -13,9 +13,15 @@ export class createCourseDto{
 
     courseCode: string;
 
-    @IsNotEmpty()
 
-    tutorId: number;
+    // @IsNotEmpty()
+
+    // video: string;
+
+    // @IsNotEmpty()
+    
+    // document: string;
+
 
     constructor(data: Partial<createCourseDto>) {
         Object.assign(this, data);
