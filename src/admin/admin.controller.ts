@@ -10,7 +10,7 @@ export class AdminController {
   dashboard(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const payload: any = req.user;
-    // const stats = this.dashboardService.AdminStats(payload.user.id, 0);
+    // const stats = this.dashboardService.AdminStats(payload.user.id);
     res.render('dashboard/admin', {
       message,
       user: payload.user,

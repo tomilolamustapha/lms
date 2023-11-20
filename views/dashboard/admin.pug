@@ -19,6 +19,46 @@ block main
                 value: 45,
             },    
         ]
+
+        const testimonials = [
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },          
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },          
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },
+            {
+                client: 'Aishat Tomilola',
+                occupation: 'Senior developer',
+                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                image: '/image/schoolgirl.jpg',
+            },          
+        ]
+
     
 
         
@@ -44,16 +84,44 @@ block main
         //-     P() Courses
 
     
+    div(class="flex justify-evenly pt-14 ")
+        each test, i in testimonials
+            +profile-card(test)
+                block profile
+                    img( src=`${parse.image}` alt="" srcset="")
+                block body
+                    p(class="font-bold") #{parse.client}
+                    p #{parse.occupation}
+                    p #{parse.testimony}
+
     div()
         table 
             thead 
-                th Name
-                th email
-                th date
+                tr
+                    th Name
+                    th email
+                    th date
             tbody 
-                td Aishat
-                td AT@mail.com
-                td 22-3-3003
+                tr
+                    td Aishat
+                    td AT@mail.com
+                    td 22-3-3003
+                tr
+                    td Aishat
+                    td AT@mail.com
+                    td 22-3-3003
+                tr
+                    td Aishat
+                    td AT@mail.com
+                    td 22-3-3003
+                tr
+                    td Aishat
+                    td AT@mail.com
+                    td 22-3-3003
+                tr
+                    td Aishat
+                    td AT@mail.com
+                    td 22-3-3003
 
     div()    
         h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Admin Dashboard

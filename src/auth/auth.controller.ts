@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { UserGuard } from 'src/common/guards';
 import { Request, Response } from 'express';
 import session from 'express-session';
+import { access } from 'fs';
 
 @Controller('auth')
 export class AuthController {
@@ -34,7 +35,6 @@ export class AuthController {
     try {
       const user = await this.authService.signInUser(req.body);
       const access = user.access_token;
-      console.log(user.message);
 
       req.flash('success', user.message);
       res.cookie('user_token', access, {
@@ -58,9 +58,22 @@ export class AuthController {
   async signup(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.userService.registerUser(req.body);
+
+      const access = await this.authService.getUserTokens(
+        user.user.id,
+        user.user,
+      );
       req.flash('success', user.message);
-      res.redirect('/dashboard');
+      if (access) {
+        res.cookie('user_token', access.access_token, {
+          expires: new Date(Date.now() + 10 * 60 * 1000),
+        });
+        res.redirect('/dashboard');
+      } else {
+        res.redirect('/');
+      }
     } catch (error) {
+      req.flash('error', error.message);
       res.redirect('/auth/signup');
     }
   }

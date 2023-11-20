@@ -1,12 +1,54 @@
 extends ../layout 
 
 block main
-    div(class="flex")
-        div(class="lg:basis-4/6")
-            div(="bg-light rounded-lg flex justify-between")
-                p() Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae et culpa reprehenderit id beatae asperiores est, ea consequatur quos. Exercitationem optio iure consequuntur magni dignissimos ea harum earum amet quod.
-                img( src="/image/Student stress-amico.png" alt="girl")
+    -
+        const courses = [
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            },
+            {
+                'image': '/image/schoolgirl.jpg',
+                'school': 'LASU',
+                'title': 'Lorem ipsum',
+                'description': 'lorem ipsum, dolor sit',
+                'enrolled': 200
+            }
+        ]
+
+
+    div(class="grid lg:flex gap-3")
+        div(class="lg:basis-4/6 gap-6")
+            div(class="bg-light rounded-lg flex p-5 items-center ")
+                div(class="basis-4/6")
+                    p(class="font-bold text-lg") Hello, #{user.fullname}
+                    p(class="text-lg") Welcome, lets get to work.
+                div(class="basis-2/6 ")
+                    img( src="/image/Research paper-rafiki.png" alt="girl")
+            p(class="font-semibold mt-5 mb-1") Popular courses
+            div(class="flex justify-center mb-5")
+                div(class="grid lg:grid-flow-col gap-6")
+                    each course in courses
+                        +course-card(course)
+            p(class="font-semibold mt-5 mb-1") My courses
+            div(class="flex justify-center mb-5")
+                div(class="grid lg:grid-flow-col gap-6")
+                    each course in courses
+                        +course-card(course)
+
+
         div(class="lg:basis-2/6")
             +card
                 p() yes
-    h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Student dashboard
+    
+    
