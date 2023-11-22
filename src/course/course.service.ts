@@ -155,7 +155,7 @@ export class CourseService {
 
   async createCourse(data :createCourseDto , id : number){
 
-    const {title, description, courseCode} = data;
+    const {title, description, courseCode, } = data;
 
     const admin = await this.prisma.user.findFirst({ where: { id } });
 
@@ -196,30 +196,30 @@ export class CourseService {
 
   }
 
-  async getTutorCourses(userRole:UserRole , id :number){
+  // async getTutorCourses(userRole:UserRole , id: number){
 
-    const tutor = await this.prisma.user.findFirst({ where: { id } });
+  // //   const tutor = await this.prisma.user.findFirst({ where: { id } });
 
-    if (!tutor || tutor.role !== UserRole.Tutor) {
-      throw new UnauthorizedException('Only Tutor can fetch their Course.')
-  }
+  // //   if (!tutor || tutor.role !== UserRole.Tutor) {
+  // //     throw new UnauthorizedException('Only Tutor can fetch their Course.')
+  // // }
 
-  if (isNaN(id)) {
-      throw new BadRequestException("User Id is Invalid");
-  }
+  // if (isNaN(id)) {
+  //     throw new BadRequestException("User Id is Invalid");
+  // }
 
 
-  const courses = await this.prisma.course.findMany({
-    where:{
-      tutorId: tutor.id,
-    },
-  });
+  // const courses = await this.prisma.course.findMany({
+  //   where:{
+  //    course
+  //   },
+  // });
 
-  return{
-    courses,
-    message: "Course fetched successfully!"
-  }
-  }
+  // return{
+  //   courses,
+  //   message: "Course fetched successfully!"
+  // }
+  // }
 
 
   async enrollCourse(userRole:UserRole , data:enrollmentDto ,id: number){
