@@ -2,23 +2,23 @@ extends ../layout
 
 block main 
     -
-        const stats = [
-            {
-                icon: 'fa fa-envelope',
-                title: 'Courses',
-                value: 100,
-            },
-            {
-                icon: 'fa fa-envelope',
-                title: 'Students',
-                value: 200,
-            },
-            {
-                icon: 'fa fa-envelope',
-                title: 'Tutors',
-                value: 45,
-            },    
-        ]
+        //- const stats = [
+        //-     {
+        //-         icon: 'fa fa-envelope',
+        //-         title: 'Courses',
+        //-         value: 100,
+        //-     },
+        //-     {
+        //-         icon: 'fa fa-envelope',
+        //-         title: 'Students',
+        //-         value: 200,
+        //-     },
+        //-     {
+        //-         icon: 'fa fa-envelope',
+        //-         title: 'Tutors',
+        //-         value: 45,
+        //-     },    
+        //- ]
 
         const testimonials = [
             {
@@ -63,25 +63,26 @@ block main
 
         
     div(class="grid lg:grid-flow-col gap-5")
-        each stat, i in stats 
-            +card
-                i(class=`${stat.icon}`)
-                P() #{stat.value}
-                P() #{stat.title}
-        //- +card
-        //-     i(class='')
-        //-     P() #{stats.numCourses}
-        //-     P() Courses
+        //- each stat, i in stats 
+        //-     +card
+        //-         i(class=`${stat.icon}`)
+        //-         P() #{stat.value}
+        //-         P() #{stat.title}
+        +card
+            i(class='fa fa-book')
+            P() #{stats.numCourses}
+            P() Courses
         
-        //- +card
-        //-     i(class='')
-        //-     P() #{stats.numStudents}
-        //-     P() Courses
+        +card
+            i(class='fa-solid fa-graduation-cap')
+            P() #{stats.numStudents}
+            P() Students
         
-        //- +card
-        //-     i(class='')
-        //-     P() #{stats.numTutors}
-        //-     P() Courses
+        +card
+            i(class='fa-solid fa-person-chalkboard')
+            P() #{stats.numTutors}
+            p(class='') Tutor 
+            
 
     
     div(class="flex justify-evenly pt-14 ")
