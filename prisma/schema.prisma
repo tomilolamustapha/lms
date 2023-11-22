@@ -39,7 +39,7 @@ model Course {
   description String?
   courseCode  String       @unique
   duration    Int          @default(0)
-  tutorId     Int
+  //tutorId     Int
   status      Boolean      @default(true)
   video       Video[]
   document    Document[]

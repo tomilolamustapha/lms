@@ -155,7 +155,7 @@ export class CourseService {
 
   async createCourse(data :createCourseDto , id : number){
 
-    const {title, description, courseCode,} = data;
+    const {title, description, courseCode} = data;
 
     const admin = await this.prisma.user.findFirst({ where: { id } });
 
