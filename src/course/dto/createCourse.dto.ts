@@ -20,7 +20,7 @@ export class createCourseDto{
 
     // @IsNotEmpty()
     
-    // document: string;
+    //  document: string;
 
 
     constructor(data: Partial<createCourseDto>) {

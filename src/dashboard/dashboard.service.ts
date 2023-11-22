@@ -36,7 +36,7 @@ export class DashboardService {
         // calculate total number of courses
         const numCourses = await this.prisma.course.count({
             where: {
-                tutorId:{
+                courseCode:{
                     not:null
                 },
             },
