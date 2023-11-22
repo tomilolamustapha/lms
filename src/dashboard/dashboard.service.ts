@@ -34,13 +34,7 @@ export class DashboardService {
         });
 
         // calculate total number of courses
-        const numCourses = await this.prisma.course.count({
-            where: {
-                courseCode:{
-                    not:null
-                },
-            },
-        });
+        const numCourses = await this.prisma.course.count();
 
         return {
             message : "Total Users and Courses Fetched",
