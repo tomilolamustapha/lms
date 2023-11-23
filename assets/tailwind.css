@@ -237,7 +237,7 @@
   }
 
   button.inverse {
-    border: 1px solid #28104e;
+    border: 2px solid #28104e;
     background: none;
     color: #28104e;
   }
@@ -318,7 +318,7 @@
   .nav {
     height: 50px;
     width: 100%;
-    background-color: #6237a0;
+    background-color: #9754cb;
     position: relative;
   }
 
@@ -404,24 +404,30 @@
     align-items: center;
   }
 
-  .carousel {
+  .slider {
+    position: absolute;
+    /* left: 10%;
+    top: 30%; */
+    width: 80%;
+    height: 200px;
+    overflow: hidden;
+  }
+  .slider-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    gap: 1em;
+    height: 200%;
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns:;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    pointer-events: none;
+    transition: 0s ease-in;
   }
 
-  /* .carousel > * {
-  } */
-
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-
-  .carousel.dragging ::content {
-    cursor: grab;
-    user-select: none;
+  .slide {
+    height: 100%;
+    padding: 3rem;
   }
 
   @media (max-width: 768px) {
