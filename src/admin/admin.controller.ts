@@ -7,11 +7,10 @@ import { DashboardService } from 'src/dashboard/dashboard.service';
 export class AdminController {
   constructor(private readonly dashboardService: DashboardService) {}
   @Get('')
-  dashboard(@Req() req: Request, @Res() res: Response) {
+  async dashboard(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const payload: any = req.user;
-    const stats =  this.dashboardService.AdminStats(payload.user.id);
-    console.log(stats);
+    const stats = await this.dashboardService.AdminStats(payload.user.id);
     res.render('dashboard/admin', {
       message,
       user: payload.user,

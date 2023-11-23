@@ -2,24 +2,6 @@ extends ../layout
 
 block main 
     -
-        //- const stats = [
-        //-     {
-        //-         icon: 'fa fa-envelope',
-        //-         title: 'Courses',
-        //-         value: 100,
-        //-     },
-        //-     {
-        //-         icon: 'fa fa-envelope',
-        //-         title: 'Students',
-        //-         value: 200,
-        //-     }, 
-        //-     {
-        //-         icon: 'fa fa-envelope',
-        //-         title: 'Tutors',
-        //-         value: 45,
-        //-     },    
-        //- ]
-
         const testimonials = [
             {
                 client: 'Aishat Tomilola',
@@ -63,26 +45,30 @@ block main
 
         
     div(class="grid lg:grid-flow-col gap-5")
-        //- each stat, i in stats 
-        //-     +card
-        //-         i(class=`${stat.icon}`)
-        //-         P() #{stat.value}
-        //-         P() #{stat.title}
         +card
-            i(class='fa fa-book')
-            P() #{stats.numCourses}
-            P() Courses
+            div(class="flex h-full w-full justify-around items-center")
+                div(class=" bg-light rounded-lg text-3xl px-5 py-4")
+                    i(class='fa fa-book')
+                div()
+                    P(class="font-bold text-2xl") #{stats.numCourses}
+                    P(class="font-bold text-md") Courses
         
         +card
-            i(class='fa-solid fa-graduation-cap')
-            P() #{stats.numStudents}
-            P() Students
+            div(class="flex h-full w-full justify-around items-center")
+                div(class=" bg-medium rounded-lg text-3xl px-5 py-4")
+                    i(class='fa-solid fa-graduation-cap')
+                div()
+                    P(class="font-bold text-2xl") #{stats.numStudents}
+                    P(class="font-bold text-md") Students
         
         +card
-            i(class='fa-solid fa-person-chalkboard')
-            P() #{stats.numTutors}
-            p(class='') Tutor 
-            
+            div(class="flex h-full w-full justify-around items-center")
+                div(class=" bg-primary rounded-lg text-3xl px-5 py-4")
+                    i(class='fa-solid fa-person-chalkboard')
+                div()
+                    P(class="font-bold text-2xl") #{stats.numTutors}
+                    p(class="font-bold text-md") Tutors 
+                    
   
     div(class="lg:flex justify-evenly pt-14 ")
         each test, i in testimonials
