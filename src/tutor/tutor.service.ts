@@ -1,11 +1,14 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserRole } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { updateCourseDataDto } from './dto/updateCourseData.dto';
+import { CourseService } from 'src/course/course.service';
+import { courses } from 'prisma/models/courses';
 
 @Injectable()
 export class TutorService {
-    constructor (private prisma : PrismaService){}
+    constructor (private prisma : PrismaService,
+        private course : CourseService){}
 
     async getUserById(id: number) {
 
@@ -56,8 +59,26 @@ export class TutorService {
          });
 
          return{
+            updateCourse,
             message :"Course Updated Successfully"
          };
+    }
+
+    async getTotalForCourses(tutorId : number){
+        const tutor = await this.prisma.user.findUnique({
+            where:{
+                id : tutorId,
+            },
+            include:{
+                courses: true,
+            },
+        });
+
+        if(!tutor){
+            throw new NotFoundException('Tutor not found!')
+        }
+
+        // const totalVideos = tutor.courses.filter((courses)=> courses.type ==='')
     }
 
 }

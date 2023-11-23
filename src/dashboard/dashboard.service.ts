@@ -3,13 +3,14 @@ import { UserRole } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { dashboardDto } from './dto/dashboard.dto';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
+import { createUserDto } from 'src/user/dto/createUserDto';
 
 @Injectable()
 export class DashboardService {
     constructor(private prisma: PrismaService) { }
 
-    async AdminStats(id: number) {
-        // Check if the user is an admin
+    async AdminStats(id: number){
+        
         const user = await this.prisma.user.findUnique({
             where: { id },
         });
@@ -37,6 +38,8 @@ export class DashboardService {
             },
         });
 
+        console.log(numStudents)
+
         //calculate total number of tutors
         const numTutors = await this.prisma.user.count({
             where: {
@@ -44,22 +47,21 @@ export class DashboardService {
             },
         });
 
-        // calculate total number of courses
-        const numCourses = await this.prisma.course.count(
-            {
-                where:{
-                    id: course.id,
-                }
-            }
-        );
-        
+        console.log(numTutors)
 
+        // calculate total number of courses
+        const numCourses = this.prisma.course.count();
+
+        console.log(numCourses)
+        
         return {
+            numCourses: numCourses ,
+            numStudents : numStudents,
+            numTutors : numTutors,
             message: 'Total Users and Courses Fetched',
-            numCourses,
-            numStudents,
-            numTutors,
         };
+
+        
     }
 
     async recentUsers(data: dashboardDto) {
