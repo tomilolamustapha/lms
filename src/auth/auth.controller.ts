@@ -53,6 +53,12 @@ export class AuthController {
 
     res.render('signup', { message });
   }
+  @Get('signup-tutor')
+  tutorSignupPage(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+
+    res.render('signup-tutor', { message });
+  }
 
   @Post('signup')
   async signup(@Req() req: Request, @Res() res: Response) {

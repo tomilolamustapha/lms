@@ -1,6 +1,6 @@
-extends root_layout 
+extends public_layout 
 
-block root
+block public
     -   
         const statistics = [
             {
@@ -132,21 +132,7 @@ block root
                 image: '/image/schoolgirl.jpg',
             },          
         ]
-
-    div(class="nav lg:px-14")
-        input(type="checkbox" id="nav-check")
-        div(class="nav-header")
-            div(class="nav-title") 
-                i(class="fa fa-chalkboard !important text-light") 
-                   span(class="text-light font-black") LMS
-        div(class="nav-btn")
-            label(for="nav-check")
-                span 
-                span 
-                span 
-        div(class="nav-links")
-            a(href="/auth/login") Login 
-            a(href="/auth/signup") SignUp 
+   
     div(class=" px-5 lg:px-16 pt-3 flex flex-col")
         div(class="flex flex-col lg:flex-row justify-between items-center")
             div(class="lg:basis-5/12")
@@ -195,13 +181,14 @@ block root
             div(class=" py-14 my-5")
                 +carousel()
                     each cat, i in category
-                        +profile-card(cat)
-                            block profile 
-                                img(src="/image/schoolgirl.jpg" alt="")
-                            block body
-                                p(class="text-2xl text-bold") testing
-                                p(class="text-bold") #{parse.title}
-                                p #{parse.description}
+                        div(class="slide")
+                            +profile-card(cat)
+                                block profile 
+                                    img(src="/image/schoolgirl.jpg" alt="")
+                                block body
+                                    p(class="text-2xl text-bold") testing
+                                    p(class="text-bold") #{parse.title}
+                                    p #{parse.description}
                         //- +card 
                         //-     p(class="text-xl font-bold") #{courseCat.title}
                         //-     p(class="") #{courseCat.description}
@@ -226,54 +213,3 @@ block root
                 a(href="#course")
                     +card
                         p View all Tesmonials
-
-        
-    div(id="footer" class="bg-dark  ")
-        div(class="flex flex-col lg:flex-row lg:justify-between  text-medium !important p-5 lg:pt-10 lg:px-16 lg:pb-20")
-            div()
-                i(class="fa fa-chalkboard  text-light py-5 flex justify-self-center") 
-                    span(class="text-light font-black") LMS
-
-                p(class="text-bold text-medium flex justify-self-center") Follow us on social 
-                div(class=" flex justify-evenly")
-                    a( class="" href="#")
-                        i(class="fa-brands fa-x-twitter text-medium")
-                    a( class="" href="#")
-                        i(class="fa-brands fa-instagram text-medium")
-                    a( class="" href="#")
-                        i(class="fa-brands fa-facebook text-medium")
-
-            div(class="")
-                p(class="font-extrabold py-5 text-medium flex justify-self-center") links
-
-                div(class="flex lg:flex-col justify-evenly")
-                    a(href="#" class="text-medium") Home
-                    a(href="#" class="text-medium") Help center
-                    a(href="#" class="text-medium") service
-            
-            div(class="")
-                p(class="font-extrabold py-5 text-medium") Resource
-
-                div(class="flex lg:flex-col justify-evenly")
-                    a(href="#" class="text-medium") about
-                    a(href="#" class="text-medium") carrier
-                    a(href="#" class="text-medium") legal notice
-            div(class="")
-                p(class="font-extrabold py-5 text-medium") Contacts
-
-                div(class="flex lg:flex-col justify-evenly") 
-                    a(href="#" class="text-medium") Epe, Lagos.
-                    a(href="#" class="text-medium") support
-                    a(href="#" class="text-medium") +234 800 000 0000
-
-        div(class="bg-primary flex justify-center")
-            a(href="#")      
-                p © Aishat Tomilola 2023
-    script.
-        document.addEventListener('DOMContentLoaded', function () {
-            //- handleCarousel();
-        });
-
-            
-
-            

@@ -10,12 +10,8 @@ export class AppController {
   @Get()
   index(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
-    res.render('index', { message });
+    res.render('index', { message, page: 'home' });
   }
 
-  @Get('course')
-  course(@Req() req, @Res() res) {
-    const message = res.locals.message;
-    res.render('course');
-  }
+  
 }

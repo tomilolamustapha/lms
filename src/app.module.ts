@@ -82,6 +82,7 @@ export class AppModule {
         { path: 'auth/login', method: RequestMethod.GET },
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/signup', method: RequestMethod.GET },
+        { path: 'auth/signup-tutor', method: RequestMethod.GET },
         { path: 'auth/signup', method: RequestMethod.POST },
         { path: '/', method: RequestMethod.GET },
       )

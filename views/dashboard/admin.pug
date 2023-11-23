@@ -12,7 +12,7 @@ block main
         //-         icon: 'fa fa-envelope',
         //-         title: 'Students',
         //-         value: 200,
-        //-     },
+        //-     }, 
         //-     {
         //-         icon: 'fa fa-envelope',
         //-         title: 'Tutors',
@@ -59,7 +59,7 @@ block main
             },          
         ]
 
-    
+    p(class="font-bold text-3xl my-5") Dashboard
 
         
     div(class="grid lg:grid-flow-col gap-5")
@@ -83,9 +83,8 @@ block main
             P() #{stats.numTutors}
             p(class='') Tutor 
             
-
-    
-    div(class="flex justify-evenly pt-14 ")
+  
+    div(class="lg:flex justify-evenly pt-14 ")
         each test, i in testimonials
             +profile-card(test)
                 block profile
