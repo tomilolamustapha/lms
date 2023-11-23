@@ -1,7 +1,7 @@
 extends auth_layout 
 
 block left
-    div(class="font-bold text-lg text-primary mb-3") Sign Up a new Account
+    div(class="font-bold text-lg text-primary mb-3") Become A tutor
 
         form(action="/auth/signup", method="POST")
             div(class="mb-3")
@@ -19,20 +19,27 @@ block left
             div(class="mb-3")
                 label( for="password" class="text-primary") Password
                 input(type="password" class="" id="password" name="password") 
+            div(class="mb-3")
+                label( for="access-code" class="text-primary") Access Code
+                input(type="text" class="" id="access-code" name="access-code") 
             
-            input( id="role" name="role" Value="Student" hidden)
-            
+            input( id="role" name="role" Value="Tutor" hidden)
+                  
             div(class="mb-3")
                 label( for="password" class="text-primary" require) Username
                 input(type="text" class="" id="username" name="username")
             button( class="w-full") Sign Up
-
-
+    
+      
         p(class="text-gray-600") already have an account ?.
             span(class="text-medium")
                 a(href="/auth/login") Login  
 
 
 block right
-    img( src="/image/Buffer-bro.png" alt="girl")
+    img( src="/image/Video tutorial-rafiki.png" alt="girl")
 
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            handleTabs()
+        });     

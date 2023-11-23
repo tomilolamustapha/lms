@@ -1,0 +1,38 @@
+extends layout 
+
+block main
+    p(class="font-bold text-3xl my-5") Add User
+
+    div(class="bg-light flex justify-center items-center rounded-lg lg:rounded-r-2xl ")
+        div(class="m-8 lg:mx-60 w-full")  
+            form(action="/auth/signup", method="POST")
+                div(class="lg:flex justify-between")
+                    div(class="mb-3")
+                        label( for="lastName" class="text-primary") Last Name
+                        input(type="text" class="" id="lastName" name="lastname" required) 
+                    div(class="mb-3")
+                        label( for="firstName" class="text-primary") First Name
+                        input(type="text" class="" id="firstName" name="firstname") 
+                div(class="lg:flex justify-between")    
+                    div(class="mb-3")
+                        label( for="email" class="text-primary") Email
+                        input(type="email" class="" id="email" name="email")
+                    div(class="mb-3")
+                        label( for="phoneNumber" class="text-primary") Phone Number
+                        input(type="tel" class="" id="phoneNumber" name="phoneNumber") 
+                div(class="mb-3")
+                    label( for="role" class="text-primary") Role
+                    select( class="" id="role" name="role")
+                        option( disabled slected label="Select a role")
+                        option(value="Admin" label="Admin")
+                        option(value="Tutor" label="Tutor")
+                        option(value="Student" label="Student")
+                div(class="lg:flex justify-between")
+                    div(class="mb-3")
+                        label( for="password" class="text-primary" require) Username
+                        input(type="text" class="" id="username" name="username")
+                    
+                    div(class="mb-3")
+                        label( for="password" class="text-primary") Password
+                        input(type="password" class="" id="password" name="password") 
+                button( class="w-full") Add User

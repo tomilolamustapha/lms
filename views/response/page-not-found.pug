@@ -1,10 +1,10 @@
 extends layout 
 
 block response
-    div(class="px-96")
-        img( class="" src="/image/no-session.png" alt="no session")
+    div(class="lg:px-96")
+        img( class="" src="/image/page-not-found.png" alt="no session")
 
-    p(class="font-bold text-lg text-violet-700") No session!! you'll be redirectd in 3 seconds
+    p(class="font-bold text-lg text-violet-700") Ooops! Page not Found, you'll be redirectd in 3 seconds
 
     script.
         setTimeout(function() {window.location.href= '/dashboard'},3000)
