@@ -1022,11 +1022,6 @@ table tbody tr:last-of-type {
   margin-bottom: 1.25rem;
 }
 
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1069,6 +1064,10 @@ table tbody tr:last-of-type {
 
 .h-56 {
   height: 14rem;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .h-screen {
@@ -1203,6 +1202,16 @@ table tbody tr:last-of-type {
 .py-14 {
   padding-top: 3.5rem;
   padding-bottom: 3.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.py-40 {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 
 .py-5 {
@@ -1352,6 +1361,10 @@ table tbody tr:last-of-type {
   .lg\:rounded-r-2xl {
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
+  }
+
+  .lg\:p-0 {
+    padding: 0px;
   }
 
   .lg\:px-14 {
