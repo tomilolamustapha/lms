@@ -903,6 +903,8 @@ table tbody tr:last-of-type {
 }
 
 .card.profile .body {
+  justify-content: center;
+  align-items: center;
   margin-top: 3.5rem;
 }
 
@@ -1038,6 +1040,10 @@ table tbody tr:last-of-type {
   margin-bottom: 1.25rem;
 }
 
+.mt-0 {
+  margin-top: 0px;
+}
+
 .mt-5 {
   margin-top: 1.25rem;
 }
@@ -1151,6 +1157,10 @@ table tbody tr:last-of-type {
   justify-self: center;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -1158,6 +1168,11 @@ table tbody tr:last-of-type {
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(40 16 78 / var(--tw-bg-opacity));
+}
+
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .bg-light {
@@ -1227,6 +1242,10 @@ table tbody tr:last-of-type {
   padding-top: 0.75rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -1290,6 +1309,11 @@ table tbody tr:last-of-type {
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(98 55 160 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 @media (min-width: 1024px) {

@@ -18,26 +18,15 @@ block main
             thead 
                 tr
                     th Name
-                    th email
-                    th date
+                    th Email
+                    th Username 
+                    th Role 
+                    th
             tbody 
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
+                each person in users
+                    tr
+                        td #{person.fullname}
+                        td #{person.email}
+                        td #{person.username}
+                        td #{person.role}
+                        td
