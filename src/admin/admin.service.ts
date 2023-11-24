@@ -152,6 +152,7 @@ export class AdminService {
     }
 
 
+    // get all users by role
     async getUserByRole(userRole: UserRole) {
         const users = await this.prisma.user.findMany({
 

@@ -96,4 +96,15 @@ export class UserService {
     }
 
 
+    async getAllUsers(){
+
+        const users = await this.prisma.user.findMany();
+
+        return{
+            users,
+            message : 'All users have been fetched successfully!'
+        }
+    }
+
+
 }
