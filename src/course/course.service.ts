@@ -161,7 +161,7 @@ export class CourseService {
 
     const tutor = await this.prisma.user.findFirst({where:{id}});
 
-        if ((!admin || admin.role !== UserRole.Admin) && (!tutor|| tutor.role !==UserRole.Tutor) ){
+        if (admin || admin.role !== UserRole.Admin && (!tutor|| tutor.role !==UserRole.Tutor) ){
             throw new UnauthorizedException('Only Admins and Tutors can create Courses')
         }
 
