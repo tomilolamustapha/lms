@@ -1,46 +1,6 @@
 extends ../layout 
 
 block main 
-    -
-        const testimonials = [
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },          
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },          
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },
-            {
-                client: 'Aishat Tomilola',
-                occupation: 'Senior developer',
-                testimony: 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                image: '/image/schoolgirl.jpg',
-            },          
-        ]
-
     p(class="font-bold text-3xl my-5") Dashboard
 
         
@@ -71,43 +31,36 @@ block main
                     
   
     div(class="lg:flex justify-evenly pt-14 ")
-        each test, i in testimonials
-            +profile-card(test)
+        each tutor, i in tutors
+            +profile-card(tutor)
                 block profile
-                    img( src=`${parse.image}` alt="" srcset="")
+                    img( src='/image/schoolgirl.jpg' alt="" srcset="")
+            
                 block body
-                    p(class="font-bold") #{parse.client}
-                    p #{parse.occupation}
-                    p #{parse.testimony}
+                    p(class="font-bold") #{parse.fullname}
+                    p #{parse.email}
+                    p #{parse.phoneNumber}
 
     div()
-        table 
+        p(class="font-bold text-lg mt-5 mb-3") Students
+
+        table(class="mt-0")
             thead 
                 tr
                     th Name
                     th email
+                    th Status
                     th date
             tbody 
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
-                tr
-                    td Aishat
-                    td AT@mail.com
-                    td 22-3-3003
+                each  student in students
+                    tr
+                        td #{student.fullname}
+                        td #{student.email}
+                        td(class="text-center") 
+                            if student.status == true 
+                                p(class="bg-light rounded") Enabled 
+                            else 
+                                p(class="bg-gray-500 text-white rounded") Disabled 
 
-    div()    
-        h1(class="font-bold text-lg text-violet-700") #{user.fullname}, welcome to your Admin Dashboard
+                        td #{student.createdAt}
+    
