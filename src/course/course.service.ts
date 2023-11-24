@@ -7,6 +7,7 @@ import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 import { createCourseDto } from './dto/createCourse.dto';
 import { User } from 'src/auth/auth.service';
 import { enrollmentDto } from './dto/enrollment.dto';
+import { createCourseTutorDto } from './dto/createCourseTutor.dto';
 
 @Injectable()
 export class CourseService {
@@ -121,7 +122,7 @@ export class CourseService {
     }
   }
 
-  async courseCategory(courseCode: string){
+  async courseCodes(courseCode: string){
 
     const filterCourse = await this.prisma.course.findMany({
       where: {courseCode}
@@ -153,15 +154,13 @@ export class CourseService {
   }
    
 
-  async createCourse(data :createCourseDto , id : number){
+  async createCourseAdmin(data :createCourseDto , id : number){
 
-    const {title, description, courseCode, } = data;
+    const {title, description, courseCode,category, code } = data;
 
     const admin = await this.prisma.user.findFirst({ where: { id } });
 
-    const tutor = await this.prisma.user.findFirst({where:{id}});
-
-        if (admin || admin.role !== UserRole.Admin && (!tutor|| tutor.role !==UserRole.Tutor) ){
+        if (admin || admin.role !== UserRole.Admin ){
             throw new UnauthorizedException('Only Admins and Tutors can create Courses')
         }
 
@@ -186,6 +185,49 @@ export class CourseService {
         courseCode,
         // document,
         // video,
+        category,
+        code,
+      },
+    });
+
+    return{
+      newCourse,
+      mesaage :" Course created successfully"
+    }
+
+  }
+
+  async createCourseTutor(data :createCourseTutorDto , id : number){
+
+    const {title, description, courseCode,code,category } = data;
+
+    const tutor = await this.prisma.user.findFirst({ where: { id } });
+
+        if (tutor || tutor.role !== UserRole.Tutor ){
+            throw new UnauthorizedException('Only Admins and Tutors can create Courses')
+        }
+
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+    const existingCourse = await this.prisma.course.findFirst({
+      where:{
+        courseCode: courseCode
+      },
+    });
+
+    if(existingCourse){
+      throw new ConflictException('Course code already exists');
+    }
+
+    const newCourse = await this.prisma.course.create({
+      data:{
+        title,
+        description,
+        courseCode,
+        code,
+        category
       },
     });
 
@@ -244,6 +286,19 @@ export class CourseService {
     message: "Student enrolled in the course sucessfully"
   }
    
+  }
+
+  async courseCategory(category: string){
+
+    const filterCourse = await this.prisma.course.findMany({
+      where: {category}
+    });
+
+
+    return{
+      filterCourse,
+      message : "Code have been successfully searched"
+    }
   }
 
 }

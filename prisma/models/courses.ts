@@ -6,6 +6,7 @@ export class courses {
     id: number;
     title: string;
     description: string;
+    category: string;
     document : Document[];
     duration : number;
     progress: number;
