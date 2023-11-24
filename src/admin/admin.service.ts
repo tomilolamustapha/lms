@@ -123,7 +123,7 @@ export class AdminService {
     }
 
 
-    async addCourseCode(courseId: number, courseCode: string) {
+    async addCourse(courseId: number, courseCode: string , title : string , description: string) {
 
         const existingCourse = await this.prisma.course.findUnique({
             where: {
@@ -142,6 +142,8 @@ export class AdminService {
             },
             data: {
                 courseCode: courseCode,
+                title : title,
+                description: description,
             },
         });
 
