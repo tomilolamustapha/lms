@@ -1,6 +1,6 @@
 import {  IsNotEmpty, isNotEmpty, validateSync } from "class-validator";
 
-export class createCourseDto{
+export class createCourseTutorDto{
     @IsNotEmpty()
 
     title: string;
@@ -17,21 +17,16 @@ export class createCourseDto{
 
     code: string;
 
-    @IsNotEmpty()
+     @IsNotEmpty()
 
-    category: string;
-
-
-    // @IsNotEmpty()
-
-    // video: string;
+     category: string;
 
     // @IsNotEmpty()
     
     //  document: string;
 
 
-    constructor(data: Partial<createCourseDto>) {
+    constructor(data: Partial<createCourseTutorDto>) {
         Object.assign(this, data);
       }
 
