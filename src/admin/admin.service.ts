@@ -6,7 +6,7 @@ import { userActionDto } from './dto/userActionDto';
 import { userCreation } from './dto/adminCreateDto.dto';
 import { StudentService } from 'src/student/student.service';
 import { TutorService } from 'src/tutor/tutor.service';
-
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -123,7 +123,7 @@ export class AdminService {
     }
 
 
-    async addCourse(courseId: number, courseCode: string , title : string , description: string) {
+    async addCourse(courseId: number, courseCode: string , title : string , description: string , category : string) {
 
         const existingCourse = await this.prisma.course.findUnique({
             where: {
@@ -144,6 +144,7 @@ export class AdminService {
                 courseCode: courseCode,
                 title : title,
                 description: description,
+                category : category,
             },
         });
 
@@ -170,7 +171,7 @@ export class AdminService {
     }
 
     async addUser(data: userCreation, password: string, username: string) {
-        const { email, role, firstname, lastname, phoneNumber, } = data;
+        const { email, role, firstname, lastname, phoneNumber,} = data;
 
         const useremail = await this.prisma.user.findUnique({ where: { email } })
 
@@ -186,6 +187,9 @@ export class AdminService {
             throw new BadRequestException('Phone Number Already exists')
         }
 
+        
+        const hashedPassword = await this.hashPassword(password)
+
 
         const adduser = await this.prisma.user.create({
             data: {
@@ -196,7 +200,7 @@ export class AdminService {
                 fullname: lastname + " " + firstname,
                 phoneNumber,
                 Status: false,
-                password,
+                password : hashedPassword,
                 username,
             },
         });
@@ -209,6 +213,15 @@ export class AdminService {
 
     }
 
+
+    async hashPassword(password: string) {
+
+        const saltOrRounds = 10;
+
+        const hashedPassword = await bcrypt.hash(password, saltOrRounds)
+
+        return hashedPassword;
+    }
 
 
 }
