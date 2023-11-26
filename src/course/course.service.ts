@@ -182,7 +182,7 @@ export class CourseService {
       data:{
         title,
         description,
-        courseCode,
+        courseCode : category + " " + code,
         // document,
         // video,
         category,
@@ -225,7 +225,7 @@ export class CourseService {
       data:{
         title,
         description,
-        courseCode,
+        courseCode: category + " " + code,
         code,
         category
       },
