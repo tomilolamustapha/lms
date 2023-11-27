@@ -27,7 +27,7 @@ export class AuthController {
   loginPage(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
 
-    res.render('login', { message });
+    res.render('auth/login', { message });
   }
 
   @Post('login')
@@ -38,7 +38,7 @@ export class AuthController {
 
       req.flash('success', user.message);
       res.cookie('user_token', access, {
-        expires: new Date(Date.now() + 10 * 60 * 1000),
+        expires: new Date(Date.now() + 15 * 60 * 1000),
       });
       res.redirect('/dashboard');
     } catch (error) {
@@ -51,13 +51,14 @@ export class AuthController {
   signupPage(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
 
-    res.render('signup', { message });
+    res.render('auth/signup', { message });
   }
+
   @Get('signup-tutor')
   tutorSignupPage(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
 
-    res.render('signup-tutor', { message });
+    res.render('auth/signup-tutor', { message });
   }
 
   @Post('signup')

@@ -1,0 +1,61 @@
+extends ../layout 
+
+block main
+    p(class="font-bold text-3xl my-5") Manage Users
+
+    div(class="flex gap-10 justify-end")    
+        a(href="" ) 
+            button( class="m-left")
+                i( class="") 
+                    span Generate  Tutor Acess-Code
+        a(href="users/add-user" ) 
+            button( class="m-left")
+                i( class="fa fa-user-plus") 
+                    span Add User
+          
+    div(class="my-5")
+        table 
+            thead 
+                tr
+                    th Name
+                    th Email
+                    th Username 
+                    th Role 
+                    th
+            tbody 
+                each person in users
+                    tr
+                        td #{person.fullname}
+                        td #{person.email}
+                        td #{person.username}
+                        td #{person.role}
+                        td
+                            div(id="switch")
+                                input(type="checkbox" id=`toggle-${person.id}` checked=person.Status)
+                                label(for=`toggle-${person.id}`) 
+
+ 
+    script.
+        document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('[id^="toggle-"]').forEach(function(toggle) {
+        toggle.addEventListener('change', function() {
+            const userId = this.id.split('-')[1];
+            const newStatus = this.checked;
+
+            fetch(`/admin/settings/users/${userId}/update-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ newStatus }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log('Status updated successfully');
+            })
+            .catch(error => {
+            console.error('Error updating status:', error);
+            });
+        });
+        });
+        });
