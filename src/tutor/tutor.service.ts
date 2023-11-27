@@ -30,7 +30,7 @@ export class TutorService {
 
 
     async updateTutorCourse(id : number , data : updateCourseDataDto, document: any, video: any){
-         const { title, description, courseCode} = data 
+         const { title, description, category,code} = data 
 
          const tutor = await this.prisma.user.findFirst({where : {id}});
 
@@ -52,7 +52,8 @@ export class TutorService {
             }, data: {
                 title,
                 description,
-                courseCode,
+                code,
+                courseCode : category + " " + code,
                 video,
                 document
             }

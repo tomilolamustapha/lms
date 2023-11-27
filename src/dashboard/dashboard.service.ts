@@ -10,6 +10,7 @@ export class DashboardService {
   constructor(private prisma: PrismaService) {}
 
   async AdminStats(id: number) {
+
     const user = await this.prisma.user.findUnique({
       where: { id },
     });
@@ -100,4 +101,31 @@ export class DashboardService {
       message: 'Recently Added Users Fetched',
     };
   }
+
+  async getNewUploadedVideos() {
+    // Get the last month's videos uploaded by tutors 
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
+
+    const newUploadedVideos = await this.prisma.video.findMany({
+        where: {
+            createdAt: {
+                gte: startOfToday.toISOString(),
+                lte: endOfToday.toISOString(),
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+    });
+
+    return {
+        data: newUploadedVideos,
+        message: 'New uploaded videos fetched successfully',
+    };
+}
+
 }
