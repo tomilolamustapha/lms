@@ -5,6 +5,7 @@ import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
 import { createUserDto } from './dto/createUserDto';
 import * as bcrypt from 'bcrypt';
+import { updateUserProfileDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -68,34 +69,6 @@ export class UserService {
     }
 
 
-
-
-
-    async deleteCourse(id: number, data: courseDataDto) {
-
-        const admin = await this.prisma.user.findUnique({ where: { id } });
-
-        const tutor = await this.prisma.user.findUnique({ where: { id } });
-
-        if (!admin || admin.role !== UserRole.Admin && !tutor || tutor.role !== UserRole.Tutor) {
-            throw new UnauthorizedException('You are not Authorized to perform this action');
-        }
-        const course = await this.prisma.course.findUnique({ where: { id } })
-
-        if (!course) {
-            throw new NotFoundException(`Course with ID ${id} not found.`)
-        }
-
-        await this.prisma.course.delete({
-            where: {
-                id
-            }
-        });
-
-        return `Course with title ${title} has been deleted.`
-    }
-
-
     async getAllUsers(){
 
         const users = await this.prisma.user.findMany();
@@ -105,6 +78,40 @@ export class UserService {
             message : 'All users have been fetched successfully!'
         }
     }
+
+    async editUserProfile(id: number, data: updateUserProfileDto) {
+
+        const {firstname,lastname,fullname, email, phoneNumber, password, username} = data;
+
+
+        const existingUser = await this.prisma.user.findUnique({
+            where: {
+                id
+            },
+        });
+    
+        if (!existingUser) {
+            throw new NotFoundException('User not found');
+        }
+    
+        const updatedUser = await this.prisma.user.update({
+            where: {
+                id
+            },
+            data: {
+            firstname,
+            lastname,
+            fullname : firstname + " " + lastname ,
+            email,
+            username,
+            password,
+            phoneNumber
+
+            }, 
+         });
+
+            return updatedUser;
+        }
 
 
 }

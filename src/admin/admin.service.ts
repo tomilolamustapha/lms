@@ -7,6 +7,7 @@ import { userCreation } from './dto/adminCreateDto.dto';
 import { StudentService } from 'src/student/student.service';
 import { TutorService } from 'src/tutor/tutor.service';
 import * as bcrypt from 'bcrypt';
+import { updateCourseDataDto } from 'src/tutor/dto/updateCourseData.dto';
 
 
 @Injectable()
@@ -47,6 +48,7 @@ export class AdminService {
         });
 
         return {
+            updateUser,
             message: "User Updated Successfully"
         };
     }
@@ -123,7 +125,7 @@ export class AdminService {
     }
 
 
-    async addCourse(courseId: number, courseCode: string , title : string , description: string , category : string) {
+    async addCourse(courseId: number, title: string, description: string, category: string, code: string) {
 
         const existingCourse = await this.prisma.course.findUnique({
             where: {
@@ -141,10 +143,10 @@ export class AdminService {
                 id: courseId,
             },
             data: {
-                courseCode: courseCode,
-                title : title,
+                courseCode: category + " " + code,
+                title: title,
                 description: description,
-                category : category,
+                category: category,
             },
         });
 
@@ -171,7 +173,7 @@ export class AdminService {
     }
 
     async addUser(data: userCreation, password: string, username: string) {
-        const { email, role, firstname, lastname, phoneNumber,} = data;
+        const { email, role, firstname, lastname, phoneNumber, } = data;
 
         const useremail = await this.prisma.user.findUnique({ where: { email } })
 
@@ -187,7 +189,7 @@ export class AdminService {
             throw new BadRequestException('Phone Number Already exists')
         }
 
-        
+
         const hashedPassword = await this.hashPassword(password)
 
 
@@ -200,7 +202,7 @@ export class AdminService {
                 fullname: lastname + " " + firstname,
                 phoneNumber,
                 Status: false,
-                password : hashedPassword,
+                password: hashedPassword,
                 username,
             },
         });
@@ -212,6 +214,94 @@ export class AdminService {
 
 
     }
+
+    async updateUserStatus(id: number) {
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+        const existingUser = await this.prisma.user.findUnique({
+            where: {
+                id,
+            },
+        });
+
+        if (!existingUser) {
+            throw new BadRequestException("User not found");
+        }
+
+        const updatedUser = await this.prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                Status: true
+            }
+        });
+
+        return {
+            message: 'User updated successfully',
+            data: updatedUser,
+        };
+    }
+
+    async updateAdminCourse(id: number, data: updateCourseDataDto, document: any, video: any) {
+        const { title, description, category, code } = data
+
+        const admin = await this.prisma.user.findFirst({ where: { id } });
+
+        if (!admin || admin.role! == UserRole.Admin) {
+            throw new UnauthorizedException("Only Admin can update courses")
+        }
+
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+        const findCourse = await this.prisma.course.findFirst({ where: { id } });
+
+        if (findCourse == null) throw new BadRequestException('Course Not Found');
+
+        const updateCourse = await this.prisma.course.update({
+            where: {
+                id
+            }, data: {
+                title,
+                description,
+                code,
+                category,
+                courseCode: category + " " + code,
+                video,
+                document
+            }
+        });
+
+        return {
+            updateCourse,
+            message: "Course Updated Successfully"
+        };
+    }
+
+
+    async deleteUser(id: number) {
+
+        if (isNaN(id)) {
+            throw new BadRequestException("User Id is Invalid");
+        }
+
+        const deleteUsers = await this.prisma.user.delete({
+            where: {
+                id
+            },
+        });
+
+        return {
+            deleteUsers,
+            message: 'User deleted successfully',
+        };
+    }
+
+
 
 
     async hashPassword(password: string) {

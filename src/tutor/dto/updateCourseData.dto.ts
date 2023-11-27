@@ -26,6 +26,14 @@ export class updateCourseDataDto{
 
     id : number;
 
+    @IsNotEmpty()
+
+   code : string;
+
+   @IsNotEmpty()
+
+    category : string;
+
 
 
     constructor(data: Partial<updateCourseDataDto>) {
