@@ -20,7 +20,7 @@ export class AdminController {
     const stats = await this.dashboardService.AdminStats(payload.user.id);
     const students = await this.adminService.getUserByRole('Student');
     const tutors = await this.adminService.getUserByRole('Tutor');
-    res.render('dashboard/admin', {
+    res.render('admin/dashboard', {
       message,
       user: payload.user,
       stats: stats,
@@ -34,7 +34,7 @@ export class AdminController {
     const message = res.locals.message;
     const payload: any = req.user;
 
-    res.render('settings', {
+    res.render('admin/settings', {
       message,
       user: payload.user,
     });
@@ -47,7 +47,7 @@ export class AdminController {
     const users = await this.userService.getAllUsers();
     console.log(users);
 
-    res.render('users', {
+    res.render('admin/users', {
       message,
       user: payload.user,
       users: users.users,
@@ -59,7 +59,7 @@ export class AdminController {
     const message = res.locals.message;
     const payload: any = req.user;
 
-    res.render('add-user', {
+    res.render('admin/add-user', {
       message,
       user: payload.user,
     });
@@ -67,9 +67,6 @@ export class AdminController {
 
   @Post('settings/users/add-user')
   async addUser(@Req() req: Request, @Res() res: Response) {
-    const message = res.locals.message;
-    const payload: any = req.user;
-
     try {
       const user = await this.adminService.addUser(
         req.body,
@@ -82,6 +79,15 @@ export class AdminController {
     } catch (error) {
       req.flash('error', error.message);
       res.redirect('');
+    }
+  }
+
+  @Post('settings/users/:id/update-status')
+  async updatestatus(@Req() req: Request, @Res() res: Response) {
+    try {
+      res.status(200).json({ message: 'User status updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 }

@@ -8,6 +8,6 @@ export class StudentController {
   @Get('')
   dashboard(@Req() req: Request, @Res() res: Response) {
     const payload: any = req.user;
-    res.render('dashboard/student', { user: payload.user });
+    res.render('student/dashboard', { user: payload.user });
   }
 }

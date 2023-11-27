@@ -1,13 +1,13 @@
-extends layout 
+extends ../layout 
 
 block main
     p(class="font-bold text-3xl my-5") Admin settings
     
     div(class="grid lg:grid-flow-col gap-5")
-        a(href="/admin/settings/course-codes")
+        a(href="/admin/settings/course-cat")
             div(class="card bg-light rounded-lg flex p-5 items-center ")
                     div(class="basis-4/6")
-                        p(class="font-bold text-lg") Course Codes
+                        p(class="font-bold text-lg") Course Categories
                         p(class="text-lg") 50+, manage
                     div(class="basis-2/6 ")
                         img( src="/image/Reading glasses-cuate.png" alt="girl")
