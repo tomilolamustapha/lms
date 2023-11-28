@@ -8,7 +8,8 @@ import { courses } from 'prisma/models/courses';
 @Injectable()
 export class TutorService {
     constructor (private prisma : PrismaService,
-        private course : CourseService){}
+        private course : CourseService,
+        private tutor :TutorService){}
 
     async getUserById(id: number) {
 
@@ -65,21 +66,48 @@ export class TutorService {
          };
     }
 
-    async getTotalForCourses(tutorId : number){
-        const tutor = await this.prisma.user.findUnique({
-            where:{
-                id : tutorId,
-            },
-            include:{
-                courses: true,
-            },
+
+    async getTotalCoursesByTutor(tutorId: number) {
+        
+        const existingTutor = await this.prisma.user.findUnique({
+          where: {
+            id: tutorId,
+          },
         });
-
-        if(!tutor){
-            throw new NotFoundException('Tutor not found!')
+    
+        if (!existingTutor) {
+          throw new NotFoundException('Tutor not found');
         }
+    
+        // Calculate total courses
+        const tutorWithCourses = await this.prisma.user.findUnique({
+            where: {
+              id: tutorId,
+            },
+            include: {
+              courses: {
+                include: {
+                 // video: true,
+                 // documents: true,
+                },
+              },
+            },
+          });
+    
+        return {
+         // totalCourses,
+          message :'Tutor Courses Fetched Successfully'
+        };
+      }
 
-        // const totalVideos = tutor.courses.filter((courses)=> courses.type ==='')
+
+      
+
+
     }
 
-}
+
+
+
+
+

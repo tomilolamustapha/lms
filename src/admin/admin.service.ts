@@ -53,59 +53,34 @@ export class AdminService {
         };
     }
 
-    async updateUserStatus(id: number, params: userActionDto) {
-        const dto = new userActionDto(params);
-        const errorMessage = dto.validate();
-      
-        if (errorMessage) {
-          throw new BadRequestException(errorMessage);
-        }
-      
+    async updateUserStatus(id: number, status: boolean) {
         if (isNaN(id)) {
-          throw new BadRequestException("User Id is Invalid");
+            throw new BadRequestException("User Id is Invalid");
         }
-      
-        const findUser = await this.prisma.user.findFirst({ where: { id } });
-      
-        if (!findUser) {
-          throw new BadRequestException("User Not Found");
-        }
-      
-        const { type } = params;
-      
-        switch (type) {
-          case "enable":
-            await this.prisma.user.update({
-              where: {
+    
+        const existingUser = await this.prisma.user.findUnique({
+            where: {
                 id,
-              },
-              data: {
-                Status: true,
-              },
-            });
-      
-            return {
-              message: 'User Enabled Successfully',
-            };
-      
-          case "disable":
-            await this.prisma.user.update({
-              where: {
-                id,
-              },
-              data: {
-                Status: false,
-              },
-            });
-      
-            return {
-              message: 'User Disabled Successfully',
-            };
-      
-          default:
-            throw new BadRequestException(`Invalid action type: ${type}`);
+            },
+        });
+    
+        if (!existingUser) {
+            throw new BadRequestException('User not found');
         }
-      }
+    
+        const updateStatus = await this.prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                Status: status, // Assuming "Status" is the field to be updated
+            },
+        });
+    
+        return {
+            message: 'User updated successfully',
+        };
+    }
       
 
     async getCourseCode(courseId: number) {

@@ -21,15 +21,6 @@ export class DashboardService {
       );
     }
 
-    // const course = await this.prisma.course.findUnique({
-    //     where: { id },
-    // });
-
-    // if (!course) {
-    //     throw new UnauthorizedException(
-    //         'Course not available',
-    //     );
-    // }
 
     //calculate total number of students
     const numStudents = await this.prisma.user.count({
