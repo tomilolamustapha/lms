@@ -53,55 +53,60 @@ export class AdminService {
         };
     }
 
-    async userAction(id: number, params: userActionDto) {
+    async updateUserStatus(id: number, params: userActionDto) {
         const dto = new userActionDto(params);
         const errorMessage = dto.validate();
+      
         if (errorMessage) {
-            throw new BadRequestException(errorMessage);
+          throw new BadRequestException(errorMessage);
         }
-
+      
         if (isNaN(id)) {
-            throw new BadRequestException("User Id is Invalid");
+          throw new BadRequestException("User Id is Invalid");
         }
-
-        const { type } = params
-
+      
         const findUser = await this.prisma.user.findFirst({ where: { id } });
-
-        if (findUser == null) throw new BadRequestException("User Not Found");
-
-
-        if (type == "enable") {
-
-            const enableUser = await this.prisma.user.update({
-                where: {
-                    id
-                },
-                data: {
-                    Status: true
-                }
+      
+        if (!findUser) {
+          throw new BadRequestException("User Not Found");
+        }
+      
+        const { type } = params;
+      
+        switch (type) {
+          case "enable":
+            await this.prisma.user.update({
+              where: {
+                id,
+              },
+              data: {
+                Status: true,
+              },
             });
-
+      
             return {
-                message: 'User Enabled Successfully'
-            }
-        } else if (type == 'disable') {
-
-            const disableUser = await this.prisma.user.update({
-                where: {
-                    id
-                },
-                data: {
-                    Status: false
-                }
+              message: 'User Enabled Successfully',
+            };
+      
+          case "disable":
+            await this.prisma.user.update({
+              where: {
+                id,
+              },
+              data: {
+                Status: false,
+              },
             });
+      
+            return {
+              message: 'User Disabled Successfully',
+            };
+      
+          default:
+            throw new BadRequestException(`Invalid action type: ${type}`);
         }
-        return {
-            message: "User Disabled Sucessfully"
-        }
-
-
-    }
+      }
+      
 
     async getCourseCode(courseId: number) {
 
@@ -215,35 +220,6 @@ export class AdminService {
 
     }
 
-    async updateUserStatus(id: number) {
-        if (isNaN(id)) {
-            throw new BadRequestException("User Id is Invalid");
-        }
-
-        const existingUser = await this.prisma.user.findUnique({
-            where: {
-                id,
-            },
-        });
-
-        if (!existingUser) {
-            throw new BadRequestException("User not found");
-        }
-
-        const updatedUser = await this.prisma.user.update({
-            where: {
-                id,
-            },
-            data: {
-                Status: true
-            }
-        });
-
-        return {
-            message: 'User updated successfully',
-            data: updatedUser,
-        };
-    }
 
     async updateAdminCourse(id: number, data: updateCourseDataDto, document: any, video: any) {
         const { title, description, category, code } = data

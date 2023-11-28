@@ -27,11 +27,11 @@ export class CourseService {
 
     const endDate = new Date(end_date).toISOString();
 
-    const startOfToday = new Date()
-    startOfToday.setHours(0, 0, 0, 0) // set time to 00:00:00.000
+    // const startOfToday = new Date()
+    // startOfToday.setHours(0, 0, 0, 0) // set time to 00:00:00.000
 
-    const endOfToday = new Date()
-    endOfToday.setHours(23, 59, 59, 999) // set time to 23:59:59.999
+    // const endOfToday = new Date()
+    // endOfToday.setHours(23, 59, 59, 999) // set time to 23:59:59.999
 
 
     const allCourses = await paginate(this.prisma.course, {
