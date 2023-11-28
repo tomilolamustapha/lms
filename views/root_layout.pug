@@ -26,8 +26,14 @@ html(lang="en")
         
         block root
             
-    script.
+    script. 
+        function goBack() {
+            window.history.back()
+        }
+        
         document.addEventListener('DOMContentLoaded', function () {
           handleAlert()
+
+         
         });   
         

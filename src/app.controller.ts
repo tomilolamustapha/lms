@@ -10,11 +10,13 @@ export class AppController {
   @Get()
   async index(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
-    // const courses = await this.courseService.gettopCourses();
+    const courses = await this.courseService.gettopCourses();
+    console.log(courses);
+
     res.render('index', {
       message,
       page: 'home',
-      // courses: courses.topCourses
+      courses: courses.topCourses,
     });
   }
 }

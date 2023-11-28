@@ -1,6 +1,10 @@
 extends ../layout 
 
 block main
+    a(href="javascript:void(0)" class="font-semibold text-lg my-5" onclick="goBack()") 
+        i( class=" fa-solid fa-angle-left") 
+            span Back
+
     p(class="font-bold text-3xl my-5") Add User
 
     div(class="bg-light flex justify-center items-center rounded-lg lg:rounded-r-2xl ")

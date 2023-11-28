@@ -6,41 +6,52 @@ block main
         
     div(class="grid lg:grid-flow-col gap-5")
         +card
-            div(class="flex h-full w-full justify-around items-center")
-                div(class=" bg-light rounded-lg text-3xl px-5 py-4")
-                    i(class='fa fa-book')
-                div()
-                    P(class="font-bold text-2xl") #{stats.numCourses}
-                    P(class="font-bold text-md") Courses
+            div(class="flex items-center")
+                div(class="basis-4/6 flex gap-5")
+                    div(class=" bg-light rounded-lg text-3xl px-5 py-4")
+                        i(class='fa fa-book')
+                    div()
+                        P(class="font-bold text-2xl") #{stats.numCourses}
+                        P(class="font-bold text-md") Courses
+                div(class="basis-2/6 ")
+                        img( src="/image/Reading glasses-cuate.png" alt="girl")
+
+            
+        +card
+            div(class="flex items-center")
+                div(class="basis-4/6 flex gap-5")
+                    div(class=" bg-medium rounded-lg text-3xl px-5 py-4")
+                        i(class='fa-solid fa-graduation-cap')
+                    div()
+                        P(class="font-bold text-2xl") #{stats.numStudents}
+                        P(class="font-bold text-md") Students
+                div(class="basis-2/6 ")
+                        img( src="/image/college students-rafiki.png" alt="girl")
         
         +card
-            div(class="flex h-full w-full justify-around items-center")
-                div(class=" bg-medium rounded-lg text-3xl px-5 py-4")
-                    i(class='fa-solid fa-graduation-cap')
-                div()
-                    P(class="font-bold text-2xl") #{stats.numStudents}
-                    P(class="font-bold text-md") Students
-        
-        +card
-            div(class="flex h-full w-full justify-around items-center")
-                div(class=" bg-primary rounded-lg text-3xl px-5 py-4")
-                    i(class='fa-solid fa-person-chalkboard')
-                div()
-                    P(class="font-bold text-2xl") #{stats.numTutors}
-                    p(class="font-bold text-md") Tutors 
+            div(class="flex  items-center")
+                div(class="basis-4/6 flex gap-5")
+                    div(class=" bg-primary rounded-lg text-3xl px-5 py-4")
+                        i(class='fa-solid fa-person-chalkboard')
+                    div()
+                        P(class="font-bold text-2xl") #{stats.numTutors}
+                        p(class="font-bold text-md") Tutors 
+                div(class="basis-2/6 ")
+                        img( src="/image/Seminar-rafiki.png" alt="girl")
                     
   
     div(class="pt-14 ")
         +carousel
             each tutor, i in tutors
-                +profile-card(tutor)
-                    block profile
-                        img( src='/image/schoolgirl.jpg' alt="" srcset="")
-                
-                    block body
-                        p(class="font-bold") #{parse.fullname}
-                        p #{parse.email}
-                        p #{parse.phoneNumber}
+                div(class="slide")
+                    +profile-card(tutor)
+                        block profile
+                            img( src='/image/schoolgirl.jpg' alt="" srcset="")
+                    
+                        block body
+                            p(class="font-bold") #{parse.fullname}
+                            p #{parse.email}
+                            p #{parse.phoneNumber}
 
     div()
         p(class="font-bold text-lg mt-5 mb-3") Students
