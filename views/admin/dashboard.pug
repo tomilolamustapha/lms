@@ -30,16 +30,17 @@ block main
                     p(class="font-bold text-md") Tutors 
                     
   
-    div(class="lg:flex justify-evenly pt-14 ")
-        each tutor, i in tutors
-            +profile-card(tutor)
-                block profile
-                    img( src='/image/schoolgirl.jpg' alt="" srcset="")
-            
-                block body
-                    p(class="font-bold") #{parse.fullname}
-                    p #{parse.email}
-                    p #{parse.phoneNumber}
+    div(class="pt-14 ")
+        +carousel
+            each tutor, i in tutors
+                +profile-card(tutor)
+                    block profile
+                        img( src='/image/schoolgirl.jpg' alt="" srcset="")
+                
+                    block body
+                        p(class="font-bold") #{parse.fullname}
+                        p #{parse.email}
+                        p #{parse.phoneNumber}
 
     div()
         p(class="font-bold text-lg mt-5 mb-3") Students

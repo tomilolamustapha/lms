@@ -4,12 +4,11 @@ mixin landing-stats(stats)
         p #{stats.text}
 
 mixin carousel
-    //- .carousel-wrap
-    //-     i(id="left" class="carousel-nav fa-solid fa-angle-left")
-    .slider 
-        .slider-inner
+    div(class="flex justify-center items-center")
+        i(id="left" class="slider-nav fa-solid fa-angle-left")
+        .slider 
             block
-        //- i(id="right" class="carousel-nav fa-solid fa-angle-right")
+        i(id="right" class="slider-nav fa-solid fa-angle-right")
 
 mixin card
     .card.active
