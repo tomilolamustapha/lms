@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserGuard } from 'src/common/guards';
 import { DashboardService } from 'src/dashboard/dashboard.service';
 import { UserService } from 'src/user/user.service';
 import { AdminService } from './admin.service';
+import { CourseService } from 'src/course/course.service';
+import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 @UseGuards(UserGuard)
 @Controller('admin')
 export class AdminController {
@@ -11,6 +21,7 @@ export class AdminController {
     private readonly adminService: AdminService,
     private readonly dashboardService: DashboardService,
     private readonly userService: UserService,
+    private readonly courseService: CourseService,
   ) {}
 
   @Get('')
@@ -45,7 +56,6 @@ export class AdminController {
     const message = res.locals.message;
     const payload: any = req.user;
     const users = await this.userService.getAllUsers();
-    console.log(users);
 
     res.render('admin/users', {
       message,
@@ -83,9 +93,12 @@ export class AdminController {
   }
 
   @Post('settings/users/:id/update-status')
-  async updatestatus(@Req() req: Request, @Res() res: Response) {
+  async updatestatus(@Param('id') id: number, @Res() res: Response) {
     try {
-      res.status(200).json({ message: 'User status updated successfully' });
+      const userId = +id;
+      const user = await this.adminService.updateUserStatus(userId);
+      console.log(user);
+      res.status(200).json({ message: user.message });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -95,13 +108,24 @@ export class AdminController {
   async courses(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const payload: any = req.user;
-    const users = await this.userService.getAllUsers();
-    console.log(users);
+    // const dto: dataFetchDto = {
+    //   search_term: '',
+    //   page_number: 1,
+    //   start_date: '',
+    //   end_date: '',
+    //   page_size: 10,
+    //   validate: function (): string {
+    //     throw new Error('Function not implemented.');
+    //   },
+    // };
+    // const courses = await this.courseService.getAllCourses(dto);
+    // console.log(courses.data);
 
     res.render('admin/courses', {
       message,
       user: payload.user,
-      users: users.users,
+      // courses: courses.data,
+      // pagination: courses.meta,
     });
   }
 }

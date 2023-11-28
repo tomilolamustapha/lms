@@ -1,17 +1,20 @@
 import { Controller, Get, Redirect, Req, Res, Session } from '@nestjs/common';
-import { IS_NOT_EMPTY_OBJECT } from 'class-validator';
 import { Request, Response } from 'express';
-import { session } from 'passport';
+import { CourseService } from './course/course.service';
+import { courses } from 'prisma/models/courses';
 
 @Controller()
 export class AppController {
-  constructor() {}
+  constructor(private readonly courseService: CourseService) {}
 
   @Get()
-  index(@Req() req: Request, @Res() res: Response) {
+  async index(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
-    res.render('index', { message, page: 'home' });
+    // const courses = await this.courseService.gettopCourses();
+    res.render('index', {
+      message,
+      page: 'home',
+      // courses: courses.topCourses
+    });
   }
-
-  
 }

@@ -25,6 +25,7 @@
   a {
     text-decoration: none;
     color: inherit;
+    font-style: normal !important;
   }
 
   .layout-content {
@@ -202,6 +203,7 @@
 
   input:focus,
   select:focus {
+    outline: none;
     border-bottom-width: 2px;
     border-bottom-color: #6237a0;
   }
@@ -224,6 +226,27 @@
     font-size: 1rem /* 16px */;
     line-height: 1.5rem;
     width: 100%;
+  }
+
+  .search {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: #f3f3f3;
+  }
+
+  .search:focus-within {
+    border-bottom-width: 2px;
+    border-bottom-color: #6237a0;
+  }
+
+  .search-input {
+    margin-left: 0.5rem;
+    outline: none;
+    border: none;
+    background: transparent;
   }
 
   #switch input {

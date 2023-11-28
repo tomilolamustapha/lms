@@ -1,3 +1,29 @@
+function searchTable(tableBodyId) {
+    const searchInput = document.querySelector('.search-input');
+    const searchTerm = searchInput.value.toLowerCase();
+    const tableBody = document.getElementById(tableBodyId);
+    const rows = tableBody.getElementsByTagName('tr');
+    let matchCount = 0;
+
+    for (const row of rows) {
+        const cells = row.getElementsByTagName('td');
+        let rowMatches = false;
+
+        for (const cell of cells) {
+            if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                rowMatches = true;
+                break;
+            }
+        }
+
+        if (rowMatches) {
+            row.style.display = '';
+            matchCount++;
+        } else {
+            row.style.display = 'none';
+        }
+    }
+}
 
 function handleTabs() {
     const tabToggles = document.querySelectorAll('[data-toggle="tab"]');
