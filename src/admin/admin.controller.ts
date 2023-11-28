@@ -90,4 +90,18 @@ export class AdminController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  @Get('settings/courses')
+  async courses(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+    const payload: any = req.user;
+    const users = await this.userService.getAllUsers();
+    console.log(users);
+
+    res.render('admin/courses', {
+      message,
+      user: payload.user,
+      users: users.users,
+    });
+  }
 }
