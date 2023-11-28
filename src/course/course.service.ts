@@ -349,32 +349,92 @@ export class CourseService {
     }
   }
 
-  async updateDocument(documentId: number, url:string) {
+  async updateDocument(documentId: number, url: string) {
     const existingVideo = await this.prisma.video.findUnique({
-        where: {
-            id: documentId,
-        },
+      where: {
+        id: documentId,
+      },
     });
 
     if (!existingVideo) {
-        throw new NotFoundException('Video not found');
+      throw new NotFoundException('Video not found');
     }
 
     const updatedVideo = await this.prisma.video.update({
-        where: {
-            id: documentId,
-            
-        },
-        data:{
-          url
-        }
+      where: {
+        id: documentId,
+
+      },
+      data: {
+        url
+      }
     });
 
     return {
-        data: updatedVideo,
-        message: 'Video updated successfully',
+      data: updatedVideo,
+      message: 'Video updated successfully',
     };
+  }
+
+  async addVideoToCourse(courseId: number, videoUrl: string) {
+
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found');
+    }
+
+    // If the course exists, associate the video with the course
+    const video = await this.prisma.video.create({
+      data: {
+        url: videoUrl,
+        courseId: courseId,
+        title,
+      },
+    });
+
+    return {
+      message: 'Video added to the course successfully',
+      videoData: video,
+    };
+  }
+
+  async addDocumentToCourse(courseId: number, document: string, documentUrl: string) {
+    // Check if the course exists
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found');
+    }
+
+    // If the course exists, associate the document with the course
+    const newdocument = await this.prisma.document.create({
+      data: {
+        title: title,
+        url: documentUrl,
+        courseId: courseId,
+      },
+    });
+
+    return {
+      message: 'Document added to the course successfully',
+      documentData: document,
+    };
+  }
+
 }
 
 
-}
+
+
+
+
+
