@@ -73,11 +73,12 @@ export class AdminService {
                 id,
             },
             data: {
-                Status: status, // Assuming "Status" is the field to be updated
+                Status: status, 
             },
         });
     
         return {
+            updateStatus,
             message: 'User updated successfully',
         };
     }
