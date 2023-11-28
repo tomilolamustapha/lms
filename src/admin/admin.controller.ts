@@ -93,10 +93,10 @@ export class AdminController {
   }
 
   @Post('settings/users/:id/update-status')
-  async updatestatus(@Param('id') id: number, @Res() res: Response) {
+  async updatestatus(@Param('id') id: number, params :any , @Res() res: Response) {
     try {
       const userId = +id;
-      const user = await this.adminService.updateUserStatus(userId);
+      const user = await this.adminService.updateUserStatus(userId ,params);
       console.log(user);
       res.status(200).json({ message: user.message });
     } catch (error) {
