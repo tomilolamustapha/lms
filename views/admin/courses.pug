@@ -3,15 +3,21 @@ extends ../layout
 block main
     p(class="font-bold text-3xl my-5") Manage Courses
 
-    div(class="flex gap-10 justify-end")    
-        //- a(href="" ) 
-        //-     button( class="m-left")
-        //-         i( class="") 
-        //-             span Generate  Tutor Acess-Code
-        a(href="users/add-user" ) 
-            button( class="m-left")
-                i( class="fa fa-user-plus") 
-                    span Add Course
+
+    div(class="flex justify-between")
+        div(class="search")
+            i(class="search-icon fa-solid fa-magnifying-glass")
+            input(class="search-input" type="search" placeholder="Search" onkeyup="searchTable('course-table')")
+
+        div(class="flex gap-10 justify-end")    
+            //- a(href="" ) 
+            //-     button( class="m-left")
+            //-         i( class="") 
+            //-             span Generate  Tutor Acess-Code
+            a(href="users/add-user" ) 
+                button( class="m-left")
+                    i( class="fa fa-user-plus") 
+                        span Add Course
           
     div(class="my-5")
         table 
@@ -22,17 +28,18 @@ block main
                     th Username 
                     th Role 
                     th
-            tbody 
-                each person in users
-                    tr
-                        td #{person.fullname}
-                        td #{person.email}
-                        td #{person.username}
-                        td #{person.role}
-                        td
-                            div(id="switch")
-                                input(type="checkbox" id=`toggle-${person.id}` checked=person.Status)
-                                label(for=`toggle-${person.id}`) 
+            tbody(course-table) 
+                if users
+                    each person in users
+                        tr
+                            td #{person.fullname}
+                            td #{person.email}
+                            td #{person.username}
+                            td #{person.role}
+                            td
+                                div(id="switch")
+                                    input(type="checkbox" id=`toggle-${person.id}` checked=person.Status)
+                                    label(for=`toggle-${person.id}`) 
 
  
     script.

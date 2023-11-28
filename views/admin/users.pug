@@ -3,15 +3,20 @@ extends ../layout
 block main
     p(class="font-bold text-3xl my-5") Manage Users
 
-    div(class="flex gap-10 justify-end")    
-        a(href="" ) 
-            button( class="m-left")
-                i( class="") 
-                    span Generate  Tutor Acess-Code
-        a(href="users/add-user" ) 
-            button( class="m-left")
-                i( class="fa fa-user-plus") 
-                    span Add User
+    div(class="flex justify-between")
+        div(class="search")
+            i(class="search-icon fa-solid fa-magnifying-glass")
+            input(class="search-input" type="search" placeholder="Search" onkeyup="searchTable('user-table')")
+
+        div(class="flex gap-10 justify-end")    
+            a(href="" ) 
+                button( class="m-left")
+                    i( class="") 
+                        span Generate  Tutor Acess-Code
+            a(href="users/add-user" ) 
+                button( class="m-left")
+                    i( class="fa fa-user-plus") 
+                        span Add User
           
     div(class="my-5")
         table 
@@ -22,7 +27,7 @@ block main
                     th Username 
                     th Role 
                     th
-            tbody 
+            tbody(id="user-table")
                 each person in users
                     tr
                         td #{person.fullname}
@@ -58,4 +63,6 @@ block main
             });
         });
         });
+
+        
         });
