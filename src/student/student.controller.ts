@@ -11,7 +11,7 @@ export class StudentController {
     res.render('student/dashboard', { user: payload.user });
   }
 
-  @Get('my-course')
+  @Get('my-courses')
   course(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const payload: any = req.user;

@@ -23,7 +23,6 @@ export class AdminController {
     const stats = await this.dashboardService.AdminStats(payload.user.id);
     const students = await this.adminService.getUserByRole('Student');
     const tutors = await this.adminService.getUserByRole('Tutor');
-    console.log('here', students.users);
     res.render('admin/dashboard', {
       message,
       user: payload.user,
