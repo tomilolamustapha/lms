@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserGuard } from 'src/common/guards';
 import { DashboardService } from 'src/dashboard/dashboard.service';
 import { UserService } from 'src/user/user.service';
 import { AdminService } from './admin.service';
 import { CourseService } from 'src/course/course.service';
-import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 @UseGuards(UserGuard)
 @Controller('admin')
 export class AdminController {
@@ -31,6 +22,7 @@ export class AdminController {
     const stats = await this.dashboardService.AdminStats(payload.user.id);
     const students = await this.adminService.getUserByRole('Student');
     const tutors = await this.adminService.getUserByRole('Tutor');
+    console.log('here', students.users);
     res.render('admin/dashboard', {
       message,
       user: payload.user,
@@ -93,12 +85,15 @@ export class AdminController {
   }
 
   @Post('settings/users/:id/update-status')
-  async updatestatus(@Param('id') id: number, @Res() res: Response) {
+  async updatestatus(@Req() req: Request, @Res() res: Response) {
     try {
-      const userId = +id;
-      //const user = await this.adminService.updateUserStatus(userId);
-     // console.log(user);
-      //res.status(200).json({ message: user.message });
+      const userId = +req.params.id;
+      const user = await this.adminService.updateUserStatus(
+        userId,
+        req.body.newStatus,
+      );
+      console.log(user);
+      res.status(200).json({ message: user.message });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -127,5 +122,36 @@ export class AdminController {
       // courses: courses.data,
       // pagination: courses.meta,
     });
+  }
+
+  @Get('settings/courses/add-course')
+  addCoursePage(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+    const payload: any = req.user;
+
+    res.render('add-course', {
+      message,
+      user: payload.user,
+    });
+  }
+
+  @Post('settings/courses/add-course')
+  async addCourse(@Req() req: Request, @Res() res: Response) {
+    const payload: any = req.user;
+
+    console.log(payload);
+
+    try {
+      const course = await this.courseService.createCourseAdmin(
+        req.body,
+        payload.user.id,
+      );
+
+      req.flash('success', course.mesaage);
+      res.redirect('/admin/settings/users');
+    } catch (error) {
+      req.flash('error', error.message);
+      res.redirect('');
+    }
   }
 }
