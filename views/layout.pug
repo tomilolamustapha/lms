@@ -15,16 +15,18 @@ block root
                     li
                         a( class="sidebar-nav-link" href="/course")
                             i(class="fa fa-book-open")
-                                em() Courses         
-                    li
-                        a( class="sidebar-nav-link" href=user.role === 'admin' ? "/tutor-course" : "/course")
-                            i(class="fa fa-book")
-                                em() My Courses         
+                                em() Courses                
                     if user.role == 'Admin'
                         li
                             a( class="sidebar-nav-link" href="/admin/settings")
                                 i(class="fa fa-sliders")
-                                    em() LMS Settings        
+                                    em() LMS Settings 
+                    else 
+                        li
+                            a( class="sidebar-nav-link" href=user.role === 'Tutor' ? "/tutor/my-course" : "/student/my-course")
+                                i(class="fa fa-book")
+                                    em() My Courses 
+
                     li
                         a( class="sidebar-nav-link" href="/auth/logout")
                             i(class="fa fa-right-from-bracket")
