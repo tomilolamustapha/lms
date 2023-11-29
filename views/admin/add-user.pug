@@ -1,6 +1,10 @@
 extends ../layout 
 
 block main
+    a(href="javascript:void(0)" class="font-semibold text-lg my-5" onclick="goBack()") 
+        i( class=" fa-solid fa-angle-left") 
+            span Back
+
     p(class="font-bold text-3xl my-5") Add User
 
     div(class="bg-light flex justify-center items-center rounded-lg lg:rounded-r-2xl ")
@@ -29,7 +33,7 @@ block main
                         option(value="Student" label="Student")
                 div(class="lg:flex justify-between")
                     div(class="mb-3")
-                        label( for="password" class="text-primary" require) Username
+                        label( for="username" class="text-primary" require) Username
                         input(type="text" class="" id="username" name="username")
                     
                     div(class="mb-3")
