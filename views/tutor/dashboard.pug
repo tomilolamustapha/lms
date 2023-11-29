@@ -11,7 +11,7 @@ block main
                     div(class=" bg-light rounded-lg text-3xl px-5 py-4")
                         i(class='fa fa-book')
                     div()
-                        P(class="font-bold text-2xl") 0
+                        P(class="font-bold text-2xl") #{stats.totalCourses}
                         P(class="font-bold text-md") Courses
                 div(class="basis-2/6 ")
                         img( src="/image/Reading glasses-cuate.png" alt="girl")
@@ -34,7 +34,7 @@ block main
                     div(class=" bg-primary rounded-lg text-3xl px-5 py-4")
                         i(class="fa-solid fa-video")
                     div()
-                        P(class="font-bold text-2xl") 0
+                        P(class="font-bold text-2xl") #{stats.totalVideos}
                         p(class="font-bold text-md") Videos 
                 div(class="basis-2/6 ")
                         img( src="/image/Video files-amico.png" alt="girl")
@@ -44,7 +44,7 @@ block main
                     div(class=" bg-light rounded-lg text-3xl px-5 py-4")
                         i(class='fa-solid fa-folder-open')
                     div()
-                        P(class="font-bold text-2xl") 0
+                        P(class="font-bold text-2xl") #{stats.totalDocuments}
                         p(class="font-bold text-md") Documents 
                 div(class="basis-2/6 ")
                         img( src="/image/Online document-rafiki.png" alt="girl")
@@ -58,18 +58,18 @@ block main
         table(class="mt-0")
             thead 
                 tr
+                    th Course Code
                     th Name
-                    th email
+                    th Duration
                     th Status
-                    th date
             tbody 
                 if students
-                    each  student in students
+                    each  course in recentCourses
                         tr
-                            td #{student.fullname}
-                            td #{student.email } 
+                            td #{course.cotitleurseCode}
+                            td #{course.title } 
                             td(class="text-center") 
-                                if student.Status
+                                if course.Status
                                     p(class="bg-light rounded") Enabled 
                                 else 
                                     p(class="bg-gray-500 text-white rounded") Disabled 

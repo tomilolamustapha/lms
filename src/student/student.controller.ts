@@ -10,4 +10,11 @@ export class StudentController {
     const payload: any = req.user;
     res.render('student/dashboard', { user: payload.user });
   }
+
+  @Get('my-course')
+  course(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+    const payload: any = req.user;
+    res.render('course/student-course', { message, user: payload.user });
+  }
 }

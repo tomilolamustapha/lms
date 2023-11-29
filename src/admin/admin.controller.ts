@@ -5,6 +5,7 @@ import { DashboardService } from 'src/dashboard/dashboard.service';
 import { UserService } from 'src/user/user.service';
 import { AdminService } from './admin.service';
 import { CourseService } from 'src/course/course.service';
+import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 @UseGuards(UserGuard)
 @Controller('admin')
 export class AdminController {
@@ -148,7 +149,7 @@ export class AdminController {
       );
 
       req.flash('success', course.mesaage);
-      res.redirect('/admin/settings/users');
+      res.redirect('/admin/settings/courses');
     } catch (error) {
       req.flash('error', error.message);
       res.redirect('');
