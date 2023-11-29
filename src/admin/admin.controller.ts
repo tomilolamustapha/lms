@@ -123,4 +123,35 @@ export class AdminController {
       // pagination: courses.meta,
     });
   }
+
+  @Get('settings/courses/add-course')
+  addCoursePage(@Req() req: Request, @Res() res: Response) {
+    const message = res.locals.message;
+    const payload: any = req.user;
+
+    res.render('add-course', {
+      message,
+      user: payload.user,
+    });
+  }
+
+  @Post('settings/courses/add-course')
+  async addCourse(@Req() req: Request, @Res() res: Response) {
+    const payload: any = req.user;
+
+    console.log(payload);
+
+    try {
+      const course = await this.courseService.createCourseAdmin(
+        req.body,
+        payload.user.id,
+      );
+
+      req.flash('success', course.mesaage);
+      res.redirect('/admin/settings/users');
+    } catch (error) {
+      req.flash('error', error.message);
+      res.redirect('');
+    }
+  }
 }
