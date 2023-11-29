@@ -1,0 +1,32 @@
+extends ../layout 
+
+block main
+    a(href="javascript:void(0)" class="font-semibold text-lg my-5" onclick="goBack()") 
+        i( class=" fa-solid fa-angle-left") 
+            span Back
+
+    p(class="font-bold text-3xl my-5") Add Course
+
+    div(class="bg-light flex justify-center items-center rounded-lg lg:rounded-r-2xl ")
+        div(class="m-8 lg:mx-60 w-full")  
+            form(action="/tutor/my-courses/add-course", method="POST")
+                div(class="lg:flex justify-between")
+                    div(class="mb-3")
+                        label( for="title" class="text-primary") Title
+                        input(type="text" class="" id="title" name="title" required) 
+                    div(class="mb-3")
+                        label( for="description" class="text-primary") Descritption
+                        input(type="text" class="" id="description" name="description") 
+                div(class="lg:flex justify-between")    
+                    div(class="mb-3")
+                        label( for="courseCode" class="text-primary") Course Code
+                        input(type="text" class="" id="courseCode" name="courseCode")
+                    div(class="mb-3")
+                        label( for="category" class="text-primary") Category
+                        input(type="text" class="" id="category" name="category") 
+                div(class="lg:flex justify-between items-center")
+                    div(class="mb-3")
+                        label( for="code" class="text-primary" require) Code
+                        input(type="text" class="" id="code" name="code")
+                    div(class="mb-3")
+                        button( class="w-full") Add Course
