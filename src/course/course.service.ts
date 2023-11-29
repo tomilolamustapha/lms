@@ -14,6 +14,7 @@ export class CourseService {
   constructor(private prisma: PrismaService) { }
 
   async getAllCourses(data: dataFetchDto) {
+    
     const { search_term, page_number, start_date, end_date, page_size, } = data;
 
     const pageSize = page_size ?? 10;
@@ -23,12 +24,6 @@ export class CourseService {
     const startDate = new Date(start_date).toISOString();
 
     const endDate = new Date(end_date).toISOString();
-
-    // const startOfToday = new Date()
-    // startOfToday.setHours(0, 0, 0, 0) // set time to 00:00:00.000
-
-    // const endOfToday = new Date()
-    // endOfToday.setHours(23, 59, 59, 999) // set time to 23:59:59.999
 
 
     const allCourses = await paginate(this.prisma.course, {
@@ -130,7 +125,7 @@ export class CourseService {
   }
 
 
-  async createCourseAdmin(data: createCourseDto, id: number) {
+  async createCourse(data: createCourseDto, id: number) {
 
     const { title, description, courseCode, category, code } = data;
 
@@ -138,7 +133,7 @@ export class CourseService {
 
     const admin = await this.prisma.user.findFirst({ where: { id } });
 
-    if (tutor.role !== UserRole.Tutor || admin.role !== UserRole.Admin) {
+    if (tutor.role !== UserRole.Tutor && admin.role !== UserRole.Admin) {
       throw new UnauthorizedException('Only Admin and Tutors can create Courses')
     }
 
@@ -392,7 +387,7 @@ export class CourseService {
     };
   }
 
-  async getAllUsers() {
+  async getAllCourse() {
 
     const getcourse = await this.prisma.course.findMany();
 

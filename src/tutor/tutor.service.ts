@@ -66,10 +66,10 @@ export class TutorService {
     }
 
 
-    
 
 
-    async getTotalCoursesByTutor(tutorId: number) {
+
+    async getTutorStats(tutorId: number) {
         const existingTutor = await this.prisma.user.findUnique({
           where: {
             id: tutorId,

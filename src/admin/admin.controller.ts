@@ -142,7 +142,7 @@ export class AdminController {
     console.log(payload);
 
     try {
-      const course = await this.courseService.createCourseAdmin(
+      const course = await this.courseService.createCourse(
         req.body,
         payload.user.id,
       );
