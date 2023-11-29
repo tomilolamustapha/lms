@@ -1,16 +1,13 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { Course, UserRole } from '@prisma/client';
-import { courses } from 'prisma/models/courses';
+import { UserRole } from '@prisma/client';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 import { createCourseDto } from './dto/createCourse.dto';
-import { User } from 'src/auth/auth.service';
 import { enrollmentDto } from './dto/enrollment.dto';
 import { createCourseTutorDto } from './dto/createCourseTutor.dto';
 import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
-import { updateCourseDataDto } from 'src/tutor/dto/updateCourseData.dto';
 
 @Injectable()
 export class CourseService {
@@ -66,6 +63,8 @@ export class CourseService {
     }
 
   }
+
+
 
   async getCourseById(id: number) {
 
@@ -135,53 +134,12 @@ export class CourseService {
 
     const { title, description, courseCode, category, code } = data;
 
-    const admin = await this.prisma.user.findFirst({ where: { id } });
-
-    if (admin || admin.role !== UserRole.Admin) {
-      throw new UnauthorizedException('Only Admins and Tutors can create Courses')
-    }
-
-    if (isNaN(id)) {
-      throw new BadRequestException("User Id is Invalid");
-    }
-
-    const existingCourse = await this.prisma.course.findFirst({
-      where: {
-        courseCode: courseCode
-      },
-    });
-
-    if (existingCourse) {
-      throw new ConflictException('Course code already exists');
-    }
-
-    const newCourse = await this.prisma.course.create({
-      data: {
-        title,
-        description,
-        courseCode: category + " " + code,
-        // document,
-        // video,
-        category,
-        code,
-      },
-    });
-
-    return {
-      newCourse,
-      mesaage: " Course created successfully"
-    }
-
-  }
-
-  async createCourseTutor(data: createCourseTutorDto, id: number) {
-
-    const { title, description, courseCode, code, category } = data;
-
     const tutor = await this.prisma.user.findFirst({ where: { id } });
 
-    if (tutor || tutor.role !== UserRole.Tutor) {
-      throw new UnauthorizedException('Only Admins and Tutors can create Courses')
+    const admin = await this.prisma.user.findFirst({ where: { id } });
+
+    if (tutor.role !== UserRole.Tutor || admin.role !== UserRole.Admin) {
+      throw new UnauthorizedException('Only Admin and Tutors can create Courses')
     }
 
     if (isNaN(id)) {
@@ -203,8 +161,11 @@ export class CourseService {
         title,
         description,
         courseCode: category + " " + code,
+        category,
         code,
-        category
+        // document,
+        // video,
+
       },
     });
 
@@ -214,6 +175,7 @@ export class CourseService {
     }
 
   }
+
 
   async deleteCourse(id: number, data: courseDataDto) {
 
@@ -430,7 +392,47 @@ export class CourseService {
     };
   }
 
+  async getAllUsers() {
+
+    const getcourse = await this.prisma.course.findMany();
+
+    return {
+      getcourse,
+      message: 'All courses have been fetched successfully!'
+    }
+  }
+
+  async getRecentlyUploadedCourses(tutorId: number, limit: number = 5) {
+
+    const existingTutor = await this.prisma.user.findUnique({
+      where: {
+        id: tutorId,
+      },
+    });
+
+    if (!existingTutor) {
+      throw new NotFoundException('Tutor not found');
+    }
+
+    const recentlyUploadedCourses = await this.prisma.course.findMany({
+      where: {
+        id: tutorId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: limit,
+    });
+
+    return {
+      recentlyUploadedCourses,
+    }
+  }
 }
+
+
+
+
 
 
 
