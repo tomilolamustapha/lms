@@ -74,7 +74,7 @@ export class TutorController {
       res.redirect('/tutor/my-courses');
     } catch (error) {
       req.flash('error', error.message);
-      res.redirect('');
+      res.redirect('/tutor/my-courses/add-course');
     }
   }
 }

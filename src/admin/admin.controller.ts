@@ -80,7 +80,7 @@ export class AdminController {
       res.redirect('/admin/settings/users');
     } catch (error) {
       req.flash('error', error.message);
-      res.redirect('');
+      res.redirect('/admin/settings/users/add-user');
     }
   }
 
@@ -152,7 +152,7 @@ export class AdminController {
       res.redirect('/admin/settings/courses');
     } catch (error) {
       req.flash('error', error.message);
-      res.redirect('');
+      res.redirect('/admin/settings/courses/add-course');
     }
   }
 }
