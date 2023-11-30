@@ -23,7 +23,6 @@ export class AdminController {
     const stats = await this.dashboardService.AdminStats(payload.user.id);
     const students = await this.adminService.getUserByRole('Student');
     const tutors = await this.adminService.getUserByRole('Tutor');
-    console.log('here', students.users);
     res.render('admin/dashboard', {
       message,
       user: payload.user,
@@ -145,7 +144,8 @@ export class AdminController {
     try {
       const course = await this.courseService.createCourse(
         req.body,
-        payload.user.id,
+        payload.user.userId,
+        payload.user.tutorId
       );
 
       req.flash('success', course.mesaage);

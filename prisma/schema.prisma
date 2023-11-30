@@ -30,7 +30,8 @@ model User {
   updatedAt   DateTime          @updatedAt
   Status     Boolean
   tokens      UserAccessToken[]
-  courses     Enrollment[]
+  courses     Course[] 
+  enrollments Enrollment[]
 }
 
 model Course {
@@ -41,13 +42,14 @@ model Course {
   code        String       @unique
   courseCode  String       @unique
   duration    Int          @default(0)
-  //tutorId     Int
+  tutorId     Int
   status      Boolean      @default(true)
   video       Video[]
   document    Document[]
   students    Enrollment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  tutor       User    @relation( fields: [tutorId], references: [id])
 }
 
 model Enrollment {

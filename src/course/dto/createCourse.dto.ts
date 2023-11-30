@@ -23,10 +23,6 @@ export class createCourseDto{
 
 
     // @IsNotEmpty()
-
-    // video: string;
-
-    // @IsNotEmpty()
     
     //  document: string;
 

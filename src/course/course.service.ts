@@ -143,21 +143,22 @@ export class CourseService {
     };
   }
 
-  async createCourse(data: createCourseDto, id: number) {
-    const { title, description, courseCode, category, code } = data;
+  async createCourse(data: createCourseDto,tutorId : number ,userId : number) {
 
-    const tutor = await this.prisma.user.findFirst({ where: { id } });
+    const { title, description, courseCode, category, code} = data;
 
-    const admin = await this.prisma.user.findFirst({ where: { id } });
+   const user = await this.prisma.user.findFirst({where :{id:userId}})
 
-    if (tutor.role !== UserRole.Tutor && admin.role !== UserRole.Admin) {
+    if (user.role !== UserRole.Tutor && user.role !== UserRole.Admin) {
       throw new UnauthorizedException(
         'Only Admin and Tutors can create Courses',
       );
     }
 
-    if (isNaN(id)) {
-      throw new BadRequestException('User Id is Invalid');
+    console.log('tutorId',tutorId)
+
+    if (isNaN(tutorId)) {
+      throw new BadRequestException('Tutor Id is Invalid');
     }
 
     const existingCourse = await this.prisma.course.findFirst({
@@ -177,6 +178,7 @@ export class CourseService {
         courseCode: category + ' ' + code,
         category,
         code,
+        tutorId,
         // document,
         // video,
       },

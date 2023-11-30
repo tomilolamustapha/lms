@@ -11,7 +11,6 @@ export class AppController {
   async index(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const courses = await this.courseService.gettopCourses();
-    console.log(courses);
 
     res.render('index', {
       message,
