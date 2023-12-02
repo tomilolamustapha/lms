@@ -37,6 +37,8 @@ model User {
   tokens      UserAccessToken[]
   courses     Course[]
   enrollments Enrollment[]
+   notifications     Notification[]
+
 }
 
 model Course {
@@ -73,6 +75,8 @@ model PushNotifications {
   id          Int      @id @default(autoincrement())
   title       String
   description String
+  sentBy      String
+  status      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -96,4 +100,17 @@ model Content {
   type      ContentType
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+}
+
+model Notification{
+  id        Int       @id @default(autoincrement())
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int?
+  title     String
+  content   String
+  is_read   Boolean   @default(false)
+  read_at   DateTime?
+  sent_by   String    @default("system")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
 }

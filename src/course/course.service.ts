@@ -11,10 +11,8 @@ import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 import { createCourseDto } from './dto/createCourse.dto';
 import { enrollmentDto } from './dto/enrollment.dto';
-import { createCourseTutorDto } from './dto/createCourseTutor.dto';
 import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
-import { isPassportNumber } from 'class-validator';
 
 @Injectable()
 export class CourseService {
@@ -144,7 +142,7 @@ export class CourseService {
     };
   }
 
-  async createCourse(data: createCourseDto,id :number) {
+  async createCourse(data: createCourseDto, id: number) {
 
     const { title, description, courseCode, category, code, } = data;
 
@@ -175,7 +173,7 @@ export class CourseService {
         courseCode: category + ' ' + code,
         category,
         code,
-        userId:user.id,
+        userId: user.id,
       },
     });
 
@@ -261,148 +259,60 @@ export class CourseService {
     };
   }
 
-  // async uploadVideo(courseId: number, title: string, url: string) {
-  //   const videoUpload = await this.prisma.content.create({
-  //     where:{
-  //       type: ContentType.Video
-  //     },
-  //     data: {
-  //       title,
-  //       url: url,
-  //       courseId,
-  //     },
-  //   });
+  async uploadVideo(courseId: number, title: string, url: string) {
 
-  //   return {
-  //     data: videoUpload,
-  //     message: 'Video Successfully uploded!',
-  //   };
-  // }
-
-  async updateVideo(videoId: number, url: string) {
-    const existingVideo = await this.prisma.content.findUnique({
+    const existingCourse = await this.prisma.course.findUnique({
       where: {
-        id: videoId,
+        id: courseId,
       },
     });
 
-    if (!existingVideo) {
-      throw new NotFoundException('Video not found');
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found!');
     }
 
-    const updatedVideo = await this.prisma.content.update({
-      where: {
-        id: videoId,
-      },
+    const videoUpload = await this.prisma.content.create({
       data: {
-        url,
+        title,
+        url: url,
+        courseId,
+        type: ContentType.Video
       },
     });
 
     return {
-      data: updatedVideo,
-      message: 'Video updated successfully',
+      data: videoUpload,
+      message: 'Video Successfully uploded!',
     };
   }
 
-  // async uploadDocument(courseId: number, title: string, url: string) {
-  //   const document = await this.prisma.content.create({
-  //     data: {
-  //       title,
-  //       url: url,
-  //       courseId,
-  //     },
-  //   });
+  async uploadDocument(courseId: number, title: string, url: string) {
 
-  //   return {
-  //     data: document,
-  //     message: 'Document Successfully Uploaded!',
-  //   };
-  // }
-
-  async updateDocument(documentId: number, url: string) {
-    const existingVideo = await this.prisma.content.findUnique({
+    const existingCourse = await this.prisma.course.findUnique({
       where: {
-        id: documentId,
+        id: courseId,
       },
     });
 
-    if (!existingVideo) {
-      throw new NotFoundException('Video not found');
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found!');
     }
 
-    const updatedVideo = await this.prisma.content.update({
-      where: {
-        id: documentId,
-      },
+    const documentUpload = await this.prisma.content.create({
       data: {
-        url,
+        title,
+        url: url,
+        courseId,
+        type: ContentType.Document,
       },
     });
 
     return {
-      data: updatedVideo,
-      message: 'Video updated successfully',
+      data: documentUpload,
+      message: 'Document Successfully Uploaded!',
     };
   }
 
-  // async addVideoToCourse(courseId, videoUrl: string,) {
-  //   const existingCourse = await this.prisma.course.findUnique({
-  //     where: {
-  //       id: courseId,
-  //     },
-  //   });
-
-  //   if (!existingCourse) {
-  //     throw new NotFoundException('Course not found');
-  //   }
-
-  //   // If the course exists, associate the video with the course
-  //   const video = await this.prisma.content.create({
-  //     where:{
-  //       type: ContentType.Video
-  //     },
-  //     data: { 
-  //       courseId,
-  //       title,
-  //     },
-  //   });
-
-  //   return {
-  //     message: 'Video added to the course successfully',
-  //     videoData: video,
-  //   };
-  // }
-
-  // async addDocumentToCourse(courseId: number) {
-  //   // Check if the course exists
-  //   const existingCourse = await this.prisma.course.findUnique({
-  //     where: {
-  //       id: courseId,
-  //     },
-  //   });
-
-  //   if (!existingCourse) {
-  //     throw new NotFoundException('Course not found');
-  //   }
-
-  //   // If the course exists, associate the document with the course
-  //   const newdocument = await this.prisma.content.create({
-  //   where:{
-  //     type: ContentType.Document
-  //   },
-  //     data: {
-  //       title: title,
-  //       courseId
-  //     },
-  //   });
-
-  //   return {
-  //     newdocument,
-  //     message: 'Document added to the course successfully',
-      
-  //   };
-  // }
 
   async getAllCourse() {
 
@@ -413,6 +323,9 @@ export class CourseService {
       message: 'All courses have been fetched successfully!',
     };
   }
+
+
+
 
   async getRecentlyUploadedCourses(tutorId: number, limit: number = 5) {
     const existingTutor = await this.prisma.user.findUnique({
@@ -439,4 +352,72 @@ export class CourseService {
       recentlyUploadedCourses,
     };
   }
+
+
+  async deleteUploadedVideo(contentId: number) {
+    
+    const existingVideo = await this.prisma.content.findUnique({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    if (!existingVideo) {
+      throw new NotFoundException('Video not found');
+    }
+  
+    // Delete the video file *you need to implement the logic to delete the actual video file from storage*
+  
+    // Delete the video record from the database
+    await this.prisma.content.delete({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    return {
+      message: 'Uploaded video successfully deleted',
+    };
+  }
+  
+  async deleteUploadedDocument(contentId: number) {
+
+    const existingDocument = await this.prisma.content.findUnique({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    if (!existingDocument) {
+      throw new NotFoundException('Document not found');
+    }
+  
+    // Delete the document file *you need to implement the logic to delete the actual document file from storage*
+  
+    // Delete the document record from the database
+    await this.prisma.content.delete({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    return {
+      message: 'Uploaded document successfully deleted',
+    };
+  }
+
+  async generateCustomUniqueId() {
+
+    const timestamp = new Date().getTime().toString(36);
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const uniqueId = `${timestamp}-${randomString}`;
+  
+    return {
+      uniqueId,
+      message: 'Id generated successfully',
+    };
+  }
+ 
+
+
 }
