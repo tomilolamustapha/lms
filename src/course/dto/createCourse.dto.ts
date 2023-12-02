@@ -21,11 +21,6 @@ export class createCourseDto{
 
     category: string;
 
-
-    // @IsNotEmpty()
-
-    // video: string;
-
     // @IsNotEmpty()
     
     //  document: string;
