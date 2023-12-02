@@ -103,6 +103,38 @@ export class TutorService {
     };
   }
 
+  async getAllTutorCourse(userId : number){
+
+    const existingTutor = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!existingTutor) {
+      throw new NotFoundException('Tutor not found');
+    }
+
+    const allCourse = await this.prisma.course.findMany({
+      where:{
+        userId: existingTutor.id
+      }
+    });
+
+    return{
+      allCourse,
+      message:"All courses fetched successfully"
+    }
+  }
+
+  
+  
+  
+
+
+  
+
+
 
 }
 
