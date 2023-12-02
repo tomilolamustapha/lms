@@ -114,4 +114,29 @@ export class UserService {
         }
 
 
+        async resetPassword(email: string , password : string){
+
+            const findUser = await this.prisma.user.findUnique({where:{email}});
+
+            if(findUser == null ) throw new BadRequestException('User Does Not Exist');
+
+            const hashedPassword = await this.hashPassword(password);
+
+            await this.prisma.user.update({
+                where:{
+                    id :findUser.id
+                },
+                data:{
+                    email,
+                    password :hashedPassword,
+                    Status: true,
+                }
+            });
+
+            return{
+                message:"Password changed Sucessfully"
+            }
+        }
+
+
 }

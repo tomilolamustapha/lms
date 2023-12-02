@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException, UnauthorizedExcepti
 import { PrismaService } from 'prisma/prisma.service';
 import { updateUserDto } from './dto/updateUser.dto';
 import { UserRole } from '@prisma/client';
-import { userActionDto } from './dto/userActionDto';
 import { userCreation } from './dto/adminCreateDto.dto';
 import { StudentService } from 'src/student/student.service';
 import { TutorService } from 'src/tutor/tutor.service';
@@ -222,9 +221,7 @@ export class AdminService {
                 description,
                 code,
                 category,
-                courseCode: category + " " + code,
-                video,
-                document
+                courseCode: category + " " + code
             }
         });
 
@@ -252,7 +249,6 @@ export class AdminService {
             message: 'User deleted successfully',
         };
     }
-
 
 
 

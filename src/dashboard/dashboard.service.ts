@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserRole } from '@prisma/client';
+import { ContentType, UserRole } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { dashboardDto } from './dto/dashboard.dto';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
@@ -101,13 +101,15 @@ export class DashboardService {
     const endOfToday = new Date();
     endOfToday.setHours(23, 59, 59, 999);
 
-    const newUploadedVideos = await this.prisma.video.findMany({
+    const newUploadedVideos = await this.prisma.content.findMany({
         where: {
+          type: ContentType.Video ,
             createdAt: {
                 gte: startOfToday.toISOString(),
                 lte: endOfToday.toISOString(),
             },
         },
+        
         orderBy: {
             createdAt: 'desc',
         },

@@ -17,7 +17,7 @@ export class TutorController {
     const message = res.locals.message;
     const payload: any = req.user;
 
-    const stats = await this.tutorService.getTotalCoursesByTutor(
+    const stats = await this.tutorService.getTutorStats(
       payload.user.id,
     );
     const ulpoadedCourses = await this.courseService.getRecentlyUploadedCourses(
@@ -64,7 +64,7 @@ export class TutorController {
     console.log(payload);
 
     try {
-      const course = await this.courseService.createCourseAdmin(
+      const course = await this.courseService.createCourse(
         req.body,
         payload.user.id,
       );
@@ -73,7 +73,7 @@ export class TutorController {
       res.redirect('/tutor/my-courses');
     } catch (error) {
       req.flash('error', error.message);
-      res.redirect('/tutor/my-courses/add-course');
+      res.redirect('');
     }
   }
 }

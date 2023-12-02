@@ -5,19 +5,18 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRole } from '@prisma/client';
+import { ContentType, UserRole } from '@prisma/client';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
 import { createCourseDto } from './dto/createCourse.dto';
 import { enrollmentDto } from './dto/enrollment.dto';
-import { createCourseTutorDto } from './dto/createCourseTutor.dto';
 import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
 
 @Injectable()
 export class CourseService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getAllCourses(data: dataFetchDto) {
     const { search_term, page_number, start_date, end_date, page_size } = data;
@@ -29,12 +28,6 @@ export class CourseService {
     const startDate = new Date(start_date).toISOString();
 
     const endDate = new Date(end_date).toISOString();
-
-    // const startOfToday = new Date()
-    // startOfToday.setHours(0, 0, 0, 0) // set time to 00:00:00.000
-
-    // const endOfToday = new Date()
-    // endOfToday.setHours(23, 59, 59, 999) // set time to 23:59:59.999
 
     const allCourses = await paginate(
       this.prisma.course,
@@ -149,22 +142,19 @@ export class CourseService {
     };
   }
 
-  async createCourseAdmin(data: createCourseDto, id: number) {
-    const { title, description, courseCode, category, code } = data;
+  async createCourse(data: createCourseDto, id: number) {
 
-    const tutor = await this.prisma.user.findFirst({ where: { id } });
+    const { title, description, courseCode, category, code, } = data;
 
-    const admin = await this.prisma.user.findFirst({ where: { id } });
+    const user = await this.prisma.user.findFirst({ where: { id } })
 
-    if (tutor.role !== UserRole.Tutor && admin.role !== UserRole.Admin) {
+
+    if (user.role !== UserRole.Tutor && user.role !== UserRole.Admin) {
       throw new UnauthorizedException(
         'Only Admin and Tutors can create Courses',
       );
     }
 
-    if (isNaN(id)) {
-      throw new BadRequestException('User Id is Invalid');
-    }
 
     const existingCourse = await this.prisma.course.findFirst({
       where: {
@@ -183,8 +173,7 @@ export class CourseService {
         courseCode: category + ' ' + code,
         category,
         code,
-        // document,
-        // video,
+        userId: user.id,
       },
     });
 
@@ -271,11 +260,23 @@ export class CourseService {
   }
 
   async uploadVideo(courseId: number, title: string, url: string) {
-    const videoUpload = await this.prisma.video.create({
+
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found!');
+    }
+
+    const videoUpload = await this.prisma.content.create({
       data: {
         title,
         url: url,
         courseId,
+        type: ContentType.Video
       },
     });
 
@@ -285,131 +286,36 @@ export class CourseService {
     };
   }
 
-  async updateVideo(videoId: number, url: string) {
-    const existingVideo = await this.prisma.video.findUnique({
+  async uploadDocument(courseId: number, title: string, url: string) {
+
+    const existingCourse = await this.prisma.course.findUnique({
       where: {
-        id: videoId,
+        id: courseId,
       },
     });
 
-    if (!existingVideo) {
-      throw new NotFoundException('Video not found');
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found!');
     }
 
-    const updatedVideo = await this.prisma.video.update({
-      where: {
-        id: videoId,
-      },
-      data: {
-        url,
-      },
-    });
-
-    return {
-      data: updatedVideo,
-      message: 'Video updated successfully',
-    };
-  }
-
-  async uploadDocument(courseId: number, title: string, url: string) {
-    const document = await this.prisma.document.create({
+    const documentUpload = await this.prisma.content.create({
       data: {
         title,
         url: url,
         courseId,
+        type: ContentType.Document,
       },
     });
 
     return {
-      data: document,
+      data: documentUpload,
       message: 'Document Successfully Uploaded!',
     };
   }
 
-  async updateDocument(documentId: number, url: string) {
-    const existingVideo = await this.prisma.video.findUnique({
-      where: {
-        id: documentId,
-      },
-    });
 
-    if (!existingVideo) {
-      throw new NotFoundException('Video not found');
-    }
+  async getAllCourse() {
 
-    const updatedVideo = await this.prisma.video.update({
-      where: {
-        id: documentId,
-      },
-      data: {
-        url,
-      },
-    });
-
-    return {
-      data: updatedVideo,
-      message: 'Video updated successfully',
-    };
-  }
-
-  async addVideoToCourse(courseId: number, videoUrl: string) {
-    const existingCourse = await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-    });
-
-    if (!existingCourse) {
-      throw new NotFoundException('Course not found');
-    }
-
-    // If the course exists, associate the video with the course
-    const video = await this.prisma.video.create({
-      data: {
-        url: videoUrl,
-        courseId: courseId,
-        title,
-      },
-    });
-
-    return {
-      message: 'Video added to the course successfully',
-      videoData: video,
-    };
-  }
-
-  async addDocumentToCourse(
-    courseId: number,
-    document: string,
-    documentUrl: string,
-  ) {
-    // Check if the course exists
-    const existingCourse = await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-    });
-
-    if (!existingCourse) {
-      throw new NotFoundException('Course not found');
-    }
-
-    // If the course exists, associate the document with the course
-    const newdocument = await this.prisma.document.create({
-      data: {
-        title: title,
-        url: documentUrl,
-        courseId: courseId,
-      },
-    });
-
-    return {
-      message: 'Document added to the course successfully',
-      documentData: document,
-    };
-  }
-
-  async getAllUsers() {
     const getcourse = await this.prisma.course.findMany();
 
     return {
@@ -417,6 +323,9 @@ export class CourseService {
       message: 'All courses have been fetched successfully!',
     };
   }
+
+
+
 
   async getRecentlyUploadedCourses(tutorId: number, limit: number = 5) {
     const existingTutor = await this.prisma.user.findUnique({
@@ -443,4 +352,72 @@ export class CourseService {
       recentlyUploadedCourses,
     };
   }
+
+
+  async deleteUploadedVideo(contentId: number) {
+    
+    const existingVideo = await this.prisma.content.findUnique({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    if (!existingVideo) {
+      throw new NotFoundException('Video not found');
+    }
+  
+    // Delete the video file *you need to implement the logic to delete the actual video file from storage*
+  
+    // Delete the video record from the database
+    await this.prisma.content.delete({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    return {
+      message: 'Uploaded video successfully deleted',
+    };
+  }
+  
+  async deleteUploadedDocument(contentId: number) {
+
+    const existingDocument = await this.prisma.content.findUnique({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    if (!existingDocument) {
+      throw new NotFoundException('Document not found');
+    }
+  
+    // Delete the document file *you need to implement the logic to delete the actual document file from storage*
+  
+    // Delete the document record from the database
+    await this.prisma.content.delete({
+      where: {
+        id: contentId,
+      },
+    });
+  
+    return {
+      message: 'Uploaded document successfully deleted',
+    };
+  }
+
+  async generateCustomUniqueId() {
+
+    const timestamp = new Date().getTime().toString(36);
+    const randomString = Math.random().toString(36).substring(2, 8);
+    const uniqueId = `${timestamp}-${randomString}`;
+  
+    return {
+      uniqueId,
+      message: 'Id generated successfully',
+    };
+  }
+ 
+
+
 }

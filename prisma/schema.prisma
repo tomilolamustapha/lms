@@ -16,6 +16,11 @@ enum UserRole {
   Admin
 }
 
+enum ContentType {
+  Video
+  Document
+}
+
 model User {
   id          Int               @id @default(autoincrement())
   firstname   String
@@ -28,23 +33,27 @@ model User {
   username    String            @unique
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
-  Status     Boolean
+  Status      Boolean
   tokens      UserAccessToken[]
-  courses     Enrollment[]
+  courses     Course[]
+  enrollments Enrollment[]
+   notifications     Notification[]
+
 }
 
 model Course {
   id          Int          @id @default(autoincrement())
-  title       String
+  title       String       @unique
   description String?
   category    String
   code        String       @unique
   courseCode  String       @unique
   duration    Int          @default(0)
-  //tutorId     Int
-  status      Boolean      @default(true)
-  video       Video[]
-  document    Document[]
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+  status      Boolean      @default(false)
+  isPublished Boolean      @default(false)
+  content     Content[]
   students    Enrollment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -66,6 +75,8 @@ model PushNotifications {
   id          Int      @id @default(autoincrement())
   title       String
   description String
+  sentBy      String
+  status      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -79,23 +90,27 @@ model UserAccessToken {
   revoked     Boolean  @default(false)
 }
 
-model Video {
-  id        Int      @id @default(autoincrement())
-  uuid      String   @unique @default(uuid())
+model Content {
+  id        Int         @id @default(autoincrement())
+  uuid      String      @unique @default(uuid())
   title     String
   url       String
   courseId  Int
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  course    Course      @relation(fields: [courseId], references: [id])
+  type      ContentType
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
-model Document {
-  id        Int      @id @default(autoincrement())
+model Notification{
+  id        Int       @id @default(autoincrement())
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int?
   title     String
-  url       String
-  courseId  Int
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  content   String
+  is_read   Boolean   @default(false)
+  read_at   DateTime?
+  sent_by   String    @default("system")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
 }
