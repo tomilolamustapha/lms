@@ -36,11 +36,13 @@ import { PageMiddleware } from './common/middleware/page.middleware';
 import { RedirectLoginMiddleware } from './common/middleware/redirect-login.middleware';
 import { ExternalExceptionFilter } from '@nestjs/core/exceptions/external-exception-filter';
 import { FlashMiddleware } from './common/middleware/flash.middleware';
+import { DocumentModule } from './document/document.module';
 // import flash from 'express-flash';
 
 @Module({
   imports: [
     AuthModule,
+    DocumentModule,
     DashboardModule,
     PrismaModule,
     EmailModule,
