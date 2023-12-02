@@ -145,7 +145,6 @@ export class AdminController {
       const course = await this.courseService.createCourse(
         req.body,
         payload.user.userId,
-        payload.user.tutorId
       );
 
       req.flash('success', course.mesaage);

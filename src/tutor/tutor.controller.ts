@@ -66,15 +66,14 @@ export class TutorController {
     try {
       const course = await this.courseService.createCourse(
         req.body,
-        payload.user.userid,
-        payload.user.tutorId,
+        payload.user.id,
       );
 
       req.flash('success', course.mesaage);
       res.redirect('/tutor/my-courses');
     } catch (error) {
       req.flash('error', error.message);
-      res.redirect('/tutor/my-courses/add-course');
+      res.redirect('');
     }
   }
 }

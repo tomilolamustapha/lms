@@ -21,7 +21,6 @@ export class createCourseDto{
 
     category: string;
 
-
     // @IsNotEmpty()
     
     //  document: string;

@@ -221,9 +221,7 @@ export class AdminService {
                 description,
                 code,
                 category,
-                courseCode: category + " " + code,
-                video,
-                document
+                courseCode: category + " " + code
             }
         });
 

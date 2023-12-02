@@ -1,4 +1,4 @@
-import { Video } from "@prisma/client";
+import { Content } from "@prisma/client";
 import { Student } from "./student.model";
 import { Tutor } from "./tutor.model";
 
@@ -7,15 +7,14 @@ export class courses {
     title: string;
     description: string;
     category: string;
-    document : Document[];
-    duration : number;
+    duration: number;
     progress: number;
-    status : boolean;
-    video : Video[];
+    status: boolean;
+    content: Content;
     createdBy: string;
-    courseCode : string;
+    courseCode: string;
     tutor: Tutor[];
-    student :Student[];
+    student: Student[];
     uploadedOn: Date;
     updatedON: Date;
 }

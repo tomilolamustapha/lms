@@ -5,7 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRole } from '@prisma/client';
+import { ContentType, UserRole } from '@prisma/client';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
@@ -14,10 +14,11 @@ import { enrollmentDto } from './dto/enrollment.dto';
 import { createCourseTutorDto } from './dto/createCourseTutor.dto';
 import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
+import { isPassportNumber } from 'class-validator';
 
 @Injectable()
 export class CourseService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getAllCourses(data: dataFetchDto) {
     const { search_term, page_number, start_date, end_date, page_size } = data;
@@ -143,11 +144,12 @@ export class CourseService {
     };
   }
 
-  async createCourse(data: createCourseDto,tutorId : number ,userId : number) {
+  async createCourse(data: createCourseDto,id :number) {
 
-    const { title, description, courseCode, category, code} = data;
+    const { title, description, courseCode, category, code, } = data;
 
-   const user = await this.prisma.user.findFirst({where :{id:userId}})
+    const user = await this.prisma.user.findFirst({ where: { id } })
+
 
     if (user.role !== UserRole.Tutor && user.role !== UserRole.Admin) {
       throw new UnauthorizedException(
@@ -155,11 +157,6 @@ export class CourseService {
       );
     }
 
-    console.log('tutorId',tutorId)
-
-    if (isNaN(tutorId)) {
-      throw new BadRequestException('Tutor Id is Invalid');
-    }
 
     const existingCourse = await this.prisma.course.findFirst({
       where: {
@@ -178,9 +175,7 @@ export class CourseService {
         courseCode: category + ' ' + code,
         category,
         code,
-        tutorId,
-        // document,
-        // video,
+        userId:user.id,
       },
     });
 
@@ -266,23 +261,26 @@ export class CourseService {
     };
   }
 
-  async uploadVideo(courseId: number, title: string, url: string) {
-    const videoUpload = await this.prisma.video.create({
-      data: {
-        title,
-        url: url,
-        courseId,
-      },
-    });
+  // async uploadVideo(courseId: number, title: string, url: string) {
+  //   const videoUpload = await this.prisma.content.create({
+  //     where:{
+  //       type: ContentType.Video
+  //     },
+  //     data: {
+  //       title,
+  //       url: url,
+  //       courseId,
+  //     },
+  //   });
 
-    return {
-      data: videoUpload,
-      message: 'Video Successfully uploded!',
-    };
-  }
+  //   return {
+  //     data: videoUpload,
+  //     message: 'Video Successfully uploded!',
+  //   };
+  // }
 
   async updateVideo(videoId: number, url: string) {
-    const existingVideo = await this.prisma.video.findUnique({
+    const existingVideo = await this.prisma.content.findUnique({
       where: {
         id: videoId,
       },
@@ -292,7 +290,7 @@ export class CourseService {
       throw new NotFoundException('Video not found');
     }
 
-    const updatedVideo = await this.prisma.video.update({
+    const updatedVideo = await this.prisma.content.update({
       where: {
         id: videoId,
       },
@@ -307,23 +305,23 @@ export class CourseService {
     };
   }
 
-  async uploadDocument(courseId: number, title: string, url: string) {
-    const document = await this.prisma.document.create({
-      data: {
-        title,
-        url: url,
-        courseId,
-      },
-    });
+  // async uploadDocument(courseId: number, title: string, url: string) {
+  //   const document = await this.prisma.content.create({
+  //     data: {
+  //       title,
+  //       url: url,
+  //       courseId,
+  //     },
+  //   });
 
-    return {
-      data: document,
-      message: 'Document Successfully Uploaded!',
-    };
-  }
+  //   return {
+  //     data: document,
+  //     message: 'Document Successfully Uploaded!',
+  //   };
+  // }
 
   async updateDocument(documentId: number, url: string) {
-    const existingVideo = await this.prisma.video.findUnique({
+    const existingVideo = await this.prisma.content.findUnique({
       where: {
         id: documentId,
       },
@@ -333,7 +331,7 @@ export class CourseService {
       throw new NotFoundException('Video not found');
     }
 
-    const updatedVideo = await this.prisma.video.update({
+    const updatedVideo = await this.prisma.content.update({
       where: {
         id: documentId,
       },
@@ -348,62 +346,63 @@ export class CourseService {
     };
   }
 
-  async addVideoToCourse(courseId: number, videoUrl: string) {
-    const existingCourse = await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-    });
+  // async addVideoToCourse(courseId, videoUrl: string,) {
+  //   const existingCourse = await this.prisma.course.findUnique({
+  //     where: {
+  //       id: courseId,
+  //     },
+  //   });
 
-    if (!existingCourse) {
-      throw new NotFoundException('Course not found');
-    }
+  //   if (!existingCourse) {
+  //     throw new NotFoundException('Course not found');
+  //   }
 
-    // If the course exists, associate the video with the course
-    const video = await this.prisma.video.create({
-      data: {
-        url: videoUrl,
-        courseId: courseId,
-        title,
-      },
-    });
+  //   // If the course exists, associate the video with the course
+  //   const video = await this.prisma.content.create({
+  //     where:{
+  //       type: ContentType.Video
+  //     },
+  //     data: { 
+  //       courseId,
+  //       title,
+  //     },
+  //   });
 
-    return {
-      message: 'Video added to the course successfully',
-      videoData: video,
-    };
-  }
+  //   return {
+  //     message: 'Video added to the course successfully',
+  //     videoData: video,
+  //   };
+  // }
 
-  async addDocumentToCourse(
-    courseId: number,
-    document: string,
-    documentUrl: string,
-  ) {
-    // Check if the course exists
-    const existingCourse = await this.prisma.course.findUnique({
-      where: {
-        id: courseId,
-      },
-    });
+  // async addDocumentToCourse(courseId: number) {
+  //   // Check if the course exists
+  //   const existingCourse = await this.prisma.course.findUnique({
+  //     where: {
+  //       id: courseId,
+  //     },
+  //   });
 
-    if (!existingCourse) {
-      throw new NotFoundException('Course not found');
-    }
+  //   if (!existingCourse) {
+  //     throw new NotFoundException('Course not found');
+  //   }
 
-    // If the course exists, associate the document with the course
-    const newdocument = await this.prisma.document.create({
-      data: {
-        title: title,
-        url: documentUrl,
-        courseId: courseId,
-      },
-    });
+  //   // If the course exists, associate the document with the course
+  //   const newdocument = await this.prisma.content.create({
+  //   where:{
+  //     type: ContentType.Document
+  //   },
+  //     data: {
+  //       title: title,
+  //       courseId
+  //     },
+  //   });
 
-    return {
-      message: 'Document added to the course successfully',
-      documentData: document,
-    };
-  }
+  //   return {
+  //     newdocument,
+  //     message: 'Document added to the course successfully',
+      
+  //   };
+  // }
 
   async getAllCourse() {
 
