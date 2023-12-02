@@ -13,6 +13,7 @@ import { createCourseDto } from './dto/createCourse.dto';
 import { enrollmentDto } from './dto/enrollment.dto';
 import { title } from 'process';
 import { courseDataDto } from 'src/admin/dto/courseData.dto';
+import { type } from 'os';
 
 @Injectable()
 export class CourseService {
@@ -325,12 +326,11 @@ export class CourseService {
   }
 
 
+  async getRecentlyUploadedCourses(userId: number, limit: number = 5) {
 
-
-  async getRecentlyUploadedCourses(tutorId: number, limit: number = 5) {
     const existingTutor = await this.prisma.user.findUnique({
       where: {
-        id: tutorId,
+        id: userId,
       },
     });
 
@@ -340,7 +340,7 @@ export class CourseService {
 
     const recentlyUploadedCourses = await this.prisma.course.findMany({
       where: {
-        id: tutorId,
+        id: userId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -415,6 +415,32 @@ export class CourseService {
     return {
       uniqueId,
       message: 'Id generated successfully',
+    };
+  }
+
+
+  async getEnrolledStudentsCount(courseId: number) {
+   
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+  
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found');
+    }
+    
+    const enrolledStudentsCount = await this.prisma.enrollment.count({
+      where: {
+        courseId: existingCourse.id,
+      },
+    });
+  
+
+    return {
+      enrolledStudentsCount,
+      message: 'Enrolled students count fetched successfully',
     };
   }
  
