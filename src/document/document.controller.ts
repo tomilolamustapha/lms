@@ -12,6 +12,8 @@ import { diskStorage, FileFilterCallback } from 'multer';
 import { Request, Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
+import { CourseService } from 'src/course/course.service';
+import { UserGuard } from 'src/common/guards';
 
 function makeid(length: number) {
   var result = '';
@@ -57,9 +59,10 @@ function filter(req: any, file: any, cb: FileFilterCallback) {
     );
   }
 }
+@UseGuards(UserGuard)
 @Controller('document')
 export class DocumentController {
-  constructor() {}
+  constructor(private readonly courseService: CourseService) {}
 
   @Get('')
   course(@Req() req: Request, @Res() res: Response) {
@@ -79,16 +82,29 @@ export class DocumentController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     const type = file.mimetype.startsWith('video/') ? 'videos' : 'files';
-
-    // const dto: UploadDto = {
-    //   type:type,
-    //   name: file.filename,
-    //   content: filePath,
-    // };
-
-    // const upload = await this.lmsService.addPage(dto);
-
-    // return upload;
+    const { id, title } = req.body;
+    try {
+      if (type === 'videos') {
+        const upload = await this.courseService.uploadVideo(
+          +id,
+          title,
+          file.filename,
+        );
+        req.flash('success', upload.message);
+        res.redirect(`/tutor/my-courses/course/${id}`);
+      } else {
+        const upload = await this.courseService.uploadVideo(
+          id,
+          title,
+          file.filename,
+        );
+        req.flash('success', upload.message);
+        res.redirect(`/tutor/my-courses/course/${id}`);
+      }
+    } catch (error) {
+      req.flash('error', error.message);
+      res.redirect(`/tutor/my-courses/course/${id}/upload`);
+    }
   }
 
   @Get(':type/:name')

@@ -36,13 +36,11 @@ import { PageMiddleware } from './common/middleware/page.middleware';
 import { RedirectLoginMiddleware } from './common/middleware/redirect-login.middleware';
 import { ExternalExceptionFilter } from '@nestjs/core/exceptions/external-exception-filter';
 import { FlashMiddleware } from './common/middleware/flash.middleware';
-import { DocumentModule } from './document/document.module';
-// import flash from 'express-flash';
+import { DocumentController } from './document/document.controller';
 
 @Module({
   imports: [
     AuthModule,
-    DocumentModule,
     DashboardModule,
     PrismaModule,
     EmailModule,
@@ -55,6 +53,7 @@ import { DocumentModule } from './document/document.module';
   controllers: [
     AppController,
     AuthController,
+    DocumentController,
     VideoController,
     PushNotificationController,
     UserController,
@@ -81,11 +80,9 @@ export class AppModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: 'auth/login', method: RequestMethod.GET },
-        { path: 'auth/login', method: RequestMethod.POST },
-        { path: 'auth/signup', method: RequestMethod.GET },
-        { path: 'auth/signup-tutor', method: RequestMethod.GET },
-        { path: 'auth/signup', method: RequestMethod.POST },
+        { path: 'auth/(.*)', method: RequestMethod.ALL },
+        { path: 'document/(.*)', method: RequestMethod.GET },
+
         { path: '/', method: RequestMethod.GET },
       )
       .forRoutes('*');
