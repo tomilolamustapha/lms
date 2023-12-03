@@ -20,7 +20,7 @@ export class FlashMiddleware implements NestMiddleware {
     } else if (flash) {
       message = { status: 'flash', message: flash };
     }
-    console.log('success :', success, 'error :', error, 'flash :', flash);
+    // console.log('success :', success, 'error :', error, 'flash :', flash);
 
     res.locals.message = message;
 

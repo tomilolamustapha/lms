@@ -92,7 +92,6 @@ export class AdminController {
         userId,
         req.body.newStatus,
       );
-      console.log(user);
       res.status(200).json({ message: user.message });
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -103,24 +102,13 @@ export class AdminController {
   async courses(@Req() req: Request, @Res() res: Response) {
     const message = res.locals.message;
     const payload: any = req.user;
-    // const dto: dataFetchDto = {
-    //   search_term: '',
-    //   page_number: 1,
-    //   start_date: '',
-    //   end_date: '',
-    //   page_size: 10,
-    //   validate: function (): string {
-    //     throw new Error('Function not implemented.');
-    //   },
-    // };
-    // const courses = await this.courseService.getAllCourses(dto);
-    // console.log(courses.data);
+
+    const courses = await this.courseService.getAllCourse();
 
     res.render('admin/courses', {
       message,
       user: payload.user,
-      // courses: courses.data,
-      // pagination: courses.meta,
+      courses: courses.getcourse,
     });
   }
 
