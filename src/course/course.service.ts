@@ -346,10 +346,14 @@ export class CourseService {
         createdAt: 'desc',
       },
       take: limit,
+      include: {
+        students: true, // Include the students (enrollments) associated with each course
+      },
     });
 
     return {
       recentlyUploadedCourses,
+      message :"Recently Uploaded Courses Fetched Suceesfully!"
     };
   }
 
