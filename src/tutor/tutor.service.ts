@@ -87,12 +87,14 @@ export class TutorService {
 
     const totalVideos = await this.prisma.content.count({
       where: {
-        type: ContentType.Video,
-      },
+       type : ContentType.Video,
+       id: existingTutor.id,
+      }
     });
     const totalDocuments = await this.prisma.content.count({
       where: {
         type: ContentType.Document,
+       id: existingTutor.id,
       },
     });
 
@@ -123,7 +125,46 @@ export class TutorService {
 
     return {
       allCourse,
-      message: 'All courses fetched successfully',
+      message:"All courses fetched successfully"
+    }
+  }
+
+  
+  async getEnrolledStudentsCount(courseId: number) {
+   
+    const existingCourse = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
+  
+    if (!existingCourse) {
+      throw new NotFoundException('Course not found');
+    }
+    
+    const enrolledStudentsCount = await this.prisma.enrollment.count({
+      where: {
+        courseId: existingCourse.id,
+      },
+    });
+  
+
+    return {
+      enrolledStudentsCount,
+      message: 'Enrolled students count fetched successfully',
     };
   }
+  
+
+
+  
+
+
+
 }
+
+
+
+
+
+
