@@ -24,45 +24,7 @@ export class StudentService {
         };
     }
 
-    async progTrack(userRole: UserRole, data: progressTrackDto, id: number) {
 
-        const {courseId ,videoDuration} = data;
-
-        const student = await this.prisma.user.findFirst({ where: { id } });
-
-        if (isNaN(id)) {
-            throw new BadRequestException("User Id is Invalid");
-        }
-        const course = await this.prisma.course.findUnique({
-            where:{
-                id: courseId,
-            }
-        });
-
-        if(!course){
-            throw new NotFoundException('Course not found')
-        }
-
-        const enrolled = await this.prisma.enrollment.findFirst({
-            where:{
-                courseId: courseId,
-                studentId: student.id,
-            }
-        });
-
-        if(!enrolled){
-            throw new NotFoundException('Student is not enrolled in this course');
-        }
-
-        const updateEnrollment = await this.prisma.enrollment.update({
-            where:{
-                id:enrolled.id
-            },
-            data:{
-
-            }
-        });
-    }
 
     async getEnrolledCourses(studentId: number){
 

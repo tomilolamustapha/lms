@@ -14,7 +14,7 @@ export class TutorService {
   constructor(
     private prisma: PrismaService,
     private course: CourseService,
-  ) {}
+  ) { }
 
   async getUserById(id: number) {
     if (isNaN(id)) {
@@ -87,14 +87,29 @@ export class TutorService {
 
     const totalVideos = await this.prisma.content.count({
       where: {
-       type : ContentType.Video,
-       id: existingTutor.id,
+        type: ContentType.Video,
+        id: existingTutor.id,
       }
     });
     const totalDocuments = await this.prisma.content.count({
       where: {
         type: ContentType.Document,
-       id: existingTutor.id,
+        id: existingTutor.id,
+      },
+    });
+
+    const totalStudentsEnrolled = await this.prisma.enrollment.count({
+      where: {
+        courseId: {
+          in: (await this.prisma.course.findMany({
+            where: {
+              userId: existingTutor.id,
+            },
+            select: {
+              id: true,
+            },
+          })).map((course) => course.id),
+        },
       },
     });
 
@@ -102,6 +117,7 @@ export class TutorService {
       totalCourses,
       totalVideos,
       totalDocuments,
+      totalStudentsEnrolled,
       message: 'Totals Courses Fetched Successfully',
     };
   }
@@ -125,39 +141,39 @@ export class TutorService {
 
     return {
       allCourse,
-      message:"All courses fetched successfully"
+      message: "All courses fetched successfully"
     }
   }
 
-  
+
   async getEnrolledStudentsCount(courseId: number) {
-   
+
     const existingCourse = await this.prisma.course.findUnique({
       where: {
         id: courseId,
       },
     });
-  
+
     if (!existingCourse) {
       throw new NotFoundException('Course not found');
     }
-    
+
     const enrolledStudentsCount = await this.prisma.enrollment.count({
       where: {
         courseId: existingCourse.id,
       },
     });
-  
+
 
     return {
       enrolledStudentsCount,
       message: 'Enrolled students count fetched successfully',
     };
   }
-  
 
 
-  
+
+
 
 
 
