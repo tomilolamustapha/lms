@@ -88,13 +88,13 @@ export class TutorService {
     const totalVideos = await this.prisma.content.count({
       where: {
        type : ContentType.Video,
-       id: existingTutor.id,
+       //id: existingTutor.id,
       }
     });
     const totalDocuments = await this.prisma.content.count({
       where: {
         type: ContentType.Document,
-       id: existingTutor.id,
+       //id: existingTutor.id,
       },
     });
 
