@@ -277,7 +277,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Video
+        type: ContentType.Video 
       },
     });
 
@@ -304,7 +304,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Document,
+         type: ContentType.Document //|| ContentType.Video,
       },
     });
 
