@@ -38,9 +38,10 @@ block main
                     img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
             p(class="font-semibold mt-5 mb-1") Popular courses
             div(class="flex justify-center mb-5")
-                div(class="grid lg:grid-flow-col gap-6")
+                +carousel
                     each course in courses
-                        +course-card(course)
+                        div(class="slide")
+                            +course-card(course)
             p(class="font-semibold mt-5 mb-1") My courses
             div(class="flex justify-center mb-5")
                 div(class="grid lg:grid-flow-col gap-6")

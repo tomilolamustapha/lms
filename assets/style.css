@@ -857,10 +857,6 @@ button.inverse:hover {
   border: 0;
 }
 
-.accordion-item:not(:last-child) {
-  border-bottom: 2px solid #6237a0;
-}
-
 .accordion-item .icons i {
   min-width: 2rem;
 }
@@ -1267,6 +1263,15 @@ table tbody tr:last-of-type {
   border-radius: 0.75rem;
 }
 
+.border-2 {
+  border-width: 2px;
+}
+
+.border-primary {
+  --tw-border-opacity: 1;
+  border-color: rgb(98 55 160 / var(--tw-border-opacity));
+}
+
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(40 16 78 / var(--tw-bg-opacity));
@@ -1348,6 +1353,11 @@ table tbody tr:last-of-type {
 .py-14 {
   padding-top: 3.5rem;
   padding-bottom: 3.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .py-4 {
@@ -1450,6 +1460,11 @@ table tbody tr:last-of-type {
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(98 55 160 / var(--tw-text-opacity));
+}
+
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 
 .text-red-500 {

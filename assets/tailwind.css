@@ -320,10 +320,6 @@
     border: 0;
   }
 
-  .accordion-item:not(:last-child) {
-    border-bottom: 2px solid #6237a0;
-  }
-
   .accordion-item .icons i {
     min-width: 2rem;
   }
