@@ -93,32 +93,18 @@ export class CourseService {
       throw new BadRequestException('Course Id is Invalid');
     }
 
-    const course = await this.prisma.course.findUnique({where: { id } , });
+    const course = await this.prisma.course.findUnique({
+      where: { id } , 
+      include:{
+        content: true
+      }});
 
     if (!course) {
       throw new BadRequestException('Course Id does not exist');
     }
 
-    
-  const videoContent = await this.prisma.content.findMany({
-    where: {
-      courseId: id,
-      type: ContentType.Video,
-    },
-  });
-
-  
-  const docContent = await this.prisma.content.findMany({
-    where: {
-      courseId: id,
-      type: ContentType.Document,
-    },
-  });
-
     return {
       data: course,
-      videoContent,
-      docContent,
       message: 'Course Fetched Successfully',
     };
   }
