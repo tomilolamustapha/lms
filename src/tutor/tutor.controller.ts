@@ -28,7 +28,7 @@ export class TutorController {
       message,
       user: payload.user,
       stats: stats,
-      recentCourses: ulpoadedCourses,
+      recentCourses: ulpoadedCourses.recentlyUploadedCourses,
     });
   }
 

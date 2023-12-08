@@ -38,7 +38,7 @@ export class AuthController {
 
       req.flash('success', user.message);
       res.cookie('user_token', access, {
-        expires: new Date(Date.now() + 15 * 60 * 1000),
+        expires: new Date(Date.now() + 60 * 60 * 1000),
       });
       res.redirect('/dashboard');
     } catch (error) {
@@ -73,7 +73,7 @@ export class AuthController {
       req.flash('success', user.message);
       if (access) {
         res.cookie('user_token', access.access_token, {
-          expires: new Date(Date.now() + 10 * 60 * 1000),
+          expires: new Date(Date.now() + 60 * 60 * 1000),
         });
         res.redirect('/dashboard');
       } else {

@@ -123,4 +123,28 @@ function handleCarousel() {
     carousel.addEventListener("mousedown", dragStart)
     carousel.addEventListener("mousemove", dragging)
     document.addEventListener("mouseup", dragStop)
-} 
+}
+
+function handleAccordion() {
+    const accordionBtns = document.querySelectorAll('.accordion-btn')
+
+    accordionBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.classList.togglr('active')
+            const accordionBody = this.nextElementsiblinng
+            const close = this.querySelector('.fa-caret-down')
+            const open = this.querySelector('.fa-caret-up')
+
+            if (accordionBody.style.maxHeight) {
+                accordionBody.style.maxHeight = null
+                close.style.display = 'block'
+                open.style.display = 'none'
+            }
+            else {
+                accordionBody.style.maxHeight = accordionBody.scrollHeight + 'px'
+                close.style.display = 'none'
+                open.style.display = 'block'
+            }
+        })
+    })
+}
