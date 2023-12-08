@@ -335,7 +335,7 @@ export class CourseService {
 
     const existingTutor = await this.prisma.user.findUnique({
       where: {
-        id: userId,
+        id: userId
       },
     });
 
@@ -345,7 +345,7 @@ export class CourseService {
 
     const recentlyUploadedCourses = await this.prisma.course.findMany({
       where: {
-        id: userId,
+        userId : userId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -489,7 +489,7 @@ export class CourseService {
       },
     });
 
-    const data = Object.assign({}, { course, enrollment:enrollmentStats });
+   const  data = Object.assign({}, { course, enrollment:enrollmentStats });
 
     return {
       data,
