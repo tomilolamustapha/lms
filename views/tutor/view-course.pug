@@ -34,11 +34,22 @@ block main
 
     div()
         each content in course.content
-            if content.type == 'Video'
-                label(for="") video 
-                video(width="640" height="360" controls )
-                    source(src=`/document/${content.type}/${content.url}` ) 
-
-            else
-                label(for="") file
-                embed(width="800" height="600" src=`/document/${content.type}/${content.url}` type="" ) 
+            div(class="accordion-item")
+                button( id="accordion-btn" class="accordion-btn") #{content.title}
+                    div(class="icons")
+                        i(class="fa fa-caret-down")
+                        i(class="fa fa-caret-up")
+                div(class="accordion-body")
+                    
+                    if content.type == 'Video'                    
+                        video(width="640" height="360" controls )
+                            source(src=`/document/${content.type}/${content.url}` ) 
+                    else                        
+                        embed(width="800" height="600" src=`/document/${content.type}/${content.url}` type="" ) 
+    
+    
+    
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            handleAccordion();
+        });
