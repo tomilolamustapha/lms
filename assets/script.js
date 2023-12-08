@@ -130,8 +130,8 @@ function handleAccordion() {
 
     accordionBtns.forEach(btn => {
         btn.addEventListener('click', function () {
-            this.classList.togglr('active')
-            const accordionBody = this.nextElementsiblinng
+            this.classList.toggle('active')
+            const accordionBody = this.nextElementSibling
             const close = this.querySelector('.fa-caret-down')
             const open = this.querySelector('.fa-caret-up')
 
