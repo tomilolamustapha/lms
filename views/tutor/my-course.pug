@@ -7,7 +7,7 @@ block main
     div(class="flex justify-between")
         div(class="search")
             i(class="search-icon fa-solid fa-magnifying-glass")
-            input(class="search-input" type="search" placeholder="Search" onkeyup="searchList()")
+            input(class="search-input" type="search" placeholder="Search" onkeyup="searchTable('course-table')")
 
         div(class="flex gap-10 justify-end")    
             //- a(href="" ) 
@@ -30,7 +30,7 @@ block main
                     th Date
                     th
                     th
-            tbody(course-table) 
+            tbody(id="course-table") 
                 if courses
                     each course in courses
                         -
@@ -53,4 +53,5 @@ block main
                                     option( value="") Publish
                                     option( value="")  Withdraw
                             td
-                                 button(class="inverse") View Course
+                                a(href=`/tutor/my-courses/course/${course.id}`)
+                                    button(class="inverse") View Course
