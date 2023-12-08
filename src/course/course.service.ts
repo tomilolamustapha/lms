@@ -94,10 +94,11 @@ export class CourseService {
     }
 
     const course = await this.prisma.course.findUnique({
-      where: { id } , 
-      include:{
+      where: { id },
+      include: {
         content: true
-      }});
+      }
+    });
 
     if (!course) {
       throw new BadRequestException('Course Id does not exist');
@@ -281,7 +282,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Video 
+        type: ContentType.Video
       },
     });
 
@@ -308,7 +309,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-         type: ContentType.Document //|| ContentType.Video,
+        type: ContentType.Document //|| ContentType.Video,
       },
     });
 
@@ -334,7 +335,7 @@ export class CourseService {
 
     const existingTutor = await this.prisma.user.findUnique({
       where: {
-        id: userId,
+        id: userId
       },
     });
 
@@ -344,7 +345,7 @@ export class CourseService {
 
     const recentlyUploadedCourses = await this.prisma.course.findMany({
       where: {
-        id: userId,
+        userId : userId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -357,37 +358,37 @@ export class CourseService {
 
     return {
       recentlyUploadedCourses,
-      message :"Recently Uploaded Courses Fetched Suceesfully!"
+      message: "Recently Uploaded Courses Fetched Suceesfully!"
     };
   }
 
 
   async deleteUploadedVideo(contentId: number) {
-    
+
     const existingVideo = await this.prisma.content.findUnique({
       where: {
         id: contentId,
       },
     });
-  
+
     if (!existingVideo) {
       throw new NotFoundException('Video not found');
     }
-  
+
     // Delete the video file *you need to implement the logic to delete the actual video file from storage*
-  
+
     // Delete the video record from the database
     await this.prisma.content.delete({
       where: {
         id: contentId,
       },
     });
-  
+
     return {
       message: 'Uploaded video successfully deleted',
     };
   }
-  
+
   async deleteUploadedDocument(contentId: number) {
 
     const existingDocument = await this.prisma.content.findUnique({
@@ -395,20 +396,20 @@ export class CourseService {
         id: contentId,
       },
     });
-  
+
     if (!existingDocument) {
       throw new NotFoundException('Document not found');
     }
-  
+
     // Delete the document file *you need to implement the logic to delete the actual document file from storage*
-  
+
     // Delete the document record from the database
     await this.prisma.content.delete({
       where: {
         id: contentId,
       },
     });
-  
+
     return {
       message: 'Uploaded document successfully deleted',
     };
@@ -419,7 +420,7 @@ export class CourseService {
     const timestamp = new Date().getTime().toString(36);
     const randomString = Math.random().toString(36).substring(2, 8);
     const uniqueId = `${timestamp}-${randomString}`;
-  
+
     return {
       uniqueId,
       message: 'Id generated successfully',
@@ -428,30 +429,103 @@ export class CourseService {
 
 
   async getEnrolledStudentsCount(courseId: number) {
-   
+
     const existingCourse = await this.prisma.course.findUnique({
       where: {
         id: courseId,
       },
     });
-  
+
     if (!existingCourse) {
       throw new NotFoundException('Course not found');
     }
-    
+
     const enrolledStudentsCount = await this.prisma.enrollment.count({
       where: {
         courseId: existingCourse.id,
       },
     });
-  
+
 
     return {
       enrolledStudentsCount,
       message: 'Enrolled students count fetched successfully',
     };
   }
- 
+
+  async getAllCoursesWithUser() {
+
+    const coursesWithCreators = await this.prisma.course.findMany({
+      include: {
+        user: true,
+      },
+    });
+
+    return {
+      data: coursesWithCreators,
+      message: 'Courses with creators fetched successfully',
+    };
+  }
+
+  async getCourseWithEnrollmentStats(courseId: number) {
+    if (isNaN(courseId)) {
+      throw new BadRequestException('Course Id is Invalid');
+    }
+
+    const course = await this.prisma.course.findMany({
+      where: {
+        id: courseId,
+        isPublished: true
+      },
+    });
+
+    if (!course) {
+      throw new BadRequestException('Course Id does not exist');
+    }
+
+    const enrollmentStats = await this.prisma.enrollment.count({
+      where: {
+        courseId,
+      },
+    });
+
+   const  data = Object.assign({}, { course, enrollment:enrollmentStats });
+
+    return {
+      data,
+      message: 'Course with enrollment stats fetched successfully',
+    };
+  }
+
+
+  async getCourseWithContentsForUser(courseId: number, userId: number) {
+
+    if (isNaN(courseId) || isNaN(userId)) {
+      throw new BadRequestException('Course or User Id is Invalid');
+    }
+
+    const courseWithContents = await this.prisma.course.findUnique({
+      where: {
+        id: courseId
+      },
+      include: {
+        content: true,
+      }
+    });
+
+    if (!courseWithContents || courseWithContents.userId !== userId) {
+      throw new BadRequestException('Course Id does not exist or is not associated with the specified user');
+    }
+
+    return {
+      data: courseWithContents,
+      message: 'Course with contents fetched successfully',
+    };
+  }
+
+
+
+
 
 
 }

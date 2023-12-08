@@ -68,7 +68,54 @@ export class TutorService {
     };
   }
 
+  // async getTutorStats(userId: number) {
+  //   const existingTutor = await this.prisma.user.findUnique({
+  //     where: {
+  //       id: userId,
+  //     },
+  //   });
+
+  //   if (!existingTutor) {
+  //     throw new NotFoundException('Tutor not found');
+  //   }
+
+  //   const totalCourses = await this.prisma.course.count({
+  //     where: {
+  //       userId: existingTutor.id,
+  //     },
+  //   });
+
+  //   const totalContents = await this.prisma.content.count({
+  //     where: {
+  //       content : true
+  //       },
+  //   });
+
+  //   const totalStudentsEnrolled = await this.prisma.enrollment.count({
+  //     where: {
+  //       courseId: {
+  //         in: (await this.prisma.course.findMany({
+  //           where: {
+  //             userId: existingTutor.id,
+  //           },
+  //           select: {
+  //             userId: true,
+  //           },
+  //         })).map((course) => course.userId),
+  //       },
+  //     },
+  //   });
+
+  //   return {
+  //     totalCourses,
+  //     totalContents,
+  //     totalStudentsEnrolled,
+  //     message: 'Totals Courses Fetched Successfully',
+  //   };
+  // }
+
   async getTutorStats(userId: number) {
+    
     const existingTutor = await this.prisma.user.findUnique({
       where: {
         id: userId,
@@ -79,38 +126,27 @@ export class TutorService {
       throw new NotFoundException('Tutor not found');
     }
 
-    const totalCourses = await this.prisma.course.count({
+    const courses = await this.prisma.course.findMany({
       where: {
         userId: existingTutor.id,
       },
+      include: { content: true, students: true },
     });
 
-    const totalVideos = await this.prisma.content.count({
-      where: {
-        type: ContentType.Video,
-        id: existingTutor.id,
-      }
-    });
-    const totalDocuments = await this.prisma.content.count({
-      where: {
-        type: ContentType.Document,
-        id: existingTutor.id,
-      },
-    });
+    const totalCourses = courses.length;
 
-    const totalStudentsEnrolled = await this.prisma.enrollment.count({
-      where: {
-        courseId: {
-          in: (await this.prisma.course.findMany({
-            where: {
-              userId: existingTutor.id,
-            },
-            select: {
-              id: true,
-            },
-          })).map((course) => course.id),
-        },
-      },
+    let totalVideos = 0;
+    let totalDocuments = 0;
+    let totalStudentsEnrolled = 0;
+
+    // Iterate through each course to calculate totals
+    courses.forEach((course) => {
+      // Calculate total videos and documents in each course
+      totalVideos += course.content.filter((c) => c.type === ContentType.Video).length;
+      totalDocuments += course.content.filter((c) => c.type === ContentType.Document).length;
+
+      // Calculate total students enrolled in each course
+      totalStudentsEnrolled += course.students.length;
     });
 
     return {
@@ -121,6 +157,8 @@ export class TutorService {
       message: 'Totals Courses Fetched Successfully',
     };
   }
+
+
 
   async getAllTutorCourse(userId: number) {
     const existingTutor = await this.prisma.user.findUnique({
