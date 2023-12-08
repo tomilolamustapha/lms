@@ -41,10 +41,7 @@ const storage = diskStorage({
 
 function filter(req: any, file: any, cb: FileFilterCallback) {
   const videoFormats = ['video/mp4', 'video/mkv'];
-  const documentFormats = [
-    'application/pdf',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  ];
+  const documentFormats = ['application/pdf', 'text/plain'];
 
   const isVideo = videoFormats.includes(file.mimetype);
   const isDocument = documentFormats.includes(file.mimetype);
@@ -52,11 +49,10 @@ function filter(req: any, file: any, cb: FileFilterCallback) {
   if (isVideo || isDocument) {
     cb(null, true);
   } else {
-    cb(
-      new Error(
-        'Only MP4, MKV, PDF, DOCX, and other allowed formats are allowed!',
-      ),
+    req.fileFilterError = new Error(
+      'Only MP4, MKV, PDF, TXT, and other allowed formats are allowed!',
     );
+    cb(null, false);
   }
 }
 @UseGuards(UserGuard)
@@ -77,13 +73,18 @@ export class DocumentController {
     }),
   )
   async uploadFile(
-    @Req() req: Request,
+    @Req() req: Request & { fileFilterError?: Error },
     @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const type = file.mimetype.startsWith('video/') ? 'videos' : 'files';
     const { id, title } = req.body;
     try {
+      if (req.fileFilterError) {
+        throw req.fileFilterError;
+      }
+
+      const type = file.mimetype.startsWith('video/') ? 'videos' : 'files';
+
       if (type === 'videos') {
         const upload = await this.courseService.uploadVideo(
           +id,
@@ -93,8 +94,8 @@ export class DocumentController {
         req.flash('success', upload.message);
         res.redirect(`/tutor/my-courses/course/${id}`);
       } else {
-        const upload = await this.courseService.uploadVideo(
-          id,
+        const upload = await this.courseService.uploadDocument(
+          +id,
           title,
           file.filename,
         );
@@ -111,8 +112,12 @@ export class DocumentController {
   async serveFile(@Req() req: Request, @Res() res: Response) {
     const type = req.params.type;
     const name = req.params.name;
-    const rootDirectory =
-      type === 'videos' ? './documents/videos' : './documents/files';
+    var rootDirectory = '';
+    if (type === 'Video') {
+      rootDirectory = './documents/videos';
+    } else {
+      rootDirectory = './documents/files';
+    }
     res.sendFile(`${name}`, { root: rootDirectory });
   }
 }

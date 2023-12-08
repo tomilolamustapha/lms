@@ -10,8 +10,7 @@
   * {
     font-family: 'Poppins', sans-serif;
     font-size: 1em;
-    font-weight: 400;
-    color: #28104e;
+    font-weight: 500;
   }
 
   #footer {
@@ -228,6 +227,13 @@
     width: 100%;
   }
 
+  select.pill {
+    border-radius: 1.5rem;
+  }
+
+  select.pill:focus {
+    border: none;
+  }
   .search {
     width: max-content;
     display: flex;
@@ -288,6 +294,11 @@
     padding: 5px 20px;
   }
 
+  button:hover {
+    background: #9754cb;
+    color: #28104e;
+  }
+
   button.inverse {
     border: 2px solid #28104e;
     background: none;
@@ -340,6 +351,7 @@
     border-collapse: collapse;
     margin: 28px 0;
     min-width: auto;
+    table-layout: auto;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
@@ -348,6 +360,7 @@
 
   table thead tr {
     background-color: #6237a0;
+    color: #deacf5;
     text-align: left;
     font-weight: bold;
   }
@@ -370,7 +383,7 @@
   .nav {
     height: 50px;
     width: 100%;
-    background-color: #9754cb;
+    background-color: #28104e;
     position: relative;
   }
 
@@ -402,7 +415,7 @@
   }
 
   .nav > .nav-links > a:hover {
-    background-color: #28104e;
+    background-color: #6237a0;
   }
 
   .nav > #nav-check {
@@ -449,7 +462,9 @@
   .card.profile .body {
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin-top: 3.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
   }
 
   .carousel-wrap {
@@ -459,7 +474,7 @@
   }
 
   .slider {
-    width: 80%;
+    width: 95%;
     margin: 0 10px;
     padding: 50px 0;
     display: flex;
@@ -472,7 +487,7 @@
   }
 
   .slide {
-    min-width: 24%;
+    min-width: 25%;
     height: 90%;
     margin: 0 20px 0 0;
     position: relative;
@@ -496,7 +511,7 @@
 
     .nav > .nav-btn > label:hover,
     .nav #nav-check:checked ~ .nav-btn > label {
-      background-color: #28104e;
+      background-color: #6237a0;
     }
 
     .nav > .nav-btn > label > span {
@@ -509,7 +524,7 @@
       position: absolute;
       display: block;
       width: 100%;
-      background-color: #9754cb;
+      background-color: #6237a0;
       height: 0px;
       transition: all 0.3s ease-in;
       overflow-y: hidden;
@@ -525,6 +540,10 @@
     .nav > #nav-check:checked ~ .nav-links {
       height: calc(100vh - 50px);
       overflow-y: auto;
+    }
+
+    .slide {
+      min-width: 90%;
     }
   }
 }

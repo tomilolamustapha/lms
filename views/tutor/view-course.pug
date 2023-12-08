@@ -10,8 +10,9 @@ block main
 
     div(class="bg-medium rounded-lg flex p-5 items-center ")
         div(class="basis-4/6")
+            p(class="font-semibold")  #{course.courseCode}
             p(class="font-bold text-2xl")  #{course.title}
-            p(class="text-lg") #{course.description}
+            p(class="font-medium") #{course.description}
         div(class="basis-2/6 flex justify-end")
             img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
     p(class="font-semibold mt-5 mb-1") Contents
@@ -30,3 +31,14 @@ block main
                 button( class="m-left" )
                     i( class="fa fa-file-circle-plus") 
                         span upload content
+
+    div()
+        each content in course.content
+            if content.type == 'Video'
+                label(for="") video 
+                video(width="640" height="360" controls )
+                    source(src=`/document/${content.type}/${content.url}` ) 
+
+            else
+                label(for="") file
+                embed(width="800" height="600" src=`/document/${content.type}/${content.url}` type="" ) 

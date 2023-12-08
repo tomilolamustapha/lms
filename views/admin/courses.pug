@@ -27,23 +27,39 @@ block main
         table 
             thead 
                 tr
-                    th Name
-                    th Email
-                    th Username 
-                    th Role 
+                    th Title 
+                    th Course Code
+                    th Author
+                    th Duration 
+                    th Date
+                    th
                     th
             tbody(course-table) 
-                if users
-                    each person in users
+                if courses
+                    each course in courses
+                        -
+                            const datetime = new Date(course.updatedAt)
+
+                            const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month:'short', year: 'numeric' } ).format(datetime)
+                            const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute:'2-digit', hour12:false } ).format(datetime)
+
                         tr
-                            td #{person.fullname}
-                            td #{person.email}
-                            td #{person.username}
-                            td #{person.role}
+                            td #{course.title}
+                            td #{course.courseCode}
+                            td Author
+                            td #{course.duration}
                             td
-                                div(id="switch")
-                                    input(type="checkbox" id=`toggle-${person.id}` checked=person.Status)
-                                    label(for=`toggle-${person.id}`) 
+                                p() #{date}
+                                P(class="text-gray-500") #{time}
+                            td
+                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') ) 
+                                    option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
+                                    option( value="") Publish
+                                    option( value="")  Withdraw
+                            td
+                                i(class="fa fa-menu"): select()
+                                    option() 1
+                                    option(value="") 2 
 
  
     script.
