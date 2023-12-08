@@ -61,18 +61,27 @@ block main
                 tr
                     th Name
                     th email
+                    th Username
                     th Status
                     th date
             tbody 
                 each  student in students
+                    -
+                            const datetime = new Date(student.createdAt)
+
+                            const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month:'short', year: 'numeric' } ).format(datetime)
+                            const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute:'2-digit', hour12:false } ).format(datetime)
                     tr
                         td #{student.fullname}
                         td #{student.email}
+                        th #{student.username}
                         td(class="text-center") 
-                            if student.status == true 
-                                p(class="bg-light rounded") Enabled 
+                            if student.Status === true 
+                                p(class="bg-green-200 text-green-500 rounded-3xl") Enabled 
                             else 
-                                p(class="bg-gray-500 text-white rounded") Disabled 
+                                p(class="bg-gray-400 text-white rounded-3xl") Disabled 
 
-                        td #{student.createdAt}
+                        td 
+                            p() #{date}
+                            P(class="text-gray-500") #{time}
     

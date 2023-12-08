@@ -5,30 +5,30 @@ block left
 
         form(action="/auth/signup", method="POST")
             div(class="mb-3")
-                label( for="lastName" class="text-primary") Last Name
+                label( for="lastName" class="text-primary font-medium") Last Name
                 input(type="text" class="" id="lastName" name="lastname" required) 
             div(class="mb-3")
-                label( for="firstName" class="text-primary") First Name
+                label( for="firstName" class="text-primary font-medium") First Name
                 input(type="text" class="" id="firstName" name="firstname") 
             div(class="mb-3")
-                label( for="email" class="text-primary") Email
+                label( for="email" class="text-primary font-medium") Email
                 input(type="enail" class="" id="email" name="email")
             div(class="mb-3")
-                label( for="phoneNumber" class="text-primary") Phone Number
+                label( for="phoneNumber" class="text-primary font-medium") Phone Number
                 input(type="tel" class="" id="phoneNumber" name="phoneNumber") 
             div(class="mb-3")
-                label( for="password" class="text-primary") Password
+                label( for="password" class="text-primary font-medium") Password
                 input(type="password" class="" id="password" name="password") 
             div(class="mb-3")
-                label( for="access-code" class="text-primary") Access Code
+                label( for="access-code" class="text-primary font-medium") Access Code
                 input(type="text" class="" id="access-code" name="access-code") 
             
             input( id="role" name="role" Value="Tutor" hidden)
                   
             div(class="mb-3")
-                label( for="password" class="text-primary" require) Username
+                label( for="password" class="text-primary font-medium" require) Username
                 input(type="text" class="" id="username" name="username")
-            button( class="w-full") Sign Up
+            button( class="w-full font-semibold") Sign Up
     
       
         p(class="text-gray-600") already have an account ?.

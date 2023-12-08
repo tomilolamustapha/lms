@@ -25,6 +25,25 @@ function searchTable(tableBodyId) {
     }
 }
 
+function searchList() {
+    const searchInput = document.querySelector('.search-input');
+    const searchTerm = searchInput.value.toLowerCase();
+    const courseCards = document.querySelectorAll('.course-card');
+    let matchCount = 0;
+
+    courseCards.forEach(card => {
+        const cardContent = card.textContent.toLowerCase();
+        const cardMatches = cardContent.includes(searchTerm);
+
+        if (cardMatches) {
+            card.style.display = '';
+            matchCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    })
+}
+
 function handleTabs() {
     const tabToggles = document.querySelectorAll('[data-toggle="tab"]');
 
