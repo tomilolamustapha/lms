@@ -110,21 +110,24 @@ export class CourseService {
     };
   }
 
-  // async gettopCourses() {
-  //   const topCourses = await this.prisma.course.findMany({
-  //     take: 6,
-  //     orderBy: {
-  //       students: {
-  //         _count: 'desc',
-  //       },
-  //     },
-  //   });
-
-  //   return {
-  //     topCourses,
-  //     message: 'Courses fetched sucessfully',
-  //   };
-  // }
+  async gettopCourses() {
+    
+    const topCourses = await this.prisma.course.findMany({
+      where: {
+        status: 'isPublished', 
+      },
+      orderBy: {
+        createdAt: 'desc', 
+      },
+      take: 6, 
+    });
+  
+    return {
+      topCourses,
+      message: 'Top 6 published courses fetched successfully',
+    };
+  }
+  
 
   async courseCodes(courseCode: string) {
     const filterCourse = await this.prisma.course.findMany({
@@ -265,7 +268,7 @@ export class CourseService {
     };
   }
 
-  async uploadVideo(courseId: number, title: string, url: string) {
+  async uploadVideo(courseId: number, title: string, url: string ,instruction: string) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -282,7 +285,8 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Video
+        type: ContentType.Video,
+        instruction,
       },
     });
 
@@ -292,7 +296,7 @@ export class CourseService {
     };
   }
 
-  async uploadDocument(courseId: number, title: string, url: string) {
+  async uploadDocument(courseId: number, title: string, url: string,instruction:string) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -309,7 +313,8 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Document //|| ContentType.Video,
+        type: ContentType.Document ,//|| ContentType.Video,
+        instruction
       },
     });
 
@@ -345,7 +350,7 @@ export class CourseService {
 
     const recentlyUploadedCourses = await this.prisma.course.findMany({
       where: {
-        userId : userId,
+        userId: userId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -468,6 +473,7 @@ export class CourseService {
   }
 
   async getCourseWithEnrollmentStats(courseId: number) {
+
     if (isNaN(courseId)) {
       throw new BadRequestException('Course Id is Invalid');
     }
@@ -475,7 +481,7 @@ export class CourseService {
     const course = await this.prisma.course.findMany({
       where: {
         id: courseId,
-        isPublished: true
+        status: 'isPublished'
       },
     });
 
@@ -489,7 +495,7 @@ export class CourseService {
       },
     });
 
-   const  data = Object.assign({}, { course, enrollment:enrollmentStats });
+    const data = Object.assign({}, { course, enrollment: enrollmentStats });
 
     return {
       data,
@@ -497,35 +503,21 @@ export class CourseService {
     };
   }
 
+  
+  async getCoursesWithContentAndUserForAdmin() {
 
-  async getCourseWithContentsForUser(courseId: number, userId: number) {
-
-    if (isNaN(courseId) || isNaN(userId)) {
-      throw new BadRequestException('Course or User Id is Invalid');
-    }
-
-    const courseWithContents = await this.prisma.course.findUnique({
-      where: {
-        id: courseId
-      },
+    const coursesWithContentAndUser = await this.prisma.course.findMany({
       include: {
         content: true,
-      }
+        user: true,
+      },
     });
-
-    if (!courseWithContents || courseWithContents.userId !== userId) {
-      throw new BadRequestException('Course Id does not exist or is not associated with the specified user');
-    }
-
+  
     return {
-      data: courseWithContents,
-      message: 'Course with contents fetched successfully',
+      coursesWithContentAndUser,
+      message: 'Courses with content and user details fetched successfully for admin',
     };
   }
-
-
-
-
-
+  
 
 }

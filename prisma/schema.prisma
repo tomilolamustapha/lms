@@ -99,8 +99,8 @@ model UserAccessToken {
 
 model Content {
   id        Int         @id @default(autoincrement())
-  uuid      String      @unique @default(uuid())
   title     String
+  instruction String
   url       String
   courseId  Int
   course    Course      @relation(fields: [courseId], references: [id])
