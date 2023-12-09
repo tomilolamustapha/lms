@@ -110,21 +110,21 @@ export class CourseService {
     };
   }
 
-  async gettopCourses() {
-    const topCourses = await this.prisma.course.findMany({
-      take: 6,
-      orderBy: {
-        students: {
-          _count: 'desc',
-        },
-      },
-    });
+  // async gettopCourses() {
+  //   const topCourses = await this.prisma.course.findMany({
+  //     take: 6,
+  //     orderBy: {
+  //       students: {
+  //         _count: 'desc',
+  //       },
+  //     },
+  //   });
 
-    return {
-      topCourses,
-      message: 'Courses fetched sucessfully',
-    };
-  }
+  //   return {
+  //     topCourses,
+  //     message: 'Courses fetched sucessfully',
+  //   };
+  // }
 
   async courseCodes(courseCode: string) {
     const filterCourse = await this.prisma.course.findMany({
