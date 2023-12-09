@@ -7,7 +7,7 @@ block main
     div(class="flex justify-between")
         div(class="search")
             i(class="search-icon fa-solid fa-magnifying-glass")
-            input(class="search-input" type="search" placeholder="Search" onkeyup="")
+            input(class="search-input" type="search" placeholder="Search" onkeyup="searchTable('course-table')")
 
         div(class="flex gap-10 justify-end")    
             //- a(href="" ) 
@@ -19,9 +19,39 @@ block main
                     i( class="fa fa-user-plus") 
                         span Add Course
           
-    div(class="flex justify-center my-5 ")
-        div(class="grid lg:grid-cols-6 gap-4 ")
-                    if courses
-                        each course in courses
-                            a(href=`/tutor/my-courses/course/${course.id}`)
-                                +course-card(course)
+    div(class="my-5")
+        table 
+            thead 
+                tr
+                    th Title 
+                    th Category
+                    th Course Code
+                    th Duration
+                    th Date
+                    th
+                    th
+            tbody(id="course-table") 
+                if courses
+                    each course in courses
+                        -
+                            const datetime = new Date(course.updatedAt)
+
+                            const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month:'short', year: 'numeric' } ).format(datetime)
+                            const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute:'2-digit', hour12:false } ).format(datetime)
+
+                        tr
+                            td #{course.title}
+                            td #{course.category}
+                            td #{course.courseCode}
+                            td #{course.duration}
+                            td
+                                p() #{date}
+                                P(class="text-gray-500") #{time}
+                            td
+                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') ) 
+                                    option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
+                                    option( value="") Publish
+                                    option( value="")  Withdraw
+                            td
+                                a(href=`/tutor/my-courses/course/${course.id}`)
+                                    button(class="inverse") View Course

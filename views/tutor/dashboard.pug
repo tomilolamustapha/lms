@@ -56,23 +56,33 @@ block main
         p(class="font-bold text-lg mt-5 mb-3") Courses
 
         table(class="mt-0")
-            thead 
+            thead
                 tr
                     th Course Code
                     th Name
-                    th Duration
+                    th Enrollment
                     th Status
-            tbody 
-                if students
+                    th Date
+            tbody
+                if recentCourses
                     each  course in recentCourses
+                        -
+                            const datetime = new Date(course.updatedAt)
+
+                            const date = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month:'short', year: 'numeric' } ).format(datetime)
+                            const time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute:'2-digit', hour12:false } ).format(datetime)
+
                         tr
-                            td #{course.cotitleurseCode}
+                            td #{course.courseCode}
                             td #{course.title } 
+                            td #{course.students.length}
                             td(class="text-center") 
                                 if course.Status
-                                    p(class="bg-light rounded") Enabled 
+                                    p(class="w-fit  bg-green-200 text-green-500 rounded-3xl px-1") Published 
                                 else 
-                                    p(class="bg-gray-500 text-white rounded") Disabled 
+                                    p(class="w-fit  bg-gray-500 text-white rounded-3xl px-1") Unplubished 
 
-                            td #{student.createdAt}
+                            td
+                                p() #{date}
+                                P(class="text-gray-500") #{time}
         

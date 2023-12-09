@@ -14,6 +14,8 @@ module.exports = {
       'light': '#DEACF5',
       'medium': '#9754CB',
       'dark': '#28104E',
+      green: colors.green,
+      red: colors.red,
     },
     extend: {},
   },

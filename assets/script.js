@@ -25,6 +25,25 @@ function searchTable(tableBodyId) {
     }
 }
 
+function searchList() {
+    const searchInput = document.querySelector('.search-input');
+    const searchTerm = searchInput.value.toLowerCase();
+    const courseCards = document.querySelectorAll('.course-card');
+    let matchCount = 0;
+
+    courseCards.forEach(card => {
+        const cardContent = card.textContent.toLowerCase();
+        const cardMatches = cardContent.includes(searchTerm);
+
+        if (cardMatches) {
+            card.style.display = '';
+            matchCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    })
+}
+
 function handleTabs() {
     const tabToggles = document.querySelectorAll('[data-toggle="tab"]');
 
@@ -104,4 +123,28 @@ function handleCarousel() {
     carousel.addEventListener("mousedown", dragStart)
     carousel.addEventListener("mousemove", dragging)
     document.addEventListener("mouseup", dragStop)
-} 
+}
+
+function handleAccordion() {
+    const accordionBtns = document.querySelectorAll('.accordion-btn')
+
+    accordionBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.classList.toggle('active')
+            const accordionBody = this.nextElementSibling
+            const close = this.querySelector('.fa-caret-down')
+            const open = this.querySelector('.fa-caret-up')
+
+            if (accordionBody.style.maxHeight) {
+                accordionBody.style.maxHeight = null
+                close.style.display = 'block'
+                open.style.display = 'none'
+            }
+            else {
+                accordionBody.style.maxHeight = accordionBody.scrollHeight + 'px'
+                close.style.display = 'none'
+                open.style.display = 'block'
+            }
+        })
+    })
+}

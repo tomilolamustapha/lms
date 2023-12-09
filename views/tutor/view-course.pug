@@ -10,8 +10,9 @@ block main
 
     div(class="bg-medium rounded-lg flex p-5 items-center ")
         div(class="basis-4/6")
+            p(class="font-semibold")  #{course.courseCode}
             p(class="font-bold text-2xl")  #{course.title}
-            p(class="text-lg") #{course.description}
+            p(class="font-medium") #{course.description}
         div(class="basis-2/6 flex justify-end")
             img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
     p(class="font-semibold mt-5 mb-1") Contents
@@ -30,3 +31,30 @@ block main
                 button( class="m-left" )
                     i( class="fa fa-file-circle-plus") 
                         span upload content
+
+    div(class="my-5")
+        each content in course.content
+            div(class="accordion-item mb-3")
+                button( id="accordion-btn" class="accordion-btn") #{content.title}
+                    div(class="icons")
+                        i(class="fa fa-caret-down")
+                        i(class="fa fa-caret-up")
+                div(class="accordion-body") 
+                    div(class="grid justify-center my-3 py-3 rounded-xl border-primary border-2")
+                        div(class="my-5")
+                            if content.type == 'Video'                    
+                                video(width="640" height="360" controls )
+                                    source(src=`/document/${content.type}/${content.url}` ) 
+                            else                        
+                                embed(width="800" height="600" src=`/document/${content.type}/${content.url}` type="" ) 
+
+                        div(class="flex justify-around text-2xl ")
+                            a(href="#"): i(class=" text-light fa fa-file-pen") 
+                            a(href="#"): i(class=" text-red-400 fa fa-trash-can") 
+        
+    
+     
+    script.
+        document.addEventListener('DOMContentLoaded', function () {
+            handleAccordion();
+        });

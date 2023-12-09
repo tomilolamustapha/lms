@@ -6,12 +6,12 @@ block left
     div(class="")
         form(action="/auth/login", method="POST")
             div(class="mb-3")
-                label( for="email" class="text-primary") Email
+                label( for="email" class="text-primary font-medium") Email
                 input(type="email" class="" id="email" name="email") 
             div(class="mb-3")
-                label( for="password" class="text-primary") Password
+                label( for="password" class="text-primary font-medium") Password
                 input(type="password" class="" id="password" name="password")
-            button( class="w-full") Login
+            button( class="w-full font-semibold") Login
             p(class="text-gray-600") dont have an account ?.
                 span(class="text-medium")
                     a(href="/auth/signup") Sign Up  
