@@ -21,6 +21,14 @@ enum ContentType {
   Document
 }
 
+enum CourseStats{
+  isPublished
+  unPublished
+  blocked
+  withdrawn
+
+}
+
 model User {
   id          Int               @id @default(autoincrement())
   firstname   String
@@ -51,8 +59,7 @@ model Course {
   duration    Int          @default(0)
   userId      Int
   user        User         @relation(fields: [userId], references: [id])
-  status      Boolean      @default(false)
-  isPublished Boolean      @default(false)
+  status     CourseStats    @default(unPublished)
   content     Content[]
   students    Enrollment[]
   createdAt   DateTime     @default(now())
