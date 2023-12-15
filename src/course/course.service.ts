@@ -111,23 +111,23 @@ export class CourseService {
   }
 
   async gettopCourses() {
-    
+
     const topCourses = await this.prisma.course.findMany({
       where: {
-        status: 'isPublished', 
+        status: 'isPublished',
       },
       orderBy: {
-        createdAt: 'desc', 
+        createdAt: 'desc',
       },
-      take: 6, 
+      take: 6,
     });
-  
+
     return {
       topCourses,
       message: 'Top 6 published courses fetched successfully',
     };
   }
-  
+
 
   async courseCodes(courseCode: string) {
     const filterCourse = await this.prisma.course.findMany({
@@ -222,7 +222,7 @@ export class CourseService {
   }
 
   async enrollCourse(data: enrollmentDto, id: number) {
-    
+
     const { courseId } = data;
 
     const student = await this.prisma.user.findFirst({ where: { id } });
@@ -273,7 +273,7 @@ export class CourseService {
     };
   }
 
-  async uploadVideo(courseId: number, title: string, url: string ,instruction: string) {
+  async uploadVideo(courseId: number, title: string, url: string, instruction: string) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -301,7 +301,7 @@ export class CourseService {
     };
   }
 
-  async uploadDocument(courseId: number, title: string, url: string,instruction:string) {
+  async uploadDocument(courseId: number, title: string, url: string, instruction: string) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -318,7 +318,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Document ,
+        type: ContentType.Document,
         instruction
       },
     });
@@ -508,7 +508,7 @@ export class CourseService {
     };
   }
 
-  
+
   async getCoursesWithContentAndUserForAdmin() {
 
     const coursesWithContentAndUser = await this.prisma.course.findMany({
@@ -517,12 +517,113 @@ export class CourseService {
         user: true,
       },
     });
-  
+
     return {
       coursesWithContentAndUser,
       message: 'Courses with content and user details fetched successfully for admin',
     };
   }
+
+
+  async publishCourse(courseId: number, userId: number) {
+
+    const user = await this.prisma.user.findFirst({ where: { id: userId } });
+
+    if (!user || user.role !== UserRole.Tutor) {
+      throw new UnauthorizedException('Only instructors can publish courses.');
+    }
+
+    if (isNaN(courseId)) {
+      throw new BadRequestException('Course ID is Invalid');
+    }
+
+    const cour = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+      include: {
+        content: true,
+      },
+    });
+    if (!cour) {
+      throw new NotFoundException(`Course with ID "${courseId}" not found.`);
+    }
+
+
+    if (cour.status === CourseStats.isPublished) {
+      throw new ConflictException('Course is already published.');
+    }
+
+
+    if (!cour.content || cour.content.length === 0) {
+      throw new BadRequestException('Cannot publish a course without content.');
+    }
+
+
+    // Update the course status to published
+    const publishedCourse = await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        status: CourseStats.isPublished,
+      },
+    });
+
+    return {
+      course: publishedCourse,
+      message: 'Course published successfully.',
+    };
+  }
+
+
+  async withdrawCourse(courseId: number, userId: number) {
+
+    const user = await this.prisma.user.findFirst({ where: { id: userId } });
   
+    if (!user || user.role !== UserRole.Admin) {
+      throw new UnauthorizedException('Only instructors can withdraw courses.');
+    }
+  
+    if (isNaN(courseId)) {
+      throw new BadRequestException('Course ID is Invalid');
+    }
+  
+    const cou = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+      include: {
+        content: true, 
+      },
+    });
+  
+    if (!cou) {
+      throw new NotFoundException(`Course with ID "${courseId}" not found.`);
+    }
+  
+    // Check if the course is not published
+    if (cou.status == CourseStats.unPublished) {
+      throw new ConflictException('Cannot withdraw a course that is not published.');
+    }
+  
+    const withdrawnCourse = await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        status: CourseStats.withdrawn,
+      },
+    });
+  
+    return {
+      course: withdrawnCourse,
+      message: 'Course withdrawn successfully.',
+    };
+  }
+  
+
+
+
 
 }
