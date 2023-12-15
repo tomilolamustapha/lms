@@ -313,7 +313,7 @@ export class CourseService {
         title,
         url: url,
         courseId,
-        type: ContentType.Document ,//|| ContentType.Video,
+        type: ContentType.Document ,
         instruction
       },
     });
