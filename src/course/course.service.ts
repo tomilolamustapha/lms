@@ -5,7 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ContentType, UserRole } from '@prisma/client';
+import { ContentType, CourseStats, UserRole } from '@prisma/client';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
@@ -222,6 +222,7 @@ export class CourseService {
   }
 
   async enrollCourse(data: enrollmentDto, id: number) {
+    
     const { courseId } = data;
 
     const student = await this.prisma.user.findFirst({ where: { id } });
@@ -242,6 +243,10 @@ export class CourseService {
 
     if (!course) {
       throw new NotFoundException(`Course with ID "${courseId}" not found.`);
+    }
+
+    if (course.status !== CourseStats.isPublished) {
+      throw new BadRequestException('Course is not published, enrollment is not allowed.');
     }
 
     const isEnrolled = await this.prisma.enrollment.findFirst({
