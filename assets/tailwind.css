@@ -201,14 +201,16 @@
   }
 
   input:focus,
-  select:focus {
+  select:focus,
+  textarea:focus {
     outline: none;
     border-bottom-width: 2px;
     border-bottom-color: #6237a0;
   }
 
   input,
-  select {
+  select,
+  textarea {
     outline: none;
     border-width: 1px;
     border-radius: 0.5rem;
@@ -221,7 +223,8 @@
 
   label,
   input,
-  select {
+  select,
+  textarea {
     font-size: 1rem /* 16px */;
     line-height: 1.5rem;
     width: 100%;
@@ -234,6 +237,7 @@
   select.pill:focus {
     border: none;
   }
+
   .search {
     width: max-content;
     display: flex;
@@ -334,42 +338,24 @@
     transition: max-height 200ms ease;
   }
 
+  .container {
+    background-color: #deacf5;
+    width: 95vmin;
+    min-width: 30em;
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 2fr 9fr;
+    box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
+  }
+
   .tabs {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    padding: 3px;
-    border-radius: 5px;
-    border-color: #6237a0;
-    margin-bottom: 30px;
-    justify-content: space-between;
-  }
-
-  .tab {
-    text-align: center;
-    color: #6237a0;
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: color 0.15s ease-in;
-    margin: 0 1px;
-  }
-
-  .tab:hover {
-    background-color: #9754cb;
-    color: #deacf5;
-  }
-
-  .tab-pane {
-    display: none;
-  }
-
-  .tab.active {
-    background-color: #6237a0;
-    color: #deacf5;
-  }
-
-  .tab-pane.active {
-    display: block;
+    background-color: #f0f0f0;
   }
 
   table {
@@ -403,6 +389,28 @@
   }
   table tbody tr:last-of-type {
     border-bottom: 2px solid #6237a0;
+  }
+
+  .dropdown button {
+    cursor: pointer;
+  }
+
+  .dropdown a {
+    display: block;
+  }
+
+  .dropdown .content {
+    display: none;
+    position: absolute;
+    background-color: #f3f3f3;
+    border-radius: 0.5rem;
+    text-align: center;
+    min-width: 5rem;
+    box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
+  }
+
+  .dropdown:hover .content {
+    display: block;
   }
 
   .nav {

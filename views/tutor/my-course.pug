@@ -48,10 +48,15 @@ block main
                                 p() #{date}
                                 P(class="text-gray-500") #{time}
                             td
-                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') ) 
+                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') onchange="change(  )") 
                                     option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
                                     option( value="") Publish
                                     option( value="")  Withdraw
                             td
                                 a(href=`/tutor/my-courses/course/${course.id}`)
                                     button(class="inverse") View Course
+    
+    script.
+        function change() {
+        console.log("change")
+        }

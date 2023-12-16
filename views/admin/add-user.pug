@@ -15,28 +15,28 @@ block main
                         label( for="lastName" class="text-primary") Last Name
                         input(type="text" class="" id="lastName" name="lastname" required) 
                     div(class="mb-3")
-                        label( for="firstName" class="text-primary") First Name
-                        input(type="text" class="" id="firstName" name="firstname") 
+                        label( for="firstName" class="text-primary" required) First Name
+                        input(type="text" class="" id="firstName" name="firstname" required) 
                 div(class="lg:flex justify-between")    
                     div(class="mb-3")
                         label( for="email" class="text-primary") Email
-                        input(type="email" class="" id="email" name="email")
+                        input(type="email" class="" id="email" name="email" required)
                     div(class="mb-3")
                         label( for="phoneNumber" class="text-primary") Phone Number
-                        input(type="tel" class="" id="phoneNumber" name="phoneNumber") 
+                        input(type="tel" class="" id="phoneNumber" name="phoneNumber" required) 
                 div(class="mb-3")
-                    label( for="role" class="text-primary") Role
-                    select( class="" id="role" name="role")
-                        option( disabled slected label="Select a role")
+                    label( for="role" class="text-primary" ) Role
+                    select( class="" id="role" name="role" required)
+                        option( disabled selected label="Select a role")
                         option(value="Admin" label="Admin")
                         option(value="Tutor" label="Tutor")
                         option(value="Student" label="Student")
                 div(class="lg:flex justify-between")
                     div(class="mb-3")
-                        label( for="username" class="text-primary" require) Username
-                        input(type="text" class="" id="username" name="username")
+                        label( for="username" class="text-primary" ) Username
+                        input(type="text" class="" id="username" name="username" required)
                     
                     div(class="mb-3")
                         label( for="password" class="text-primary") Password
-                        input(type="password" class="" id="password" name="password") 
+                        input(type="password" class="" id="password" name="password" required) 
                 button( class="w-full") Add User

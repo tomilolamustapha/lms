@@ -40,13 +40,17 @@ block main
                         i(class="fa fa-caret-down")
                         i(class="fa fa-caret-up")
                 div(class="accordion-body") 
-                    div(class="grid justify-center my-3 py-3 rounded-xl border-primary border-2")
-                        div(class="my-5")
-                            if content.type == 'Video'                    
-                                video(width="640" height="360" controls )
-                                    source(src=`/document/${content.type}/${content.url}` ) 
-                            else                        
-                                embed(width="800" height="600" src=`/document/${content.type}/${content.url}` type="" ) 
+                    div(class="grid justify-center my-3 p-3 gap-3 rounded-xl border-primary border-2")
+                        div(class="flex justify-between gap-10")
+                            div(class="rounded-xl bg-gray-100 py-10 px-5")
+                                p(class="text-center font-semibold text-lg") Instructions 
+                                p() #{content.instruction}
+                            div(class="my-5")
+                                if content.type == 'Video'                    
+                                    video(width="800" height="480" controls )
+                                        source(src=`/document/${content.type}/${content.url}` ) 
+                                else                        
+                                    embed(width="800" height="650" src=`/document/${content.type}/${content.url}` type="" ) 
 
                         div(class="flex justify-around text-2xl ")
                             a(href="#"): i(class=" text-light fa fa-file-pen") 

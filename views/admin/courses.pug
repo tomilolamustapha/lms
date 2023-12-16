@@ -31,6 +31,7 @@ block main
                     th Course Code
                     th Author
                     th Duration 
+                    th Contents 
                     th Date
                     th
                     th
@@ -46,23 +47,31 @@ block main
                         tr
                             td #{course.title}
                             td #{course.courseCode}
-                            td Author
+                            td #{course.user.fullname}
                             td #{course.duration}
+                            td #{course.content.length}
                             td
                                 p() #{date}
                                 P(class="text-gray-500") #{time}
                             td
-                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') ) 
+                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') onchnage="change()" ) 
                                     option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
                                     option( value="") Publish
                                     option( value="")  Withdraw
                             td
-                                i(class="fa fa-menu"): select()
-                                    option() 1
-                                    option(value="") 2 
+                                .dropdown
+                                    button: i(class="fa fa-ellipsis-vertical")
+                                    .content
+                                        a(href="#") View
+                                        a(href="#") Edit
+                                        a(href="#") Delete
+                                
 
  
     script.
+     function change() {
+        console.log("change")
+     }
         //- document.addEventListener('DOMContentLoaded', function() {
         //- document.querySelectorAll('[id^="toggle-"]').forEach(function(toggle) {
         //- toggle.addEventListener('change', function() {
