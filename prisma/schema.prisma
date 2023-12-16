@@ -21,32 +21,31 @@ enum ContentType {
   Document
 }
 
-enum CourseStats{
+enum CourseStats {
   isPublished
   unPublished
   blocked
   withdrawn
-
 }
 
 model User {
-  id          Int               @id @default(autoincrement())
-  firstname   String
-  lastname    String
-  fullname    String
-  email       String            @unique
-  phoneNumber String            @unique
-  password    String
-  role        UserRole
-  username    String            @unique
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  Status      Boolean
-  tokens      UserAccessToken[]
-  courses     Course[]
-  enrollments Enrollment[]
-   notifications     Notification[]
-
+  id            Int               @id @default(autoincrement())
+  firstname     String
+  lastname      String
+  fullname      String
+  email         String            @unique
+  phoneNumber   String            @unique
+  password      String
+  role          UserRole
+  username      String            @unique
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  Status        Boolean
+  tokens        UserAccessToken[]
+  courses       Course[]
+  enrollments   Enrollment[]
+  notifications Notification[]
+  watchedContents Content[]
 }
 
 model Course {
@@ -56,10 +55,9 @@ model Course {
   category    String
   code        String       @unique
   courseCode  String       @unique
-  duration    Int          @default(0)
   userId      Int
   user        User         @relation(fields: [userId], references: [id])
-  status     CourseStats    @default(unPublished)
+  status      CourseStats  @default(unPublished)
   content     Content[]
   students    Enrollment[]
   createdAt   DateTime     @default(now())
@@ -98,18 +96,21 @@ model UserAccessToken {
 }
 
 model Content {
-  id        Int         @id @default(autoincrement())
-  title     String
- instruction String
-  url       String
-  courseId  Int
-  course    Course      @relation(fields: [courseId], references: [id])
-  type      ContentType
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  title       String
+  instruction String
+  url         String
+  courseId    Int
+  course      Course      @relation(fields: [courseId], references: [id])
+  type        ContentType
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  duration    Int
+  timeWatched Int?        @default(0) // New field to track time watched in minutes
+  watchedBy    User[]  
 }
 
-model Notification{
+model Notification {
   id        Int       @id @default(autoincrement())
   user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int?
