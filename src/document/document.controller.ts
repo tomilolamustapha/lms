@@ -77,7 +77,7 @@ export class DocumentController {
     @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const { id, title ,instruction } = req.body;
+    const { id, title, instruction } = req.body;
     try {
       if (req.fileFilterError) {
         throw req.fileFilterError;
@@ -89,8 +89,9 @@ export class DocumentController {
         const upload = await this.courseService.uploadVideo(
           +id,
           title,
+
           file.filename,
-         instruction,
+          instruction,
         );
         req.flash('success', upload.message);
         res.redirect(`/tutor/my-courses/course/${id}`);
@@ -99,7 +100,7 @@ export class DocumentController {
           +id,
           title,
           file.filename,
-         instruction,
+          instruction,
         );
         req.flash('success', upload.message);
         res.redirect(`/tutor/my-courses/course/${id}`);

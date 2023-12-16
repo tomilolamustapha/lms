@@ -26,7 +26,20 @@ mixin course-card(data)
              
         div(class="flex justify-end")
             button(class="inverse") Join 
-            
+
+mixin enrolled-card(data)
+    .card.course-card
+        div(class="bg-medium rounded-xl ")
+            img(class="h-56 w-100 rounded-lg" src="/image/Reading glasses-cuate.png" alt="", srcset="")
+   
+        div(class="flex items-center my-5")
+            div()
+                p(class="font-medium") #{data.courseCode}
+                p(class="font-bold") #{data.title}
+             
+        div(class="flex justify-end")
+            a(href=`/student/my-courses/course/1`): button(class="inverse") view 
+
 
 mixin profile-card(parsedData)
     

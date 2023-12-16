@@ -103,12 +103,13 @@ export class AdminController {
     const message = res.locals.message;
     const payload: any = req.user;
 
-    const courses = await this.courseService.getAllCourse();
+    const courses =
+      await this.courseService.getCoursesWithContentAndUserForAdmin();
 
     res.render('admin/courses', {
       message,
       user: payload.user,
-      courses: courses.getcourse,
+      courses: courses.coursesWithContentAndUser,
     });
   }
 

@@ -1,0 +1,57 @@
+extends ../layout 
+
+block main
+    -
+        const contents = [
+            {
+                'title': 'Lesson 1',
+                'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                'url': '#'
+            },
+            {
+                'title': 'Lesson 2',
+                'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                'url': '#'
+            },
+            {
+                'title': 'Lesson 3',
+                'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                'url': '#'
+            },
+            {
+                'title': 'Lesson 4',
+                'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
+                'url': '#'
+            },
+        ]
+
+    a(href="javascript:void(0)" class="font-semibold text-lg my-5" onclick="goBack()") 
+        i( class=" fa-solid fa-angle-left") 
+            span Back
+
+    p(class="font-bold text-3xl my-5") Course
+
+    div(class="bg-medium rounded-lg flex p-5 items-center ")
+        div(class="basis-4/6")
+            p(class="font-semibold")  courseCode
+            p(class="font-bold text-2xl")  Title
+            p(class="font-medium") description
+        div(class="basis-2/6 flex justify-end")
+            img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
+    p(class="font-semibold mt-5 mb-1") Contents
+     
+
+    div(class="my-5 container")
+        .tabs
+            each content in contents
+                p #{content.title}
+        
+        .tabs-content
+            each content in contents
+                p #{content.title}
+                p #{content.instruction}
+
+    
+     
+    script.
+        

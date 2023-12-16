@@ -7,7 +7,7 @@ block main
 
     p(class="font-bold text-3xl my-5") Upload Document
 
-    div(class="bg-light flex justify-center items-center rounded-lg l ")
+    div(class="bg-light flex justify-center items-center rounded-lg")
         div(class="m-8 lg:mx-60 w-full")  
             form(enctype="multipart/form-data" action="/document/upload", method="POST")
                 div(class="lg:flex justify-between")
@@ -17,7 +17,9 @@ block main
                     div(class="mb-3")
                         label( for="file" class="text-primary") File
                         input(type="file" class="" id="file" name="file") 
-
-                    input( id="id" name="id" Value=course.id hidden)
+                div(class="mb-3")
+                    label( for="instruction" class="text-primary") Instruction
+                    textarea( class="" id="instruction" name="instruction" ) 
+                input( id="id" name="id" Value=course.id hidden)
               
                 button( class="w-full") Upload
