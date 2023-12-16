@@ -5,7 +5,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ContentType, CourseStats, UserRole } from '@prisma/client';
+import { ContentType, CourseStats, Prisma, UserRole } from '@prisma/client';
 import { PaginateFunction, paginator } from 'prisma/models/paginator';
 import { PrismaService } from 'prisma/prisma.service';
 import { dataFetchDto } from 'src/user/dto/dataFetchDto.dto';
@@ -273,7 +273,7 @@ export class CourseService {
     };
   }
 
-  async uploadVideo(courseId: number, title: string, url: string, instruction: string) {
+  async uploadVideo(courseId: number, title: string, url: string, instruction: string ,duration : number) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -292,6 +292,7 @@ export class CourseService {
         courseId,
         type: ContentType.Video,
         instruction,
+        duration,
       },
     });
 
@@ -301,7 +302,7 @@ export class CourseService {
     };
   }
 
-  async uploadDocument(courseId: number, title: string, url: string, instruction: string) {
+  async uploadDocument(courseId: number, title: string, url: string, instruction: string, duration : number) {
 
     const existingCourse = await this.prisma.course.findUnique({
       where: {
@@ -319,8 +320,9 @@ export class CourseService {
         url: url,
         courseId,
         type: ContentType.Document,
-        instruction
-      },
+        instruction,
+        duration,
+      } 
     });
 
     return {
@@ -524,20 +526,20 @@ export class CourseService {
     };
   }
 
+  async updateCourseStatus(courseId: number, userId: number, newStatus: CourseStats, allowedRole: UserRole) {
 
-  async publishCourse(courseId: number, userId: number) {
 
     const user = await this.prisma.user.findFirst({ where: { id: userId } });
-
-    if (!user || user.role !== UserRole.Tutor) {
-      throw new UnauthorizedException('Only instructors can publish courses.');
+  
+    if (!user || user.role !== allowedRole) {
+      throw new UnauthorizedException(`Only ${allowedRole}s can perform this action.`);
     }
-
+  
     if (isNaN(courseId)) {
       throw new BadRequestException('Course ID is Invalid');
     }
-
-    const cour = await this.prisma.course.findUnique({
+  
+    const course = await this.prisma.course.findUnique({
       where: {
         id: courseId,
       },
@@ -545,85 +547,83 @@ export class CourseService {
         content: true,
       },
     });
-    if (!cour) {
+  
+    if (!course) {
       throw new NotFoundException(`Course with ID "${courseId}" not found.`);
     }
-
-
-    if (cour.status === CourseStats.isPublished) {
-      throw new ConflictException('Course is already published.');
+  
+    if (course.status === newStatus) {
+      throw new ConflictException(`Course is already ${newStatus}.`);
     }
-
-
-    if (!cour.content || cour.content.length === 0) {
+  
+    if (newStatus === CourseStats.isPublished && (!course.content || course.content.length === 0)) {
       throw new BadRequestException('Cannot publish a course without content.');
     }
-
-
-    // Update the course status to published
-    const publishedCourse = await this.prisma.course.update({
+  
+    // Update the course status
+    const updatedCourse = await this.prisma.course.update({
       where: {
         id: courseId,
       },
       data: {
-        status: CourseStats.isPublished,
+        status: newStatus,
       },
     });
-
+  
+    const action = newStatus === CourseStats.isPublished ? 'isPublished' : 'withdrawn';
+  
     return {
-      course: publishedCourse,
-      message: 'Course published successfully.',
+      course: updatedCourse,
+      message: `Course ${action} successfully.`,
     };
   }
 
+  async calculateVideoProgress(contentId: number, userId: number) {
 
-  async withdrawCourse(courseId: number, userId: number) {
-
-    const user = await this.prisma.user.findFirst({ where: { id: userId } });
-  
-    if (!user || user.role !== UserRole.Admin) {
-      throw new UnauthorizedException('Only instructors can withdraw courses.');
-    }
-  
-    if (isNaN(courseId)) {
-      throw new BadRequestException('Course ID is Invalid');
-    }
-  
-    const cou = await this.prisma.course.findUnique({
+    const content = await this.prisma.content.findUnique({
       where: {
-        id: courseId,
+        id: contentId,
+      },
+    });
+  
+    if (!content) {
+      throw new NotFoundException(`Content with ID "${contentId}" not found.`);
+    }
+  
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
       },
       include: {
-        content: true, 
+        watchedContents: {
+          where: {
+            id: contentId,
+          },
+        },
       },
     });
   
-    if (!cou) {
-      throw new NotFoundException(`Course with ID "${courseId}" not found.`);
+    if (!user) {
+      throw new NotFoundException(`User with ID "${userId}" not found.`);
     }
   
-    // Check if the course is not published
-    if (cou.status == CourseStats.unPublished) {
-      throw new ConflictException('Cannot withdraw a course that is not published.');
-    }
+    const { duration } = content;
+
+    const timeWatched = user.watchedContents?.[0]?.timeWatched || 0;
   
-    const withdrawnCourse = await this.prisma.course.update({
-      where: {
-        id: courseId,
-      },
-      data: {
-        status: CourseStats.withdrawn,
-      },
-    });
+    // Calculate progress percentage
+    const progressPercentage = (timeWatched / duration) * 100;
+  
+    // Calculate progress per hour
+    const progressPerHour = (timeWatched / duration) * 60; // Assuming duration is in minutes
   
     return {
-      course: withdrawnCourse,
-      message: 'Course withdrawn successfully.',
+      progressPercentage,
+      progressPerHour,
+      message : 'Progress Tracked fetched successfully'
     };
   }
   
-
-
 
 
 }
