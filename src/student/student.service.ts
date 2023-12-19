@@ -6,6 +6,7 @@ import { progressTrackDto } from 'src/course/dto/updateprogress.dto';
 @Injectable()
 export class StudentService {
     constructor(private prisma: PrismaService) { }
+
     async getUserById(id: number) {
 
         if (isNaN(id)) {
@@ -27,21 +28,49 @@ export class StudentService {
 
     async getCoursesEnrolledByStudent(studentId: number) {
         
-        const studentEnrollments = await this.prisma.enrollment.findMany({
-          where: {
-            studentId: studentId,
-          },
-          include: {
-            course: true,
-          },
-        });
+      const studentEnrollments = await this.prisma.enrollment.findMany({
+        where: {
+          studentId: studentId,
+        },
+        include: {
+          course: true,
+        },
+      });
+    
+      const enrolledCourses = studentEnrollments.map((enrollment) => enrollment.course);
+    
+      return {
+        enrolledCourses,
+        message: 'Enrolled courses fetched successfully',
+      };
+    }
+
+
+    async getEnrollmentByIdWithContent(enrollmentId: number) {
       
-        const enrolledCourses = studentEnrollments.map((enrollment) => enrollment.course);
-      
-        return {
-          enrolledCourses,
-          message: 'Enrolled courses fetched successfully',
-        };
+      const enrollmentWithContent = await this.prisma.enrollment.findUnique({
+        where: {
+          id: enrollmentId,
+        },
+        include: {
+          course: {
+            include: {
+              content: true,
+            },
+          },
+          student: true,
+        },
+      });
+    
+      if (!enrollmentWithContent) {
+        throw new NotFoundException(`Enrollment with ID "${enrollmentId}" not found.`);
       }
+    
+      return {
+        enrollment: enrollmentWithContent,
+        message: 'Enrollment details with content fetched successfully',
+      };
+    }
+    
       
 }
