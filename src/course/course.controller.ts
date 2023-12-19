@@ -1,4 +1,12 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserGuard } from 'src/common/guards';
 import { CourseService } from './course.service';
@@ -20,5 +28,32 @@ export class CourseController {
       user: payload.user,
       courses: courses.getcourse,
     });
+  }
+
+  @Get('update/:id/:status')
+  async publish(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @Param('status') status,
+    @Res() res: Response,
+  ) {
+    const payload: any = req.user;
+    try {
+      const action = await this.courseService.updateCourseStatus(
+        +id,
+        payload.user.id,
+        status,
+        payload.user.role,
+      );
+
+      // Set success message
+      req.flash('success', action.message);
+    } catch (error) {
+      // Set error message
+      req.flash('error', error.message);
+    }
+
+    // Redirect back to the referring page
+    res.redirect('back');
   }
 }
