@@ -624,6 +624,21 @@ export class CourseService {
     };
   }
   
+  async getAllPublished(){
 
+    const publishedCourses = await this.prisma.course.findMany({
+      where:{
+        status : CourseStats.isPublished
+      },
+    });
+
+
+    return{
+      publishedCourses,
+      message: 'Published courses fetched'
+    }
+
+  }
+   
 
 }
