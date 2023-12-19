@@ -39,7 +39,7 @@ block main
             p(class="font-semibold mt-5 mb-1") Popular courses
             div(class="flex justify-center mb-5")
                 +carousel
-                    each course in courses
+                    each course in topCourses
                         div(class="slide")
                             +course-card(course)
             p(class="font-semibold mt-5 mb-1") My courses
