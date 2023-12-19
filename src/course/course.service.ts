@@ -221,10 +221,9 @@ export class CourseService {
     return `Course with title ${title} has been deleted.`;
   }
 
-  async enrollCourse(data: enrollmentDto, id: number) {
+  async enrollCourse(courseId : number , id: number) {
 
-    const { courseId } = data;
-
+   
     const student = await this.prisma.user.findFirst({ where: { id } });
 
     if (!student || student.role !== UserRole.Student) {
