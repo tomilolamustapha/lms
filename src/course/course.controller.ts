@@ -21,12 +21,12 @@ export class CourseController {
     const message = res.locals.message;
     const payload: any = req.user;
 
-    const courses = await this.courseService.getAllCourse();
+    const courses = await this.courseService.getAllPublished();
 
     res.render('course', {
       message,
       user: payload.user,
-      courses: courses.getcourse,
+      courses: courses.publishedCourses,
     });
   }
 

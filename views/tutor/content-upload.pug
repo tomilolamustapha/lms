@@ -17,9 +17,12 @@ block main
                     div(class="mb-3")
                         label( for="file" class="text-primary") File
                         input(type="file" class="" id="file" name="file") 
+                    div(class="lg:basis-1/12")    
+                        label( for="duration" class="text-primary") Duration
+                        input( type="number" id="duration" name="duration" ) 
                 div(class="mb-3")
                     label( for="instruction" class="text-primary") Instruction
-                    textarea( class="" id="instruction" name="instruction" ) 
+                    textarea( class="" id="instruction" name="instruction" )
                 input( id="id" name="id" Value=course.id hidden)
               
                 button( class="w-full") Upload
