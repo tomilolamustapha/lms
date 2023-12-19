@@ -797,14 +797,6 @@ label,
   width: 100%;
 }
 
-select.pill {
-  border-radius: 1.5rem;
-}
-
-select.pill:focus {
-  border: none;
-}
-
 .search {
   width: -moz-max-content;
   width: max-content;
@@ -1409,11 +1401,6 @@ table tbody tr:last-of-type {
   padding: 1.25rem;
 }
 
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-}
-
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -1599,6 +1586,14 @@ table tbody tr:last-of-type {
 
   .lg\:w-full {
     width: 100%;
+  }
+
+  .lg\:basis-1\/12 {
+    flex-basis: 8.333333%;
+  }
+
+  .lg\:basis-10\/12 {
+    flex-basis: 83.333333%;
   }
 
   .lg\:basis-2\/12 {
