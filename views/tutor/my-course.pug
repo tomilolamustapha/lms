@@ -28,6 +28,7 @@ block main
                     th Course Code
                     th Duration
                     th Date
+                    th Status
                     th
                     th
             tbody(id="course-table") 
@@ -47,16 +48,51 @@ block main
                             td
                                 p() #{date}
                                 P(class="text-gray-500") #{time}
-                            td
-                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') onchange="change(  )") 
-                                    option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
-                                    option( value="") Publish
-                                    option( value="")  Withdraw
+                            td(class="text-center") 
+                                p(class=`w-fit rounded-3xl px-2 ${course.status === 'isPublished' ? 'bg-green-200 text-green-500' : course.status === 'withdrawn' ? 'bg-orange-200 text-orange-500' : course.status === 'blocked' ? 'bg-red-200 text-red-500' : 'bg-gray-500 text-white' }`) #{course.status === 'isPublished' ? 'Published' : course.status === 'withdrawn' ? 'Withdrawn' : course.status === 'blocked' ? 'Blocked' :'Unpublished'}
                             td
                                 a(href=`/tutor/my-courses/course/${course.id}`)
                                     button(class="inverse") View Course
+
+                            td
+                                .dropdown
+                                    button: i(class="fa fa-ellipsis-vertical")
+                                    .content
+                                        a(href=`/course/update/${course.id}/isPublished`) Publish
+                                        a(href=`/course/update/${course.id}/withdrawn`) Withdraw
     
     script.
-        function change() {
-        console.log("change")
+        function changeStatus(courseId, selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const newStatus = selectedOption.value === 'publish';
+            
+            fetch(`/updateCourseStatus/${courseId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: newStatus }),
+            })
+            .then(response => response.json())
+            .then(data => {
+            console.log('Course status updated successfully');
+            updateSelectAppearance(selectElement, newStatus);
+            })
+            .catch(error => {
+            console.error('Error updating course status:', error);
+            });
+        }
+
+        function updateSelectAppearance(selectElement, isPublished) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            if (isPublished) {
+            selectedOption.text = 'Published';
+            selectElement.classList.remove('bg-red-200', 'text-red-500');
+            selectElement.classList.add('bg-green-200', 'text-green-500');
+            } else {
+            selectedOption.text = 'Unpublished';
+            selectElement.classList.remove('bg-green-200', 'text-green-500');
+            selectElement.classList.add('bg-red-200', 'text-red-500');
+            }
         }

@@ -1381,6 +1381,11 @@ table tbody tr:last-of-type {
   background-color: rgb(151 84 203 / var(--tw-bg-opacity));
 }
 
+.bg-orange-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 215 170 / var(--tw-bg-opacity));
+}
+
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(98 55 160 / var(--tw-bg-opacity));
@@ -1417,6 +1422,11 @@ table tbody tr:last-of-type {
 .px-16 {
   padding-left: 4rem;
   padding-right: 4rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-3 {
@@ -1534,6 +1544,11 @@ table tbody tr:last-of-type {
 .text-medium {
   --tw-text-opacity: 1;
   color: rgb(151 84 203 / var(--tw-text-opacity));
+}
+
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity));
 }
 
 .text-primary {

@@ -53,16 +53,16 @@ block main
                             td
                                 p() #{date}
                                 P(class="text-gray-500") #{time}
-                            td
-                                select(class="pill w-fit " + (course.isPublished ? 'bg-green-200 text-green-500' : 'bg-red-200 text-red-500') onchnage="change()" ) 
-                                    option( selected disabled) #{course.isPublished ? 'Published' : 'Unpublished'}
-                                    option( value="") Publish
-                                    option( value="")  Withdraw
+                            td(class="text-center") 
+                                p(class=`w-fit rounded-3xl px-2 ${course.status === 'isPublished' ? 'bg-green-200 text-green-500' : course.status === 'withdrawn' ? 'bg-orange-200 text-orange-500' : course.status === 'blocked' ? 'bg-red-200 text-red-500' : 'bg-gray-500 text-white' }`) #{course.status === 'isPublished' ? 'Published' : course.status === 'withdrawn' ? 'Withdrawn' : course.status === 'blocked' ? 'Blocked' :'Unpublished'}
                             td
                                 .dropdown
                                     button: i(class="fa fa-ellipsis-vertical")
                                     .content
                                         a(href="#") View
+                                        a(href=`/course/update/${course.id}/isPublished`) Publish
+                                        a(href=`/course/update/${course.id}/withdrawn`) Withdraw
+                                        a(href=`/course/update/${course.id}/blocked`) Block
                                         a(href="#") Edit
                                         a(href="#") Delete
                                 
