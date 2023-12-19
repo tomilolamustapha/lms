@@ -25,9 +25,8 @@ export class StudentService {
         };
     }
 
-
     async getCoursesEnrolledByStudent(studentId: number) {
-        
+
       const studentEnrollments = await this.prisma.enrollment.findMany({
         where: {
           studentId: studentId,
@@ -36,18 +35,18 @@ export class StudentService {
           course: true,
         },
       });
-    
-      const enrolledCourses = studentEnrollments.map((enrollment) => enrollment.course);
+
     
       return {
-        enrolledCourses,
+        studentEnrollments,
         message: 'Enrolled courses fetched successfully',
       };
     }
+    
 
 
     async getEnrollmentByIdWithContent(enrollmentId: number) {
-      
+
       const enrollmentWithContent = await this.prisma.enrollment.findUnique({
         where: {
           id: enrollmentId,
