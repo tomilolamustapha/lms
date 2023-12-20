@@ -30,6 +30,25 @@ export class CourseController {
     });
   }
 
+  @Get('enroll/:id')
+  async enroll(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @Res() res: Response,
+  ) {
+    const payload: any = req.user;
+    try {
+      const action = await this.courseService.enrollCourse(
+        +id,
+        payload.user.id,
+      );
+      req.flash('success', action.message);
+    } catch (error) {
+      req.flash('error', error.message);
+    }
+    res.redirect('back');
+  }
+
   @Get('update/:id/:status')
   async publish(
     @Req() req: Request,
