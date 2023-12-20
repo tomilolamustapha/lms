@@ -28,8 +28,8 @@ block main
 
     p(class="font-bold text-3xl my-5") Dashboard
 
-    div(class="grid lg:flex gap-3")
-        div(class="lg:basis-4/6 gap-6")
+    div(class="")
+        div(class="")
             div(class="bg-light rounded-lg flex px-5 items-center ")
                 div(class="basis-4/6")
                     p(class="font-bold text-lg") Hello, #{user.fullname}
@@ -37,20 +37,20 @@ block main
                 div(class="basis-2/6 ")
                     img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
             p(class="font-semibold mt-5 mb-1") Popular courses
-            div(class="flex justify-center mb-5")
+            div(class="w-full mb-5")
                 +carousel
                     each course in topCourses
                         div(class="slide")
                             +course-card(course)
             p(class="font-semibold mt-5 mb-1") My courses
             div(class="flex justify-center mb-5")
-                div(class="grid lg:grid-flow-col gap-6")
+                div(class="grid lg:grid-cols-4 gap-10 w-full")
                     each course in courses
-                        +course-card(course)
+                        +enrolled-card(course)
 
 
-        div(class="lg:basis-2/6")
-            +card
-                p() yes
+        //- div(class="lg:basis-2/6")
+        //-     +card
+        //-         p() yes
     
     

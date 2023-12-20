@@ -25,9 +25,9 @@ mixin course-card(data)
                 p(class="font-bold") #{data.title}
              
         div(class="flex justify-end")
-            button(class="inverse") Join 
+            a(href=`/course/enroll/${data.id}`): button(class="inverse") Join 
 
-mixin enrolled-card(data)
+mixin enrolled-card (data)
     .card.course-card
         div(class="bg-medium rounded-xl ")
             img(class="h-56 w-100 rounded-lg" src="/image/Reading glasses-cuate.png" alt="", srcset="")
@@ -37,8 +37,12 @@ mixin enrolled-card(data)
                 p(class="font-medium") #{data.courseCode}
                 p(class="font-bold") #{data.title}
              
-        div(class="flex justify-end")
-            a(href=`/student/my-courses/course/1`): button(class="inverse") view 
+        div(class="flex justify-between items-center gap-3")
+            div(class="w-full")
+                p(class="font-medium text-md") Progress
+                div(class="bar")
+                    div(class="per" per="60%" style="max-width:60%")
+            a(href=`/student/my-courses/course/${data.id}`): button(class="inverse") view 
 
 
 mixin profile-card(parsedData)
