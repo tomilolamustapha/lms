@@ -29,22 +29,22 @@ enum CourseStats {
 }
 
 model User {
-  id            Int               @id @default(autoincrement())
-  firstname     String
-  lastname      String
-  fullname      String
-  email         String            @unique
-  phoneNumber   String            @unique
-  password      String
-  role          UserRole
-  username      String            @unique
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  Status        Boolean
-  tokens        UserAccessToken[]
-  courses       Course[]
-  enrollments   Enrollment[]
-  notifications Notification[]
+  id              Int               @id @default(autoincrement())
+  firstname       String
+  lastname        String
+  fullname        String
+  email           String            @unique
+  phoneNumber     String            @unique
+  password        String
+  role            UserRole
+  username        String            @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Status          Boolean
+  tokens          UserAccessToken[]
+  courses         Course[]
+  enrollments     Enrollment[]
+  notifications   Notification[]
   watchedContents Content[]
 }
 
@@ -71,6 +71,7 @@ model Enrollment {
   course    Course   @relation(fields: [courseId], references: [id])
   student   User     @relation(fields: [studentId], references: [id])
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   progress  Float?
 
   @@unique([courseId, studentId])
@@ -107,7 +108,7 @@ model Content {
   updatedAt   DateTime    @updatedAt
   duration    Int
   timeWatched Int?        @default(0) // New field to track time watched in minutes
-  watchedBy    User[]  
+  watchedBy   User[]
 }
 
 model Notification {
