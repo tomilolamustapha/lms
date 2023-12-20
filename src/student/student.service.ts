@@ -76,6 +76,9 @@ export class StudentService {
       where: {
         studentId: studentId,
       },
+      include: {
+        course: true,
+      },
       orderBy: {
         updatedAt: 'desc',
       },

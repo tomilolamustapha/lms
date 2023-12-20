@@ -17,9 +17,13 @@ export class StudentController {
     const payload: any = req.user;
 
     const courses = await this.courseService.gettopCourses();
+    const recent = await this.studentService.getRecentEnrollmentsByStudent(
+      payload.user.id,
+    );
     res.render('student/dashboard', {
       user: payload.user,
       topCourses: courses.topCourses,
+      recents: recent.recentEnrollments,
     });
   }
 
