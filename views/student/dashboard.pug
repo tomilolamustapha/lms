@@ -1,31 +1,7 @@
 extends ../layout 
 
 block main
-    -
-        const courses = [
-            {
-                'image': '/image/schoolgirl.jpg',
-                'school': 'LASU',
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
-                'enrolled': 200
-            },
-            {
-                'image': '/image/schoolgirl.jpg',
-                'school': 'LASU',
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
-                'enrolled': 200
-            },
-            {
-                'image': '/image/schoolgirl.jpg',
-                'school': 'LASU',
-                'title': 'Lorem ipsum',
-                'description': 'lorem ipsum, dolor sit',
-                'enrolled': 200
-            }
-        ]
-
+   
     p(class="font-bold text-3xl my-5") Dashboard
 
     div(class="")
@@ -45,8 +21,8 @@ block main
             p(class="font-semibold mt-5 mb-1") My courses
             div(class="flex justify-center mb-5")
                 div(class="grid lg:grid-cols-4 gap-10 w-full")
-                    each course in courses
-                        +enrolled-card(course)
+                    each recent in recents
+                        +enrolled-card(recent.course)
 
 
         //- div(class="lg:basis-2/6")
