@@ -6,22 +6,26 @@ block main
             {
                 'title': 'Lesson 1',
                 'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                'url': '#'
+                'url': '#',
+                'id': 1
             },
             {
                 'title': 'Lesson 2',
                 'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                'url': '#'
+                'url': '#',
+                'id': 2
             },
             {
                 'title': 'Lesson 3',
                 'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                'url': '#'
+                'url': '#',
+                'id': 3
             },
             {
                 'title': 'Lesson 4',
                 'instruction': 'lorem ipsum, dolor sit. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus, doloremque nostrum voluptatum cumque mollitia laudantium nesciunt?',
-                'url': '#'
+                'url': '#',
+                'id': 4
             },
         ]
 
@@ -33,25 +37,56 @@ block main
 
     div(class="bg-medium rounded-lg flex p-5 items-center ")
         div(class="basis-4/6")
-            p(class="font-semibold")  courseCode
-            p(class="font-bold text-2xl")  Title
-            p(class="font-medium") description
+            p(class="font-semibold")  #{course.courseCode}
+            p(class="font-bold text-2xl")  #{course.title}
+            p(class="font-medium") #{course.description}
         div(class="basis-2/6 flex justify-end")
             img( class="h-40" src="/image/Research paper-rafiki.png" alt="girl")
     p(class="font-semibold mt-5 mb-1") Contents
      
 
-    div(class="my-5 container")
-        .tabs
-            each content in contents
-                p #{content.title}
+    div(class="my-5")
+        each content in course.content
+            div(class="accordion-item mb-3")
+                button( id="accordion-btn" class="accordion-btn") #{content.title}
+                    div(class="icons")
+                        i(class="fa fa-caret-down")
+                        i(class="fa fa-caret-up")
+                div(class="accordion-body") 
+                    div(class="grid justify-center my-3 p-3 gap-3 rounded-xl border-primary border-2")
+                        div(class="flex justify-between gap-10")
+                            div(class="rounded-xl bg-gray-100 py-10 px-5")
+                                p(class="text-center font-semibold text-lg") Instructions 
+                                p() #{content.instruction}
+                            div(class="my-5")
+                                if content.type == 'Video'                    
+                                    video(width="800" height="480" controls )
+                                        source(src=`/document/${content.type}/${content.url}` ) 
+                                else                        
+                                    embed(width="800" height="650" src=`/document/${content.type}/${content.url}` type="" ) 
+
+                        div(class="flex justify-center ")
+                            button mark as done
+                             
+    //- div(class="my-5 container")
+    //-     .accordion_tab
+    //-         .accordion_tab_wrapper
+    //-             each content in contents
+    //-                 input(type="radio" id=content.id name="accordion_group" class="radio")
         
-        .tabs-content
-            each content in contents
-                p #{content.title}
-                p #{content.instruction}
+    //-     .accordion_tab_group
+    //-         each content in contents
+    //-             label(for=content.id class="tab" id=`${content.id}-tab`) #{content.title}
+    //-     .accordion_tab_contents
+    //-         each content in contents
+    //-             .accordion_tab_content( id=`${content.id}-tab-content`) 
+    //-                 .accordion_tab_title #{content.title}
+    //-                 .accordion_tab_description #{content.instruction}
 
     
      
     script.
+        document.addEventListener('DOMContentLoaded', function () {
+            handleAccordion();
+        });
         

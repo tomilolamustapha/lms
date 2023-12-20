@@ -913,13 +913,6 @@ button.inverse:hover {
   box-shadow: 0 0 28px rgba(0, 0, 0, 0.15);
 }
 
-.tabs {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  background-color: #f0f0f0;
-}
-
 table {
   border-collapse: collapse;
   margin: 28px 0;
@@ -1083,6 +1076,19 @@ table tbody tr:last-of-type {
   margin: 0 20px 0 0;
   position: relative;
   transition: 0.5s;
+}
+
+.bar {
+  height: o.45rempx;
+  background: #f0f0f0;
+  border-radius: 0.5rem;
+}
+
+.per {
+  height: 0.45rem;
+  background: #deacf5;
+  border-radius: 0.5rem;
+  position: relative;
 }
 
 @media (max-width: 768px) {
@@ -1303,10 +1309,6 @@ table tbody tr:last-of-type {
 
 .gap-5 {
   gap: 1.25rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
 }
 
 .justify-self-center {
@@ -1592,20 +1594,12 @@ table tbody tr:last-of-type {
     flex-basis: 8.333333%;
   }
 
-  .lg\:basis-10\/12 {
-    flex-basis: 83.333333%;
-  }
-
   .lg\:basis-2\/12 {
     flex-basis: 16.666667%;
   }
 
   .lg\:basis-2\/6 {
     flex-basis: 33.333333%;
-  }
-
-  .lg\:basis-4\/6 {
-    flex-basis: 66.666667%;
   }
 
   .lg\:basis-5\/12 {
